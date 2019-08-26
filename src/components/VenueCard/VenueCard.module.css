@@ -1,0 +1,17 @@
+.Card {
+    width: 20%;
+    margin-bottom: 1.5rem;
+}
+
+.Card_img {
+    border-radius: 4px;
+}
+
+.Card_img img {
+    width: 100%;
+}
+
+.Card_button {
+    width: 100%;
+    font-size: 1.1rem;
+}

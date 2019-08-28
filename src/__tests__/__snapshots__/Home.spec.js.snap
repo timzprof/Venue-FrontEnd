@@ -1,0 +1,196 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Home Container renders 1`] = `
+Array [
+  <header
+    className="Header"
+  >
+    <div
+      className="Logo"
+    >
+      VApp
+    </div>
+    <a
+      className="Link"
+      href="/"
+    >
+      Log In
+    </a>
+  </header>,
+  <main
+    className="main"
+  >
+    <section
+      className="card_container"
+    >
+      <div
+        className="Card Card"
+      >
+        <div
+          className="Card_img"
+        >
+          <img
+            alt="Venue"
+            src="img.png"
+          />
+        </div>
+        <h3>
+          Conference Hall
+        </h3>
+        <p>
+          CITS,Unilag
+        </p>
+        <p>
+          200
+           Seats
+        </p>
+        <button
+          className="btn Card_button"
+        >
+          View
+        </button>
+      </div>
+      <div
+        className="Card Card"
+      >
+        <div
+          className="Card_img"
+        >
+          <img
+            alt="Venue"
+            src="img.png"
+          />
+        </div>
+        <h3>
+          Conference Hall
+        </h3>
+        <p>
+          CITS,Unilag
+        </p>
+        <p>
+          200
+           Seats
+        </p>
+        <button
+          className="btn Card_button"
+        >
+          View
+        </button>
+      </div>
+      <div
+        className="Card Card"
+      >
+        <div
+          className="Card_img"
+        >
+          <img
+            alt="Venue"
+            src="img.png"
+          />
+        </div>
+        <h3>
+          Conference Hall
+        </h3>
+        <p>
+          CITS,Unilag
+        </p>
+        <p>
+          200
+           Seats
+        </p>
+        <button
+          className="btn Card_button"
+        >
+          View
+        </button>
+      </div>
+      <div
+        className="Card Card"
+      >
+        <div
+          className="Card_img"
+        >
+          <img
+            alt="Venue"
+            src="img.png"
+          />
+        </div>
+        <h3>
+          Conference Hall
+        </h3>
+        <p>
+          CITS,Unilag
+        </p>
+        <p>
+          200
+           Seats
+        </p>
+        <button
+          className="btn Card_button"
+        >
+          View
+        </button>
+      </div>
+      <div
+        className="Card Card"
+      >
+        <div
+          className="Card_img"
+        >
+          <img
+            alt="Venue"
+            src="img.png"
+          />
+        </div>
+        <h3>
+          Conference Hall
+        </h3>
+        <p>
+          CITS,Unilag
+        </p>
+        <p>
+          200
+           Seats
+        </p>
+        <button
+          className="btn Card_button"
+        >
+          View
+        </button>
+      </div>
+      <div
+        className="Card Card"
+      >
+        <div
+          className="Card_img"
+        >
+          <img
+            alt="Venue"
+            src="img.png"
+          />
+        </div>
+        <h3>
+          Conference Hall
+        </h3>
+        <p>
+          CITS,Unilag
+        </p>
+        <p>
+          200
+           Seats
+        </p>
+        <button
+          className="btn Card_button"
+        >
+          View
+        </button>
+      </div>
+    </section>
+  </main>,
+  <footer>
+    <p>
+      © 2019 Copyright. Venue App.
+    </p>
+  </footer>,
+]
+`;

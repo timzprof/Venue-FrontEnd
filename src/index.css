@@ -44,3 +44,13 @@ footer {
   text-align: center;
   color: white;
 }
+
+/* Tablet */
+@media only screen and (max-width: 768px) {
+	.main {
+    padding: 2rem;
+  }
+}
+
+/* Phone */
+@media only screen and (max-width: 500px) {}

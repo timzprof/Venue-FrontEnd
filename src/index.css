@@ -1,13 +1,56 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@import url('https://fonts.googleapis.com/css?family=Livvic&display=swap');
+
+:root {
+  --font: 'Livvic', sans-serif;
+  --teal: #083A55;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+html,body {
+  margin: 0;
+  padding: 0;
 }
+
+body {
+  font-family: var(--font);
+}
+
+.main {
+  padding: 3rem;
+}
+
+.btn {
+  padding: .8rem;
+  font: inherit;
+  outline: none;
+  cursor: pointer;
+  text-align: center;
+  font-size: .8rem;
+  background-color: var(--teal);
+  color: white;
+  border: none;
+  border-radius: 4px;
+}
+
+.card_container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-around;
+}
+
+footer {
+  padding: .7rem;
+  background-color: var(--teal);
+  text-align: center;
+  color: white;
+}
+
+/* Tablet */
+@media only screen and (max-width: 768px) {
+	.main {
+    padding: 2rem;
+  }
+}
+
+/* Phone */
+@media only screen and (max-width: 500px) {}

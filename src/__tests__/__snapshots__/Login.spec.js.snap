@@ -1,0 +1,70 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Login Container renders 1`] = `
+Array [
+  <header
+    className="Header"
+  >
+    <div
+      className="Logo"
+    >
+      VApp
+    </div>
+    <a
+      className="Link"
+      href="/login"
+      onClick={[Function]}
+    >
+      Log In
+    </a>
+  </header>,
+  <section
+    className="Form__container"
+  >
+    <div
+      className="Card Form"
+    >
+      <h3>
+        Login
+      </h3>
+      <form>
+        <div
+          className="Form_group"
+        >
+          <input
+            className="Form_field"
+            name="email"
+            onChange={[Function]}
+            required={true}
+            type="email"
+            value=""
+          />
+        </div>
+        <div
+          className="Form_group"
+        >
+          <input
+            className="Form_field"
+            name="password"
+            onChange={[Function]}
+            required={true}
+            type="password"
+            value=""
+          />
+        </div>
+        <button
+          className="btn"
+          type="submit"
+        >
+          Login
+        </button>
+      </form>
+    </div>
+  </section>,
+  <footer>
+    <p>
+      © 2019 Copyright. Venue App.
+    </p>
+  </footer>,
+]
+`;

@@ -1,0 +1,39 @@
+.SideBar{
+    position: fixed;
+    top: 70px;
+    left: 0;
+    width: 22.5%;
+    background-color: #fff;
+    box-shadow: 4px 0 8px #00000016;
+    z-index: 1000;
+    padding: 50px 0;
+
+}
+
+.SideBarHeader{
+    font-size: 20px;
+    padding: 0 20px 0 20px;
+    background-color: #083A55;
+}
+
+.LinkGroup{
+    margin-top: 30px;
+    width: 100%;
+}
+
+
+@media (max-width: 768px){
+    .SideBar{
+        top: 0;
+        z-index: 2000;
+        transform: translateX(-100%);
+        width: 30%;
+    }
+}
+
+
+/* @media (max-width: 600px){
+    .SideBar{
+        width: ;
+    }
+} */

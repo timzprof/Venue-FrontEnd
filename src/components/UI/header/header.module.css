@@ -2,13 +2,14 @@
     width: 100%;
     height: 70px;
     background-color: #083A55;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 20px;
+    z-index: 1000;
 }
 
 .Header svg{
@@ -19,7 +20,10 @@
 
 
 .Header a{
-    color: #fff;
+    color: #d4d4d4;
+    font-size: 12px;
+    font-weight: 700;
 }
+
 
 

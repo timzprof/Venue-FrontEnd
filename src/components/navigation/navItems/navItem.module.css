@@ -1,0 +1,19 @@
+.NavItem{
+    width: 100%;
+    padding: 20px;
+    text-align: left;
+    transition: all 0.3s ease-in;
+    background-color: #fff;
+}
+
+.NavItem:hover{
+    background-color: #083A5510;
+}
+
+.NavItem span{
+    color: #083A55;
+}
+
+.active{
+    background-color: #083A5510;
+}

@@ -1,0 +1,18 @@
+.PageLayout{
+    height: 100%;
+    width: 100%;
+}
+
+.Main{
+    width: 77.5%;
+    position: relative;
+    margin-top: 70px;
+    margin-left: 22.5%;
+}
+
+
+@media (max-width: 768px){
+    .Main{
+        margin-left: 30%;
+    }
+}

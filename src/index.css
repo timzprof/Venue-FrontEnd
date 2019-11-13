@@ -1,5 +1,17 @@
 /* @import url('https://fonts.googleapis.com/css?family=Livvic&display=swap'); */
 
+
+@font-face{
+  font-family: "Nexa-bold";
+  src: url('./assets/fonts/Nexa Bold.otf');
+}
+
+@font-face{
+  font-family: "Nexa-light";
+  src: url('./assets/fonts/Nexa Light.otf');
+}
+
+
 *, 
 *::after,
 *::before{
@@ -11,4 +23,9 @@
 body{
   height: 100%;
   width: 100%;
+  font-family: "Nexa-light";
+}
+
+a{
+  text-decoration: none;
 }

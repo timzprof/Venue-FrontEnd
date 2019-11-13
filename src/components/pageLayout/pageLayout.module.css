@@ -4,10 +4,11 @@
 }
 
 .Main{
-    width: 77.5%;
+    width: 80%;
     position: relative;
     margin-top: 70px;
-    margin-left: 22.5%;
+    margin-left: 20%;
+    padding: 25px;
 }
 
 

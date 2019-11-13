@@ -6,7 +6,7 @@ const NavItem = ({ path, text }) => {
     return (
         <NavLink to={path} activeClassName={styles.active}>
             <div className={styles.NavItem}>
-                <span>text</span>
+                <span>{text}</span>
             </div>
         </NavLink>
     )

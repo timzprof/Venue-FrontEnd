@@ -1,0 +1,26 @@
+.Button{
+    display: inline-block;
+    padding: 12px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: "Nexa-bold";
+}
+
+.inner{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.Button svg{
+    height: 15px;
+    width: 15px;
+    color: inherit;
+    margin-right: 7px;
+}
+
+.span{
+    color: inherit;
+    font-size: 15px;
+    font-weight: 700;
+}

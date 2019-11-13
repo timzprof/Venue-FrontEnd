@@ -1,14 +1,14 @@
 import React from 'react'
 import styles from './sideBar.module.css'
-import NavItem from  '../navItems/navItems'
+import NavItem from  '../navItem/navItem'
 
 const SideBar = () => {
     return (
         <div className={styles.SideBar}>
             <h2 className={styles.SideBarHeader}>Menu</h2>
-            <div className={styles.linkGroup}>
-                <NavItem path="/" text="/Venues"/>
-                <NavItem path="/new-bookings" text="/New Bookings"/>
+            <div className={styles.LinkGroup}>
+                <NavItem path="/" text="Venues"/>
+                <NavItem path="/new-bookings" text="New Bookings"/>
             </div>
         </div>
     )

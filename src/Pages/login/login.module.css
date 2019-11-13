@@ -1,0 +1,68 @@
+.Login{
+    height: 100%;
+    width: 100%;
+    padding-top: 70px;
+}
+
+.loginBox{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 40%;
+    height: 55%;
+    background-color: #fff;
+    border-radius: 8px;
+    transform: translate(-50%, -50%);
+    border: 1px solid #083A5510;
+    box-shadow: 0 3px 6px #00000010;
+    padding: 40px 70px;
+}
+
+
+.formHeader{
+    font-family: "Nexa-bold";
+    font-size: 25px;
+    margin-bottom: 10px;
+}
+
+
+.formGroup{
+    width: 100%;
+    padding: 15px 0;
+}
+
+.formGroup input{
+    border: 1px solid #083A5510;
+    width: 100%;
+    padding: 15px;
+    color: #083A55;
+    outline: none;
+    margin: 5px 0;
+    font-size: 17px;
+}
+
+.formGroup label{
+    font-family: "Nexa-light";
+    font-size: 14px;
+}
+
+
+
+@media (max-width: 1000px){
+    .loginBox{
+        width: 60%;
+    }
+}
+
+@media (max-width: 768px){
+    .loginBox{
+        width: 80%;
+    }
+}
+
+@media (max-width: 500px){
+    .loginBox{
+        width: 80%;
+        padding: 40px;
+    }
+}

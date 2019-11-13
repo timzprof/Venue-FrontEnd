@@ -1,9 +1,10 @@
 .Card{
-    box-shadow: 0 3px 6px #00000016;
+    box-shadow: 0 3px 6px #00000010;
     padding: 10px;
     border-radius: 8px;
     border: 1px solid #083A5510;
     font-family: 'Nexa-light';
+    background-color: #ffffff;
 }
 
 .CardImage{

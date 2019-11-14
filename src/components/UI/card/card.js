@@ -13,7 +13,7 @@ const Card = ({venueObj, history}) => {
 
 
         // redirect to the viewhall page
-        history.push("/venue/id")
+        history.push(`/venue/${id}`)
     }
 
     return (

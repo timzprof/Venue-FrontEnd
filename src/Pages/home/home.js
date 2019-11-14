@@ -78,7 +78,7 @@ const Home = () => {
         <PageLayout>
             <div className={styles.Home}>
                 <div className={styles.subHeader}>
-                    <Button text="Add Venue" image={AddImage} style={{
+                    <Button text="Add New Venue" image={AddImage} style={{
                         color: "#f5f5f5",
                         backgroundColor: "#23B83C",
                     }} />

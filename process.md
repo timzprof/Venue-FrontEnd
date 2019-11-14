@@ -2,8 +2,8 @@ Delete all the files that will not be needed (done)
 create folder structure (done)
 create page layout components and the page - layoout component (done)
 create the card components (done)
-create the homepage ,
-create the login page (admin and user)
+create the homepage (done) ,
+create the login page (done)
 create the view venue page (admin and user)
 create the edit venue - modal with picture upload buttons
 create the add venue page with add image buttons

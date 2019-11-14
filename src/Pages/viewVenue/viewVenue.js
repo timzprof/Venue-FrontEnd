@@ -5,10 +5,15 @@ import { NavLink } from 'react-router-dom'
 import Button from '../../components/UI/button/button'
 import {ReactComponent as AvailableImage} from '../../assets/images/Group 19.svg'
 import {ReactComponent as UnavailableImage} from '../../assets/images/Group 18.svg'
+import { withRouter } from 'react-router-dom'
 
-
-const ViewVenue = () => {
+const ViewVenue = ({history}) => {
     const targetVenue = {}
+    
+    const datePicker = () => {
+        history.push("/datepicker")
+    }
+
     return (
         <PageLayout>
             <div className={styles.ViewVenue}>
@@ -43,7 +48,7 @@ const ViewVenue = () => {
                                 <img src={targetVenue.subImage}/>
                             </div>
                             <div className={styles.tag}><span className={styles.bolden}>CITS</span></div>
-                            <div className={styles.tag}><span className={styles.bolden}>200</span> seats </div>
+                            <div className={styles.tag}><span className={styles.bolden}>200 </span> seats </div>
                             <div className={styles.tag}> <AvailableImage/>  <span className={styles.bolden}>Internet</span></div>
                             <div className={styles.tag}> <UnavailableImage/> <span className={styles.bolden}>Computers</span></div>
                         </div>
@@ -54,11 +59,11 @@ const ViewVenue = () => {
                             backgroundColor: "#083a55",
                             margin: "0 auto",
                             marginTop: "15px"
-                        }}/>
+                        }} onClick={datePicker}/>
                     </div>
                 </div>
         </PageLayout>
     )
 }
 
-export default ViewVenue
+export default withRouter(ViewVenue)

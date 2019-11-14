@@ -1,0 +1,34 @@
+.backLink{
+    color: #083a55;
+    font-family: 'Nexa-bold';
+}
+
+.mainContent{
+    /* height: 56.3vh; */
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.venueHeader{
+    font-family: 'Nexa-bold';
+    font-size: 22px;
+    color: #083a55;
+    margin-bottom: 20px;
+}
+
+.subHeader{
+    /* width: 100%; */
+    margin: 20px 0 20px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.Date{
+    font-family: "Nexa-light";
+    font-size: 12px;
+    /* margin-left: 20px; */
+    display: block;
+}

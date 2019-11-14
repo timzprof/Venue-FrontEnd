@@ -21,7 +21,7 @@
 
 .venueHeader{
     font-family: 'Nexa-bold';
-    font-size: 25px;
+    font-size: 22px;
     color: #083a55;
     margin-bottom: 10px;
 }
@@ -52,13 +52,13 @@
 }
 
 .tag{
-    padding: 15px 30px;
+    padding: 12px 30px;
     width: 100%;
     background-color: #fff;
     box-shadow: 0 2px 4px #00000010;
     border-radius: 8px;
     text-align: center;
-    margin-bottom: 10px;
+    margin-bottom: 7px;
     color: #083a55;
     display: flex;
     align-items: center;
@@ -67,8 +67,11 @@
 
 .tag svg{
     margin-right: 10px;
+    height: 25px;
+    width: 25px;
 }
 
 .bolden{
     font-family: "Nexa-bold";
+    margin-right: 10px;
 }

@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom'
 
 const NavItem = ({ path, text }) => {
     return (
-        <NavLink to={path} activeClassName={styles.active}>
+        <NavLink to={path} exact activeClassName={styles.active}>
             <div className={styles.NavItem}>
                 <span>{text}</span>
             </div>

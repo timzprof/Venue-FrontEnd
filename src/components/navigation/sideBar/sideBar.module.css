@@ -13,13 +13,13 @@
 
 .SideBarHeader{
     font-size: 20px;
-    padding: 0 20px 0 20px;
+    padding: 0 20px 0 50px;
     color: #083A55;
     font-family: "Nexa-bold";
 }
 
 .LinkGroup{
-    margin-top: 20px;
+    margin-top: 30px;
     width: 100%;
 }
 

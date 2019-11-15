@@ -4,6 +4,9 @@
     border-radius: 5px;
     cursor: pointer;
     font-family: "Nexa-bold";
+    border: none;
+    background-color: transparent;
+    outline: none !important;
 }
 
 .inner{

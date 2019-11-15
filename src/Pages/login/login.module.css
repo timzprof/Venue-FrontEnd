@@ -23,6 +23,7 @@
     font-family: "Nexa-bold";
     font-size: 25px;
     margin-bottom: 30px;
+    color: #083A55;
 }
 
 
@@ -32,18 +33,24 @@
 }
 
 .formGroup input{
-    border: 1px solid #083A5510;
+    border: 2px solid #083A5510;
     width: 100%;
     padding: 15px;
     color: #083A55;
     outline: none;
     margin: 5px 0;
     font-size: 17px;
+    border-radius: 5px;
+    /* transition: all 0.3s ease-out; */
+}
+.formGroup input:focus{
+    border: 2px solid #083A55;
 }
 
 .formGroup label{
     font-family: "Nexa-light";
     font-size: 14px;
+    color: #083A55;
 }
 
 

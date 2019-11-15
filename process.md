@@ -4,13 +4,18 @@ create page layout components and the page - layoout component (done)
 create the card components (done)
 create the homepage (done) ,
 create the login page (done)
-create the view venue page (admin and user)
-create the edit venue - modal with picture upload buttons
-create the add venue page with add image buttons
+create the view venue page (admin and user) (done)
+create the edit venue - modal with picture upload buttons (half-done)
+create the add venue page with add image buttons (half-done)
 <!-- ask timi about the cloudinary workflow -->
-create the calender component - (milestone)
+create the calender component - (milestone) (done -))
 create smaller ui commponents
 add routing - (auth boosted)
+create the booking component
+create the label component
+create the newBoookings page
+create the venue bookings components
+create the bookings shower
 <!-- create the function from nifemi to hold my posting and fetching of data -->
 
 

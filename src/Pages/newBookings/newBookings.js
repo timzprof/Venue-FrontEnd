@@ -3,8 +3,10 @@ import styles from './newBookings.module.css'
 import PageLayout from '../../components/pageLayout/pageLayout'
 import { NavLink } from 'react-router-dom'
 import Button from '../../components/UI/button/button'
+import Booking from '../../components/UI/booking/booking'
 
 const NewBookings = () => {
+
     return (
         <PageLayout>
             <div className={styles.subHeader}>
@@ -31,6 +33,11 @@ const NewBookings = () => {
                             {new Date().toLocaleDateString()}
                         </span>
                     </h2>
+                    <div className={styles.BookingList}>
+                        <Booking/>
+                        <Booking/>
+                        <Booking/>
+                    </div>
         </PageLayout>
     )
 }

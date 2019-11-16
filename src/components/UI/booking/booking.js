@@ -1,6 +1,7 @@
 import React from 'react'
 import styles from './booking.module.css'
 import Button from '../button/button'
+import Label from '../label/label'
 
 
 const Booking = () => {
@@ -12,7 +13,7 @@ const Booking = () => {
             <div className={styles.bookingInfo}>
                 <div className={styles.main}>
                     <h2>HUAWEI Certification Program</h2>
-                    {/* tag with prop of pending */}
+                    <Label status="pending"/>
                 </div>
                 <div className={styles.subInfo}>
                     <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusamus vel explicabo architecto enim ipsam nihil, modi tenetur non ducimus obcaecati quo voluptas quidem officia cumque nesciunt cum omnis veniam ipsum!Eius harum molestiae blanditiis repellat quaerat corporis illo quod perspiciatis. Fugit, eaque facilis, aliquid aspernatur nesciunt cumque voluptas tempora placeat voluptate maiores reprehenderit amet soluta sequi delectus consequuntur nostrum quibusdam?</p>

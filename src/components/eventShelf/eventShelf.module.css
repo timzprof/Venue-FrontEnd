@@ -1,0 +1,38 @@
+.time{
+    width: 100%;
+    font-size: 15px;
+    margin: 10px 0;
+    font-family: 'Nexa-bold';
+    text-align: end;
+}
+
+.timeGroup{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-end;
+    height: auto;
+    width: 100px;
+    margin-right: 15px;
+}
+
+.eventContianer{
+    width: calc(100% - 100px);
+    /* width: 430px; */
+    padding: 15px;
+    border: 1px solid #083a55;
+    border-radius: 8px;
+}
+
+.eventContainerInner{
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+
+.EventShelf{
+    display: flex;
+    height: 100%;
+    width: 500px;
+}
+

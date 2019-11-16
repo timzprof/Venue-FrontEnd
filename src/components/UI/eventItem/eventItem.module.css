@@ -1,0 +1,52 @@
+.EventItem{
+    position: absolute;
+    width: 100%;
+}
+
+.bigScreenDetails{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 20px;
+    height: 100%;
+}
+
+.bigScreenDetails span{
+    font-size: 13px;
+}
+
+.smallScreenDetails{
+    display: none;
+}
+
+
+
+@media (max-width: 600px){
+    .eventItem{
+        position: relative;
+        width: 200px;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px #00000010;
+        height: 250px !important;
+    }
+
+    .smallScreenDetails{
+        display: block;
+    }
+
+    .detailGroup{
+        margin-bottom: 15px;
+    }
+
+    .detailGroup span{
+        font-size: 17px;
+        color: #083a55;
+        font-family: 'Nexa-light';
+    }
+
+    .lead{
+        font-family: 'Nexa-bold';
+        margin-bottom: 5px;
+    }
+
+}

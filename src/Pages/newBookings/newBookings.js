@@ -11,7 +11,7 @@ const NewBookings = () => {
         <PageLayout>
             <div className={styles.subHeader}>
                         <NavLink to="/" className={styles.backLink}>Back</NavLink>
-                            <div className={styles.btnGroup}>
+                            {/* <div className={styles.btnGroup}>
                                 <Button text="Manage Time" style={{
                                     color: "#f5f5f5",
                                     backgroundColor: "#23B83C",
@@ -24,7 +24,7 @@ const NewBookings = () => {
                                     border: "1px solid #DF7676",
                                     padding: "12px 30px"
                                 }} />
-                            </div>
+                            </div> */}
                     </div>
                     <h2 className={styles.venueHeader}>
                         {/* {targetVenue.name} */}

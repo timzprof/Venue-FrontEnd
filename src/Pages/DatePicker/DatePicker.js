@@ -4,6 +4,7 @@ import CalendarComponent from '../../components/calendar/calendar'
 import PageLayout from '../../components/pageLayout/pageLayout'
 import { NavLink } from 'react-router-dom'
 import Button from '../../components/UI/button/button'
+import EventShelf from '../../components/eventShelf/eventShelf'
 
 
 const DatePicker = () => {
@@ -22,6 +23,7 @@ const DatePicker = () => {
                     </h2>
                     <div className={styles.mainContent}>
                         <CalendarComponent/>
+                        <EventShelf/>
                         {/* Bookings */}
                     </div>
                     <Button text="View Bookings" style={{

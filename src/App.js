@@ -5,6 +5,7 @@ import Login from './Pages/login/login'
 import ViewVenue from './Pages/viewVenue/viewVenue';
 import DatePicker from './Pages/DatePicker/DatePicker';
 import NewBookings from './Pages/newBookings/newBookings';
+import ViewBookings from './Pages/viewBookings/viewBookings';
 
 
 class App extends Component {
@@ -16,6 +17,7 @@ class App extends Component {
           <Route path="/venue/:id" component={ViewVenue} />
           <Route path="/date-picker" component={DatePicker} />
           <Route path="/new-bookings" component={NewBookings} />
+          <Route path="/bookings" component={ViewBookings} />
         </Switch>
     );
   }

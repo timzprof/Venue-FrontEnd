@@ -5,9 +5,10 @@ import PageLayout from '../../components/pageLayout/pageLayout'
 import { NavLink } from 'react-router-dom'
 import Button from '../../components/UI/button/button'
 import EventShelf from '../../components/eventShelf/eventShelf'
+import { withRouter } from 'react-router-dom'
 
 
-const DatePicker = () => {
+const DatePicker = ({ history }) => {
     return (
         <div>
             <PageLayout>
@@ -26,7 +27,9 @@ const DatePicker = () => {
                         <EventShelf/>
                         {/* Bookings */}  
                     </div>
-                    <Button text="View Bookings" style={{
+                    <Button onClick={() => {
+                        history.push("/bookings")
+                    }} text="View Bookings" style={{
                         color: '#fff',
                         backgroundColor: '#083a55',
                         marginTop: '20px'
@@ -36,4 +39,4 @@ const DatePicker = () => {
     )
 }
 
-export default DatePicker
+export default withRouter(DatePicker) 

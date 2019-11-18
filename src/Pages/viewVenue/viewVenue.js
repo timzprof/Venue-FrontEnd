@@ -110,7 +110,7 @@ const ViewVenue = ({history}) => {
                                             setModalMode("delete")}} 
                                     text="Delete Venue" style={{
                                     color: "#DF7676",
-                                    backgroundColor: "transparent",
+                                    backgroundColor: "transparent", 
                                     border: "1px solid #DF7676",
                                     padding: "12px 30px"
                                 }} />
@@ -124,6 +124,11 @@ const ViewVenue = ({history}) => {
                     <div className={styles.mainContent}>
                         <div className={styles.mainImage}>
                             <img src={targetVenue.mainImage}/>
+                            <div className={styles.smallScreenImages}>
+                                <img />
+                                <img />
+                                <img />
+                            </div>
                         </div>
                         <div className={styles.rightSection}>
                             <div className={styles.subImage}>

@@ -24,7 +24,7 @@ const DatePicker = () => {
                     <div className={styles.mainContent}>
                         <CalendarComponent/>
                         <EventShelf/>
-                        {/* Bookings */}
+                        {/* Bookings */}  
                     </div>
                     <Button text="View Bookings" style={{
                         color: '#fff',

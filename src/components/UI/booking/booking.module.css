@@ -90,6 +90,19 @@
 }
 
 
+@media (max-width: 1200px){
+    .timeBlock{
+        flex-basis: 18%;
+    }
+
+    .bookingInfo{
+        flex-basis: 82%;
+    }
+
+    .Booking .subInfo{
+        width: 95%;
+    }
+}
 
 
 @media (max-width: 600px){
@@ -102,15 +115,18 @@
     }
 
     .timeBlock{
-        border-radius: none;
-        border-top-left-radius: 8px;
-        border-top-right-radius: 8px;
+        border-radius: 8px;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
         padding: 20px;
+        flex-basis: 0;
+        height: 20px;
+        width: 30%;
     }
 
     .bookingInfo{
         border-radius: 8px;
-        border-top-left-radius: none;
+        border-top-left-radius: 0;
         border-top-right-radius: none;  
         
     }

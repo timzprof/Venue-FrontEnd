@@ -19,15 +19,26 @@
     display: none;
 }
 
-
+  
 
 @media (max-width: 600px){
-    .eventItem{
+    .EventItem{
         position: relative;
-        width: 200px;
+        width: 80%;
         border-radius: 8px;
         box-shadow: 0 2px 5px #00000010;
-        height: 250px !important;
+        height: 100% !important;
+        top: 0 !important;
+        margin-right: 20px;
+        /* width: 300px; */
+        padding: 20px;
+        display: inline-block;
+    }
+
+    
+
+    .bigScreenDetails{
+        display: none;
     }
 
     .smallScreenDetails{
@@ -40,13 +51,15 @@
 
     .detailGroup span{
         font-size: 17px;
-        color: #083a55;
+        display: block;
+        /* color: #083a55; */
         font-family: 'Nexa-light';
     }
 
     .lead{
         font-family: 'Nexa-bold';
         margin-bottom: 5px;
+        font-size: 15px;
     }
 
 }

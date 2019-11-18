@@ -9,13 +9,28 @@ create the edit venue - modal with picture upload buttons (half-done)
 create the add venue page with add image buttons (half-done)
 <!-- ask timi about the cloudinary workflow -->
 create the calender component - (milestone) (done -))
-create smaller ui commponents
+create smaller ui commponents (done)
 add routing - (auth boosted)
-create the booking component
-create the label component
-create the newBoookings page
-create the venue bookings components
-create the bookings shower
+create the booking component (done)
+create the label component (done)
+create the newBoookings page (done)
+create the venue bookings components 
+create the bookings shower (done)
+make all that has been created responsive (done)
+create all the pages that havent been created yet
+fix the last step of the calendar and make it look okay
+create the loader component
+create the notification component 
+create all the pop ups and make them responsive
+add authentication and make the protected routes
+create the redux scaffolding
+Implement the api representation
+The end
+
+
+
+
+
 <!-- create the function from nifemi to hold my posting and fetching of data -->
 
 

@@ -13,8 +13,14 @@
 }
 
 .Logo{
-    font-size: 20px;
-    color: #fff;
+    font-size: 13px !important;
+    color: #fff !important;
+    position: fixed;
+    z-index: 6000;
+    top: 25px;
+    left: 20px;
+    transition: all 0.3s ease-in-out;
+    font-family: 'Nexa-bold';
 }
 
 .Header svg{
@@ -31,8 +37,106 @@
 }
 
 .flex{
+    position: absolute;
     display: flex;
     align-items: center;
+    right: 20px;
+    /* float: right; */
+}
+
+.menu{
+    height: 50px;
+    width: 50px;
+    /* background-color: white; */
+    align-items: center;
+    justify-items: center;
+    position: fixed;
+    display: none;
+    z-index: 6000;
+    top: 10px;
+    left: 20px;
 }
 
 
+.bar{
+    width: 21px;
+    max-width: 0;
+    background-color: #fff;
+    height: 4px;
+    position: relative;
+    animation: close 1s ease-out 0.7s 1 forwards;
+}
+
+@keyframes close{
+    from{
+        max-width: 0;
+    }
+    to{
+        max-width: 320px;
+    }
+}
+
+
+.bar::after, .bar::before{
+    position: absolute;
+    /* position: relative; */
+    content: '';
+    height: 4px;
+    width: 32px;
+    background-color: #fff;
+    transition: all 0.5s ease-in-out;
+    transition-delay: 0.3s;
+}
+
+
+.bar::after{
+    top: 10px;
+}
+
+.bar::before{
+    top: -10px;
+}
+
+.open{
+    animation: open 0.3s ease-in-out 0s 1 forwards;
+}
+
+.logoOpen{
+    color: #083A55 !important;
+}
+
+@keyframes open{
+    from{
+        max-width: 320px;
+        background-color: #fff;
+    }
+    to{
+        max-width: 0;
+        background-color: #083A55;
+    }
+
+}
+
+.open::after{
+    transform: translateY(-10px) rotate(45deg);
+    background-color: #083A55;
+}
+
+.open::before{
+    transform: translateY(10px) rotate(-45deg);
+    background-color: #083A55;
+}
+
+
+
+
+
+@media (max-width: 768px){
+    .menu{
+        display: flex;
+    }
+    .Logo{
+        margin-left: 60px;
+        font-size: 12px !important;
+    }
+}

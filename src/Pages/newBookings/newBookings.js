@@ -36,7 +36,7 @@ const NewBookings = () => {
                     <div className={styles.BookingList}>
                         <Booking/>
                         <Booking/>
-                        <Booking/>
+                        <Booking approved/>
                     </div>
         </PageLayout>
     )

@@ -4,12 +4,12 @@ import Button from '../button/button'
 import Label from '../label/label'
 
 
-const Booking = () => {
+const Booking = ({ approved }) => {
     return (
         <div className={styles.Booking}>
            <div className={styles.timeBlock}>
                <span>12pm to 5pm</span>
-           </div>
+           </div> 
             <div className={styles.bookingInfo}>
                 <div className={styles.main}>
                     <h2>HUAWEI Certification Program</h2>
@@ -20,20 +20,27 @@ const Booking = () => {
                     <span className={styles.detail}> <span className={styles.bold}>Email</span> test@gmail.com</span>
                     <span className={styles.detail}> <span className={styles.bold}>Phone</span> +2349093831421</span>
                     <div className={styles.btnGroup}>
-                                <Button 
+                        { approved ? (<Button 
+                                    text="Reject" style={{
+                                    color: "#DF7676",
+                                    backgroundColor: "transparent",
+                                    border: "1px solid #DF7676",
+                                    padding: "12px 30px"
+                                }} />) :  
+                                [<Button 
                                     text="Approve" style={{
                                     color: "#f5f5f5",
                                     backgroundColor: "#23B83C",
                                     marginRight: "20px",
                                     padding: "12px 30px"
-                                }} />
+                                }} />,
                                 <Button 
                                     text="Reject" style={{
                                     color: "#DF7676",
                                     backgroundColor: "transparent",
                                     border: "1px solid #DF7676",
                                     padding: "12px 30px"
-                                }} />
+                                }} />]}
                     </div>
                 </div>
             </div> 

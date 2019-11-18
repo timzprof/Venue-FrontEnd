@@ -23,7 +23,7 @@
     font-family: 'Nexa-bold';
     font-size: 22px;
     color: #083a55;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
 
 .mainImage{
@@ -48,7 +48,6 @@
 
 .btnHolder{
     width: 100%;
-    text-align: center;
 }
 
 .tag{
@@ -148,3 +147,94 @@
 
 
 
+@media (max-width: 1024px){
+    .mainImage{
+        width: 58%;
+    }
+
+    .rightSection{
+        width: 40%;
+    }
+}
+
+
+@media (max-width: 628px){
+    .mainContent{
+        flex-direction: column;
+        height: 100%;
+    }
+
+    .subImage{
+        display: none;
+    }
+
+    .mainImage{
+        width: 100%;
+        margin-bottom: 30px;
+        height: 350px;
+        /* flex-basis: 70%; */
+        overflow-x: auto;
+        background-color: transparent;
+    }
+
+    .rightSection{
+        width: 90%;
+        margin-bottom: 20px;
+    }
+
+
+    .btnHolder{
+        text-align: center;
+    }
+
+    .btnHolder button{
+        width: 90%;
+    }
+
+    .mainImage > img{
+        display: none;
+    }
+
+    .smallScreenImages{
+        width: 100%;
+        position: absolute;
+        width: 100%;
+        left: 0;
+        height: 350px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        white-space: nowrap;
+        align-items: center;
+        padding: 0 20px;
+        padding-right: 0;
+    }
+
+    .smallScreenImages::-webkit-scrollbar{
+        display: none;
+    }
+
+    .smallScreenImages img{
+        /* display: inline-block; */
+        height: 330px ;
+        width: 80%;
+        border-radius: 8px;
+        background-color: #083A55;
+        margin-right: 20px;
+        flex: 0 0 auto;
+    }
+
+
+}
+
+
+@media (max-width: 450px){
+    .backLink{
+        display: none;
+    }
+
+    .subHeader > div{
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+    }
+}

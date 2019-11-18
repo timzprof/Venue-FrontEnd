@@ -38,7 +38,7 @@ const EventItem = ({ timeBlock, blocked, eventName }) => {
         style.color = "#fff"
         style.backgroundColor = "#083A55"
     }
-
+ 
     return (
         <div className={styles.EventItem} style={style}>
             <div className={styles.bigScreenDetails}>

@@ -74,7 +74,7 @@ const EventShelf = () => {
 
 
     const times = timeShedule.map((timeBlock) => {
-        let color = ''
+        let color = '' 
 
         if (timeBlock.occupied){
             color = "#d4d4d4"
@@ -91,17 +91,23 @@ const EventShelf = () => {
     })
     return (
         <div className={styles.EventShelf}>
-            <div className={styles.timeGroup}>
-                {times}
-            </div>
-            <div className={styles.eventContianer}>
-                <div className={styles.eventContainerInner}>
-                    <EventItem timeBlock={{start: 8, end: 13}} eventName="Isaac's Birthdday"/>
-                    <EventItem timeBlock={{start: 13, end: 14}} eventName="Isaac's Birthdday"/>
-                    <EventItem timeBlock={{start: 14, end: 18}} eventName="Twitter TownHall meeting"/>
-                    <EventItem timeBlock={{start: 18, end: 20}} eventName="Twitter TownHall meeting"/>
+            <p className={styles.littleHeading}>Events</p>
+            <div className={styles.innerDiv}> 
+                <div className={styles.timeGroup}>
+                    {times}
                 </div>
-            </div>
+                <div className={styles.eventContianer}>
+                    <div className={styles.eventContainerInner}>
+                        {/* lim for eventName is 40 characters */}
+                        <EventItem timeBlock={{start: 8, end: 13}} eventName="Isaac's Birthdday"/>
+                        <EventItem timeBlock={{start: 13, end: 14}} eventName="asdfasdfasdfsd fsde sdwd asdfasdfasdfsd"/>
+                        <EventItem timeBlock={{start: 14, end: 18}} eventName="Twitter TownHall meeting......................................................................................................................................"/>
+                        <EventItem timeBlock={{start: 18, end: 20}} blocked eventName="Twitter TownHall meeting"/>
+                    </div>
+                </div>
+             </div>
+             <p className={styles.warning}>Select a date on the calender to see events</p>
+            
         </div>
     )
 }

@@ -1,13 +1,15 @@
-import React from 'react'
+import React, {useState} from 'react'
 import styles from './pageLayout.module.css'
 import Header from '../UI/header/header'
 import Sidebar from '../navigation/sideBar/sideBar'
 
 const PageLayout = ({children}) => {
+    const [menuOpen, setMenuOpen] = useState(false)
+
     return (
         <div className={styles.PageLayout}>
-            <Header/>
-            <Sidebar/>
+            <Header open={menuOpen} setOpen={setMenuOpen} />
+            <Sidebar open={menuOpen} setOpen={setMenuOpen}/>
             <div className={styles.Main}>
                 {children}
             </div>

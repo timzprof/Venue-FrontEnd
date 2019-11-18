@@ -32,3 +32,14 @@
     /* margin-left: 20px; */
     display: block;
 }
+
+
+
+@media (max-width: 1100px){
+    .mainContent{
+        flex-direction: column-reverse;
+        align-items: center;
+    }   
+
+    
+}

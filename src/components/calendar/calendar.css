@@ -168,3 +168,12 @@ button:disabled:hover{
     background-color: #f5f5f5 !important;
     color: #d4d4d4 !important;
 }
+
+
+@media (max-width: 1100px){
+    .Calendar{
+        width: 100%;
+        max-width: 100%;
+        /* max-width: 450px; */
+    }
+}

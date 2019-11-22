@@ -35,6 +35,8 @@
 }
 
 
+
+
 .react-calendar__navigation__prev2-button{
     display: none;
 }
@@ -139,6 +141,30 @@
     font-family: "Nexa-bold";
 }
 
+.react-calendar__century-view__decades__decade{
+    flex-basis: calc(100%/3) !important;
+    border: none;
+    background-color: #fff;
+    color: #083a55;
+    height: calc(350px / 7) !important;
+    font-size: 17px;
+    margin: 10px 0;
+    /* border-radius: 50%; */
+    transition: all 0.3s ease-out;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    outline: none;
+    font-family: "Nexa-bold";
+}
+
+.react-calendar__century-view__decades__decade:hover{
+    color: #fff;
+    background-color: #083a55;
+}
+
+
+
 .react-calendar__decade-view__years__year:hover{
     color: #fff;
     background-color: #083a55;
@@ -158,13 +184,25 @@ abbr[title="Saturday"]{
     color: #083a55;
 }
 
-button:disabled{
+button:disabled.react-calendar__navigation__label{
+    color: #fff !important;
+    background-color: transparent !important;
+    border: none !important;
+}
+
+button:disabled.react-calendar__navigation__label:hover{
+    color: #fff !important;
+    background-color: transparent !important;
+    border: none !important;
+}
+
+.Calendar button:disabled{
     background-color: #f5f5f5 !important;
     color: #d4d4d4 !important;
     border: 1px solid #d4d4d4 !important;
 }
 
-button:disabled:hover{
+.Calendar button:disabled:hover{
     background-color: #f5f5f5 !important;
     color: #d4d4d4 !important;
 }

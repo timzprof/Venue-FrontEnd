@@ -1,17 +1,23 @@
-import React from 'react'
+import React, { useState, useRef, useContext } from 'react'
 import styles from './home.module.css'
 import PageLayout from '../../components/pageLayout/pageLayout'
 import Button from '../../components/UI/button/button'
 import { ReactComponent as AddImage } from '../../assets/images/Union 17.svg'
 import Card from '../../components/UI/card/card'
+import Modal from '../../components/UI/modal/modal'
+import { ReactComponent as Close } from '../../assets/images/close.svg'
+import { AuthContext } from '../../contexts/AuthContext'
+
 
 
 const Home = () => {
+    const [modalOpen, setModalOpen] = useState()
+    const [authState] = useContext(AuthContext)
 
     const CardArr = [
         {   
             id: 1,
-            name: "Conference Hall",
+            name: "Conference Hall", 
             location: "CITS",
             noSeats: "200",
             computerAvailabilty: true,
@@ -73,22 +79,85 @@ const Home = () => {
     ]
 
     const cardList = CardArr.map((venueObj) => <Card venueObj={venueObj}/>)
+    const reset = () => {
+        setModalOpen(false)
+    }
+
+    const fileInputRef = useRef()
+
+    const getFiles = (e) => {
+        e.preventDefault();
+        fileInputRef.current.click()
+    }
+
 
     return (
+        <React.Fragment>
+            <Modal open={modalOpen} setOpen={setModalOpen}>
+            <div className={styles.modalItemEdit}>
+                <Close className="close" onClick={reset} />
+                <h2 className={styles.formHeader}>
+                    Create Venue
+                </h2>
+                <form action="">
+                    <div className={styles.formGroup}>
+                        <label htmlFor="">Name</label>
+                        <input type="text"/>
+                    </div>
+                    <div className={styles.formGroup}>
+                        <label htmlFor="">Location</label>
+                        <input type="text"/>
+                    </div>
+                    <div className={styles.formGroup}>
+                        <label htmlFor="">Capacity</label>
+                        <input type="number" min="50"/>
+                    </div>
+                    <div className={styles.formGroupCheck}>
+                        <input type="checkbox" id="checky1"/>
+                        <label htmlFor="checky1"><div className={styles.fakeCheckBox}></div><span>Internet</span></label>
+                    </div>
+                    <div className={styles.formGroupCheck}>
+                        <input type="checkbox" id="checky2"/>
+                        <label htmlFor="checky2"><div className={styles.fakeCheckBox}></div><span>Computers</span></label>
+                    </div>
+                    <Button onClick={(e) => getFiles(e)} text="Add images" style={{
+                            backgroundColor: "#083a55",
+                            color: "#fff",
+                            padding: "12px 45px",
+                            margin: "20px 0 20px 0",
+                            display: "inline-block",
+                            float: "center"
+                        }
+                        }/>
+                    <input className={styles.fileInput} ref={fileInputRef} multiple min="1" max='3' placeholder='Add images' type="file"/>
+                    <div className={styles.btnHolderModal}>
+                        <Button type="submit" text="Done" style={{
+                            backgroundColor: "#23B83C",
+                            color: "#fff",
+                            padding: "12px 45px",
+                            margin: "0 auto",
+                            display: "inline-block",
+                            float: "center"
+                        }
+                        }/>
+                    </div>
+                </form>
+            </div>
+        </Modal>
         <PageLayout>
             <div className={styles.Home}>
                 <div className={styles.subHeader}>
-                    <Button text="Add New Venue" image={AddImage} style={{
+                    {authState ? <Button onClick={() => setModalOpen(true)} text="Add New Venue" image={AddImage} style={{
                         color: "#f5f5f5",
                         backgroundColor: "#23B83C",
-                    }} />
+                    }} /> : null}
                 </div>
                 <div className={styles.cardList}>
                     {cardList}
                 </div>
             </div>
         </PageLayout>
-        
+        </React.Fragment> 
     )
 }
 

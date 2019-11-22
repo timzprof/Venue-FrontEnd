@@ -31,3 +31,139 @@
     margin-top: 20px;
     min-height: 70vh;
 }
+
+.modalItemDelete{
+    height: auto;
+    width: 40%;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    box-shadow: 0 3px 6px #00000016;
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.modalItemDelete h2{
+    font-family: "Nexa-bold";
+    font-size: 22px;
+    color: #083a55;
+}
+
+.options{
+    width: 100%;
+    margin: 20px 0;
+}
+
+.flexContainer{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.warning{
+    color: #DF7676;
+    margin: 17px 0;
+}
+
+.specialLine{
+    width: 100%;
+    text-align: center;
+    position: relative;
+    margin: 50px 0;
+}
+
+.specialLine hr{
+    height: 2px;
+    background-color: #083a55;
+    width: 100%;
+}
+
+.specialLine span{
+    display: inline-block;
+    padding: 20px;
+    background-color: #f5f5f5;
+    color: #083a55;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.formGroupCheck{
+    width: 100%;
+    margin: 5px 0;
+}
+.formGroupCheck span{
+    color: #083A55;
+}
+
+.formGroupCheck label{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 150px;
+    margin: 0 auto;
+}
+.formGroupCheck input{
+    visibility: hidden;
+}
+
+.formGroupCheck > input:checked + label > .fakeCheckBox::after{
+    opacity: 1;
+    max-width: 20px;
+    max-height: 20px;
+}
+
+.fakeCheckBox{
+    display: inline-block;
+    height: 25px;
+    width: 25px;
+    background-color: #fff;
+    box-shadow: 0 3px 6px #00000010;
+    margin-right: 10px;
+    position: relative;
+}
+
+.fakeCheckBox::after{
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+    height: 20px;
+    width: 10px;
+    border: 2px solid #083A55;
+    border-top: none;
+    border-left: none;
+    opacity: 0;
+    transition: all 0.5s ease;
+    max-width: 0;
+    max-height: 0;
+}
+
+
+@media (max-width: 1024px){
+    .modalItemDelete{
+        width: 55%;
+    }
+
+}
+
+@media (max-width: 768px){
+    .modalItemDelete{
+        width: 80%;
+    }
+}
+
+
+@media (max-width: 450px){
+    .modalItemDelete{
+        width: 95%;
+    }
+}
+
+
+

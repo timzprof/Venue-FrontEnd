@@ -43,6 +43,7 @@
     border-radius: 5px;
     /* transition: all 0.3s ease-out; */
 }
+
 .formGroup input:focus{
     border: 2px solid #083A55;
 }
@@ -63,13 +64,13 @@
 
 @media (max-width: 768px){
     .loginBox{
-        width: 80%;
+        width: 90%;
     }
 }
 
 @media (max-width: 500px){
     .loginBox{
-        width: 80%;
+        width: 90%;
         padding: 40px;
     }
 }

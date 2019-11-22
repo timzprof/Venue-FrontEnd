@@ -119,7 +119,7 @@
 
 
 .formGroup{
-    width: 70%;
+    width: 60%;
     padding: 10px 0;
 }
 
@@ -145,6 +145,64 @@
     display: block;
 }
 
+.fileInput{
+   visibility: hidden; 
+}
+
+.formGroupCheck{
+    width: 100%;
+    margin: 5px 0;
+}
+.formGroupCheck span{
+    color: #083A55;
+}
+
+.formGroupCheck label{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 150px;
+}
+.formGroupCheck input{
+    visibility: hidden;
+}
+
+.formGroupCheck > input:checked + label > .fakeCheckBox::after{
+    opacity: 1;
+    max-width: 20px;
+    max-height: 20px;
+}
+
+.fakeCheckBox{
+    display: inline-block;
+    height: 25px;
+    width: 25px;
+    background-color: #fff;
+    box-shadow: 0 3px 6px #00000010;
+    margin-right: 10px;
+    position: relative;
+}
+
+.fakeCheckBox::after{
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+    height: 20px;
+    width: 10px;
+    border: 2px solid #083A55;
+    border-top: none;
+    border-left: none;
+    opacity: 0;
+    transition: all 0.5s ease;
+    max-width: 0;
+    max-height: 0;
+}
+
+.btnHolderModal{
+    text-align: center;
+}
 
 
 @media (max-width: 1024px){
@@ -154,6 +212,16 @@
 
     .rightSection{
         width: 40%;
+    }
+    .modalItemEdit, .modalItemDelete{
+        width: 55%;
+    }
+
+}
+
+@media (max-width: 768px){
+    .modalItemEdit, .modalItemDelete{
+        width: 80%;
     }
 }
 
@@ -236,5 +304,9 @@
         width: 100%;
         display: flex;
         justify-content: space-between;
+    }
+
+    .modalItemEdit, .modalItemDelete{
+        width: 95%;
     }
 }

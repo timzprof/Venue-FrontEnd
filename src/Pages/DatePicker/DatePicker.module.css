@@ -43,3 +43,157 @@
 
     
 }
+
+
+.bookVenue{
+    width: 80%;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    box-shadow: 0 3px 6px #00000016;
+    padding: 30px;
+}
+
+.bookVenueContainer{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.formHeader{
+    font-family: "Nexa-bold";
+    font-size: 20px;
+    margin-bottom: 30px;
+    color: #083A55;
+}
+
+
+.formGroup{
+    width: 90%;
+    padding: 10px 0;
+}
+
+.formGroup input{
+    border: 2px solid #083A5510;
+    width: 100%;
+    padding: 15px;
+    color: #083A55;
+    outline: none;
+    margin: 5px 0;
+    font-size: 17px;
+    border-radius: 5px;
+    /* transition: all 0.3s ease-out; */
+}
+.formGroup textarea{
+    border: 2px solid #083A5510;
+    width: 100%;
+    padding: 15px;
+    color: #083A55;
+    outline: none;
+    margin: 5px 0;
+    font-size: 17px;
+    border-radius: 5px;
+    height: 100px;
+    /* transition: all 0.3s ease-out; */
+}
+
+.formGroup textarea:focus{
+    border: 2px solid #083A55;
+}
+
+.formGroup input:focus{
+    border: 2px solid #083A55;
+}
+
+.formGroup label{
+    font-family: "Nexa-light";
+    font-size: 14px;
+    color: #083A55;
+    display: block;
+}
+
+
+.btnHolderModal{
+    text-align: center;
+}
+
+
+
+/* additions */
+.flexContainer{
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 10px 0;
+}
+
+.timeHolder{
+    background-color: #fff;
+    border-radius: 8px;
+    height: 200px;
+    width: 100%;
+    padding: 15px;
+    margin-top: 20px;
+}
+
+.timeLabel{
+    display: inline-block;
+    width: auto;
+    padding: 10px 10px;
+    background-color: #D0EBF9;
+    margin: 10px;
+}
+
+.timeLabel span{
+    color: #083A55;
+    font-size: 13px;
+}
+
+.otherdetails{
+    width: 50%;
+}
+
+.bookingDetails{
+    width: 50%;
+}
+
+.btnHolder{
+    width: 100%;
+    margin-top: 20px;
+    text-align: center;
+}
+
+@media (max-width: 1024px){
+    .bookVenue{
+        width: 80%;
+    }
+
+}
+
+@media (max-width: 768px){
+    .bookVenue{
+        width: 80%;
+        max-height: 80vh;
+        overflow-y: scroll;
+    }
+
+    .bookVenueContainer{
+        flex-direction: column;
+    }
+
+    .otherdetails, .bookingDetails{
+        width: 100% !important;
+        margin-top: 20px;
+    }
+
+    .formGroup{
+        width: 100%;
+    }
+}
+
+@media (max-width: 450px){
+    .bookVenue{
+        width: 95%;
+    }
+}

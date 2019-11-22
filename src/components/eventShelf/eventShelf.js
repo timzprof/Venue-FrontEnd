@@ -1,6 +1,7 @@
 import React from 'react'
 import styles from './eventShelf.module.css'
 import EventItem from '../UI/eventItem/eventItem'
+import Loader from '../UI/loader/loader'
 
 const EventShelf = () => {
 
@@ -98,11 +99,12 @@ const EventShelf = () => {
                 </div>
                 <div className={styles.eventContianer}>
                     <div className={styles.eventContainerInner}>
-                        {/* lim for eventName is 40 characters */}
+                        <Loader color='#083a55'/>
+                        {/* lim for eventName is 40 characters
                         <EventItem timeBlock={{start: 8, end: 13}} eventName="Isaac's Birthdday"/>
                         <EventItem timeBlock={{start: 13, end: 14}} eventName="asdfasdfasdfsd fsde sdwd asdfasdfasdfsd"/>
                         <EventItem timeBlock={{start: 14, end: 18}} eventName="Twitter TownHall meeting......................................................................................................................................"/>
-                        <EventItem timeBlock={{start: 18, end: 20}} blocked eventName="Twitter TownHall meeting"/>
+                        <EventItem timeBlock={{start: 18, end: 20}} blocked eventName="Twitter TownHall meeting"/> */}
                     </div>
                 </div>
              </div>

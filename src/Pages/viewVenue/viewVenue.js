@@ -1,4 +1,4 @@
-import React, {Fragment,useState} from 'react'
+import React, {Fragment,useState, useRef, useContext} from 'react'
 import styles from './viewVenue.module.css'
 import PageLayout from '../../components/pageLayout/pageLayout'
 import { NavLink } from 'react-router-dom'
@@ -8,11 +8,19 @@ import {ReactComponent as UnavailableImage} from '../../assets/images/Group 18.s
 import { withRouter } from 'react-router-dom'
 import Modal from '../../components/UI/modal/modal'
 import { ReactComponent as Close } from '../../assets/images/close.svg'
+import { AuthContext } from '../../contexts/AuthContext'
 
 const ViewVenue = ({history}) => {
     
     const [modal, setModal] = useState(null)
     const [modalMode, setModalMode] = useState(null)
+    const [authState] = useContext(AuthContext)
+    const fileInputRef = useRef()
+
+    const getFiles = (e) => {
+        e.preventDefault();
+        fileInputRef.current.click()
+    }
 
     const targetVenue = {}
     
@@ -69,15 +77,35 @@ const ViewVenue = ({history}) => {
                         <label htmlFor="">Capacity</label>
                         <input type="number" min="50"/>
                     </div>
-                    <Button type="file" text="" style={{
-                        backgroundColor: "#23B83C",
-                        color: "#fff",
-                        padding: "12px 45px",
-                        marginTop: "15px",
-                        display: "inline-block",
-                        float: "center"
-                    }
-                    }/>
+                    <div className={styles.formGroupCheck}>
+                        <input type="checkbox" id="checky1"/>
+                        <label htmlFor="checky1"><div className={styles.fakeCheckBox}></div><span>Internet</span></label>
+                    </div>
+                    <div className={styles.formGroupCheck}>
+                        <input type="checkbox" id="checky2"/>
+                        <label htmlFor="checky2"><div className={styles.fakeCheckBox}></div><span>Computers</span></label>
+                    </div>
+                    <Button onClick={(e) => getFiles(e)} text="Add images" style={{
+                            backgroundColor: "#083a55",
+                            color: "#fff",
+                            padding: "12px 45px",
+                            margin: "20px 0 20px 0",
+                            display: "inline-block",
+                            float: "center"
+                        }
+                        }/>
+                    <input className={styles.fileInput} ref={fileInputRef} multiple min="1" max='3' placeholder='Add images' type="file"/>
+                    <div className={styles.btnHolderModal}>
+                        <Button type="submit" text="Done" style={{
+                            backgroundColor: "#23B83C",
+                            color: "#fff",
+                            padding: "12px 45px",
+                            margin: "0 auto",
+                            display: "inline-block",
+                            float: "center"
+                        }
+                        }/>
+                    </div>
                 </form>
             </div>
         )
@@ -93,7 +121,7 @@ const ViewVenue = ({history}) => {
             <div className={styles.ViewVenue}>
                     <div className={styles.subHeader}>
                         <NavLink to="/" className={styles.backLink}>Back</NavLink>
-                            <div className={styles.btnGroup}>
+                            {authState ? <div className={styles.btnGroup}>
                                 <Button 
                                     onClick={() => {
                                         setModal(true)
@@ -114,7 +142,7 @@ const ViewVenue = ({history}) => {
                                     border: "1px solid #DF7676",
                                     padding: "12px 30px"
                                 }} />
-                            </div>
+                            </div> : null}
                     </div>    
                     <h2 className={styles.venueHeader}>
                         {/* {targetVenue.name} */}
@@ -141,7 +169,7 @@ const ViewVenue = ({history}) => {
                         </div>
                     </div>
                     <div className={styles.btnHolder}>
-                        <Button text="Manage Bookings" style={{
+                        <Button text={authState ? "Manage Bookings" : "Book"} style={{
                             color: "#fff",
                             backgroundColor: "#083a55",
                             margin: "0 auto",

@@ -1,0 +1,15 @@
+export const venueActionStart = "START_VENUE_ACTION"
+export const venueActionFail = "FAIL_VENUE_ACTION"
+export const getVenuesSuccess = "GET_VENUES"
+export const getVenueSuccess = "GET_A_VENUE"
+export const deleteVenueSuccess = "DELETE_A_VENUE"
+export const createVenueSuccess = "CREATE_A_VENUE"
+export const editVenueSuccess = "EDIT_A_VENUE"
+
+
+export const bookingActionStart = "START_BOOKING_ACTION"
+export const bookingActionFail = "FAIL_BOOKING_ACTION"
+export const getBookingsSuccess = "GET_BOOKINGS"
+export const createBookingSuccess = "CREATE_A_BOOKING"
+export const approveBookingSuccess = "APPROVE_A_BOOKING"
+export const rejectBookingSuccess = "REJECT_A_BOOKING" 

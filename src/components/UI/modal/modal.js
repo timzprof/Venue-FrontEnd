@@ -39,7 +39,7 @@ const Modal = ({ open, setOpen, children}) => {
             setOpen(null)
         }, 300)
         return(() => {
-            clearTimeout(timey)
+            clearTimeout(timey) 
         })
     }, [(open == false)])
 

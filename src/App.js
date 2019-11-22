@@ -6,6 +6,7 @@ import ViewVenue from './Pages/viewVenue/viewVenue';
 import DatePicker from './Pages/DatePicker/DatePicker';
 import NewBookings from './Pages/newBookings/newBookings';
 import ViewBookings from './Pages/viewBookings/viewBookings';
+import ProtectedRoutes from './components/protectedRoutes/protectedRoutes';
 
 
 class App extends Component {
@@ -16,8 +17,8 @@ class App extends Component {
           <Route path="/login" component={Login} />
           <Route path="/venue/:id" component={ViewVenue} />
           <Route path="/date-picker" component={DatePicker} />
-          <Route path="/new-bookings" component={NewBookings} />
-          <Route path="/bookings" component={ViewBookings} />
+          <ProtectedRoutes path="/new-bookings" component={NewBookings} />
+          <ProtectedRoutes path="/bookings" component={ViewBookings} />
         </Switch>
     );
   }

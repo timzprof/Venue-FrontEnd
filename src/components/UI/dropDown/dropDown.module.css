@@ -1,0 +1,86 @@
+.dropDownContainer{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 10px  10px 0 0;
+
+}
+
+.dropDownContainer > span{
+    font-family: 'Nexa-light';
+    font-size: 15px;
+    color: #083a55;
+    margin-right: 20px;
+} 
+
+.dropDown{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100px;
+    height: 50px;
+    padding: 10px 20px;
+    box-shadow: 0 2px 3px #00000010;
+    border-radius: 8px;
+    position: relative;
+    background-color: #ffffff;
+}
+
+.dropDown span{
+    color: #083a55;
+    font-size: 15px;
+}
+
+.dropDown svg{
+    height: 10px;
+    width: 10px;
+    color: #083a55;
+}
+
+.optionsHolder{
+    opacity: 0;
+    visibility: hidden;
+    width: 100px;
+    height: 270px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: all 0.5s ease;
+    z-index: 1000;
+    box-shadow: 0 3px 6px #00000010;
+}
+
+.optionsHolder::-webkit-scrollbar-track{
+    background-color: pink;
+}
+
+.optionsHolder::-webkit-scrollbar-thumb{
+    border-radius: 32px;
+    width: 10px;
+}
+
+.dropDown:hover .optionsHolder{
+    visibility: visible;
+    opacity: 1;
+}
+
+.option{
+    width: 100%;
+    text-align: center;
+    padding: 15px 20px;
+    background-color: #ffffff;
+    transition: all 0.5s ease;
+}
+
+.option:hover{
+    background-color: #eee;
+}
+
+
+
+
+
+
+

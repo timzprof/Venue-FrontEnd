@@ -5,7 +5,7 @@ const initialStore = {
     error: {
         status: false,
         type: '',
-        message
+        message: ''
     },
     bookings: [
         // all bookings for all venues  they have a venue id, and a time array

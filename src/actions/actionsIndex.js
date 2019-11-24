@@ -5,6 +5,7 @@ export const getVenueSuccess = "GET_A_VENUE"
 export const deleteVenueSuccess = "DELETE_A_VENUE"
 export const createVenueSuccess = "CREATE_A_VENUE"
 export const editVenueSuccess = "EDIT_A_VENUE"
+export const setTargetVenueSuccess = "SET_TARGET_VENUE"
 
 
 export const bookingActionStart = "START_BOOKING_ACTION"

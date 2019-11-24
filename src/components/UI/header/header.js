@@ -1,12 +1,13 @@
-import React, {useState} from 'react'
+import React, {useState, useContext} from 'react'
 import styles from './header.module.css'
 import { NavLink } from 'react-router-dom'
 import { ReactComponent as LogoutImage } from '../../../assets/images/logout.svg'
+import { AuthContext } from '../../../contexts/AuthContext'
 
 
 const Header = ({open, setOpen, plain}) => {
-    // const [menuOpen, setMenuOpen] = useState()
 
+    const [authState] = useContext(AuthContext)
     let barClasses = [styles.bar]
     let LogoClasses = [styles.Logo]
 
@@ -37,8 +38,8 @@ const Header = ({open, setOpen, plain}) => {
         </NavLink>
 
         <div className={styles.Header}>
-            <NavLink className={styles.flex} to="/login">Login</NavLink>
-            {/* <NavLink to="/Logout"> <span className={styles.flex}> <LogoutImage/> Logout </span> </NavLink> */}
+            { authState ? <NavLink to="/Logout"> <span className={styles.flexLogout}> <LogoutImage/> Logout </span> </NavLink>
+            : <NavLink className={styles.flex} to="/login">Login</NavLink>  } 
         </div>
         </React.Fragment>
     )

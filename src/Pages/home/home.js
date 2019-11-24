@@ -1,4 +1,4 @@
-import React, { useState, useRef, useContext } from 'react'
+import React, { useState, useRef, useContext, useEffect, useCallback } from 'react'
 import styles from './home.module.css'
 import PageLayout from '../../components/pageLayout/pageLayout'
 import Button from '../../components/UI/button/button'
@@ -7,89 +7,160 @@ import Card from '../../components/UI/card/card'
 import Modal from '../../components/UI/modal/modal'
 import { ReactComponent as Close } from '../../assets/images/close.svg'
 import { AuthContext } from '../../contexts/AuthContext'
+import { useSelector, useDispatch } from 'react-redux'
+import * as venueActions from '../../actions/venueActions'
+import Loader from '../../components/UI/loader/loader'
+import { NotificationContext } from '../../contexts/notificationContext'
+import Input from '../../components/input/input'
+import { formValidator } from '../../helpers/formValidationHelper'
+import { inputValidator } from '../../helpers/formValidationHelper'
 
 
 
 const Home = () => {
+    const [notification, setNotification] = useContext(NotificationContext)
     const [modalOpen, setModalOpen] = useState()
     const [authState] = useContext(AuthContext)
+    
+   
+    const [formValid, setFormValid]  = useState(null)
 
-    const CardArr = [
-        {   
-            id: 1,
-            name: "Conference Hall", 
-            location: "CITS",
-            noSeats: "200",
-            computerAvailabilty: true,
-            internetAvailabilty: false,
-            img: "https://images.unsplash.com/photo-1480455454781-1af590be2a58?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80"
-            
+    const [formDetails, setFormDetails] = useState({
+        title: { 
+            value: '',
+            rules:{
+                required: true
+            },
+            errorMessages: [],
+            valid:true
         },
-        {
-            id: 2,
-            name: "Julius Berger Hall",
-            location: "Engineering",
-            noSeats: "500",
-            computerAvailabilty: false,
-            internetAvailabilty: false,
-            img: "https://images.unsplash.com/photo-1529636695044-9e93499f4de3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80"
-            
-        },
-        {
-            id: 3,
-            name: "Multi Purpose Hall",
-            location: "Unilag",
-            noSeats: "700",
-            computerAvailabilty: false,
-            internetAvailabilty: false,
-            img: "https://images.unsplash.com/photo-1494436567119-7f392017bb34?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80"
-            
-        },
-        {
-            id: 4,
-            name: "Conference Hall",
-            location: "CITS",
-            noSeats: "200",
-            computerAvailabilty: true,
-            internetAvailabilty: false,
-            img: "https://images.unsplash.com/photo-1464672737497-fb5327f77347?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80"
-            
-        },
-        {
-            id: 5,
-            name: "Julius Berger Hall",
-            location: "Engineering",
-            noSeats: "500",
-            computerAvailabilty: false,
-            internetAvailabilty: false,
-            img: "https://images.unsplash.com/photo-1464672737497-fb5327f77347?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80"
-            
-        },
-        {
-            id: 6,
-            name: "Multi Purpose Hall",
-            location: "Unilag",
-            noSeats: "700",
-            computerAvailabilty: false,
-            internetAvailabilty: false,
-            img: "https://images.unsplash.com/photo-1464672737497-fb5327f77347?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80"
-            
-        },
+        
+        address: {value: '', rules:{
+            required: true
+        }, errorMessages: [], valid:true},
+        
+        capacity: {value: 0, rules:{
+            required: true
+        }, errorMessages: [], valid:true},
+        
+        resources: [{name: "computers", value: false}, {name: "internet", value: false}],
+        
+        images: {value: [], rules:{
+            max: 3, min: 1, allowedTypes:['image/jpeg', 'image/png', 'image/svg'], maxSize: 5    
+        }, errorMessages: [], valid:true},
+        // featureImage: '',
+        // image1: '',
+        // image2: ''
+    })    
+    
+    const submitFunc = (e) => {
+        e.preventDefault();
+        setFormValid(formValidator(formDetails, setFormDetails, setFormValid))
+        if(formValid){
+            const formBody = {
+                title: formDetails.title.value,
+                address: formDetails.address.value,
+                capacity: formDetails.address.capacity,
+                featurImage: formDetails.images.value[0],
+                image1: formDetails.images.value[1],
+                image2: formDetails.images.value[2]
+            }
+            dispatch(venueActions.createVenue(formBody))
+            reset()
+        } 
+    }
 
-    ]
+    const formUpdater = (e) => {
+        let inputObject = {}
+        if (e.target.type === "checkbox"){
+            console.log("Checkbox", formDetails)
+            inputObject = {
+                ...formDetails,
+                resources: formDetails.resources.map(resource => {
+                    console.log(resource.name)
+                    console.log(e.target.name)
+                    if(resource.name === e.target.name){
+                        console.log({
+                            ...resource,
+                            value: e.target.checked
+                        })
+                        return ({
+                            ...resource,
+                            value: e.target.checked
+                        })
+                    }
 
-    const cardList = CardArr.map((venueObj) => <Card venueObj={venueObj}/>)
+                    return resource
+                })
+            }
+            setFormDetails(inputObject)
+        }else if (e.target.type === "file"){
+            inputObject = {
+                ...formDetails,
+                [e.target.name]: {
+                    ...formDetails[e.target.name],
+                    value: [...e.target.files]
+                }
+            }
+            setFormDetails(inputObject)
+        }else{
+            inputObject = {
+                ...formDetails,
+                [e.target.name]: {
+                    ...formDetails[e.target.name],
+                    value: e.target.value
+                }
+            }
+            setFormDetails(inputObject)
+        }
+        if(e.target.type !== 'checkbox'){
+            let rules = formDetails[e.target.name].rules
+            let type = e.target.type
+            inputValidator(e, rules, inputObject, setFormDetails, type)
+        }
+    }
+
+
+    const venueState = useSelector(state => state.venues)
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(venueActions.getVenues())
+    }, [])
+
+    useEffect(() => {
+        setNotification({
+                    open: venueState.error.status,
+                    success: venueState.error.status ? false : null ,
+                    text: venueState.error.errorMessage
+                })
+    }, [venueState.error.status])
+      
+    const cardList = venueState.venues.map((venueObj) => <Card venueObj={venueObj}/>)
     const reset = () => {
         setModalOpen(false)
+        setFormDetails({
+            title: {value: '', rules:{
+                required: true
+            }, errorMessages: [], valid:true},
+            
+            address: {value: '', rules:{
+                required: true
+            }, errorMessages: [], valid:true},
+            
+            capacity: {value: 0, rules:{
+                required: true
+            }, errorMessages: [], valid:true},
+            
+            resources: [{name: "Computers", value: false}, {name: "Internet", value: false}],
+            
+            images: {value: [], rules:{
+                max: 3, min: 1, allowedTypes:['images/jpeg', 'images/png', 'images/svg'], maxSize: 5    
+            }, errorMessages: [], valid:true}  
+        })
     }
 
-    const fileInputRef = useRef()
-
-    const getFiles = (e) => {
-        e.preventDefault();
-        fileInputRef.current.click()
-    }
-
+    
 
     return (
         <React.Fragment>
@@ -99,39 +170,48 @@ const Home = () => {
                 <h2 className={styles.formHeader}>
                     Create Venue
                 </h2>
-                <form action="">
-                    <div className={styles.formGroup}>
-                        <label htmlFor="">Name</label>
-                        <input type="text"/>
-                    </div>
-                    <div className={styles.formGroup}>
-                        <label htmlFor="">Location</label>
-                        <input type="text"/>
-                    </div>
-                    <div className={styles.formGroup}>
-                        <label htmlFor="">Capacity</label>
-                        <input type="number" min="50"/>
-                    </div>
-                    <div className={styles.formGroupCheck}>
-                        <input type="checkbox" id="checky1"/>
-                        <label htmlFor="checky1"><div className={styles.fakeCheckBox}></div><span>Internet</span></label>
-                    </div>
-                    <div className={styles.formGroupCheck}>
-                        <input type="checkbox" id="checky2"/>
-                        <label htmlFor="checky2"><div className={styles.fakeCheckBox}></div><span>Computers</span></label>
-                    </div>
-                    <Button onClick={(e) => getFiles(e)} text="Add images" style={{
-                            backgroundColor: "#083a55",
-                            color: "#fff",
-                            padding: "12px 45px",
-                            margin: "20px 0 20px 0",
-                            display: "inline-block",
-                            float: "center"
-                        }
-                        }/>
-                    <input className={styles.fileInput} ref={fileInputRef} multiple min="1" max='3' placeholder='Add images' type="file"/>
+                <form >
+
+                    <Input type="input" changeFunc={formUpdater} value={formDetails.title.value} inputObj={{
+                        name: 'title',
+                        type: 'text',
+                        label: 'Name'
+                    }} errorMessages={formDetails.title.errorMessages} />
+
+                    <Input type="input"  changeFunc={formUpdater} value={formDetails.address.value} inputObj={{
+                        name: 'address',
+                        type: 'text',
+                        label: 'Location'
+                    }} errorMessages={formDetails.address.errorMessages} />
+                    <Input type="input"  changeFunc={formUpdater} value={formDetails.capacity.value} inputObj={{
+                        name: 'capacity',
+                        type: 'number',
+                        label: 'Capacity'
+                    }} errorMessages={formDetails.capacity.errorMessages} />
+
+                    <Input type="checkbox"  changeFunc={formUpdater}  checked={formDetails.resources[0].value} inputObj={{
+                        type: 'checkbox',
+                        id: 'checky1',
+                        name: 'computers',
+                        label: 'Computers'
+                    }} />
+                    <Input type="checkbox"  changeFunc={formUpdater}  checked={formDetails.resources[1].value} inputObj={{
+                        type: 'checkbox',
+                        id: 'checky2',
+                        name: 'internet',
+                        label: 'Internet'
+                    }} />
+
+                    <Input type="file" changeFunc={formUpdater} inputObj={{
+                        type: 'file',
+                        name: 'images',
+                        label: 'Add Image',
+                        multiple: true,
+                        accept: 'image/*' 
+                    }} errorMessages={formDetails.images.errorMessages}  />    
+
                     <div className={styles.btnHolderModal}>
-                        <Button type="submit" text="Done" style={{
+                        <Button onClick={(e) => submitFunc(e)} type="submit" text="Done" style={{
                             backgroundColor: "#23B83C",
                             color: "#fff",
                             padding: "12px 45px",
@@ -153,7 +233,7 @@ const Home = () => {
                     }} /> : null}
                 </div>
                 <div className={styles.cardList}>
-                    {cardList}
+                    {venueState.loading ? <Loader color="#083A55"/>  : (cardList.length > 0) ? cardList : <h1>There are no venues avaliable</h1> }
                 </div>
             </div>
         </PageLayout>

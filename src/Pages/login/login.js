@@ -6,6 +6,7 @@ import { NotificationContext } from '../../contexts/notificationContext'
 import Notification from '../../components/UI/notification/notification'
 import FetchHelper from '../../helpers/fetchHelper'
 import {AuthContext} from '../../contexts/AuthContext'
+import { Redirect } from 'react-router-dom'
 
 const Login = () => {
 
@@ -14,29 +15,46 @@ const Login = () => {
 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const [actionBtnLoading, setActionBtnLoading] = useState()
+    const [redirect, setRedirect] = useState()
 
     const submitForm = (e) => {
         e.preventDefault();
-        const formBody = new FormData()
-        formBody.append("email", email)
-        formBody.append("password", password)
-
+        setActionBtnLoading(true)
+        const formBody = {
+            email: email,
+            password: password
+        }
         FetchHelper('/api/v1/auth/login', 'POST', formBody)
         .then((res) => res.json())
         .then((data) => {
-            setToken(data.token)
+            console.log("returning login body", data)
+            if (data.status === "success"){
+                setToken(data.token)
+                setActionBtnLoading(false)
+                setRedirect(true)
+            }else{
+                setActionBtnLoading(false)
+                setNotification({
+                    open: true,
+                    success: false,
+                    text: "Invalid Login Credentials"
+                })
+            } 
         })
-
-        if (email != 'test' || password != 'test'){
+        .catch(error => {
+            setActionBtnLoading(false)
             setNotification({
                 open: true,
                 success: false,
-                text: "Invalid Login Credentials"
+                text: "There was an error loggin in"
             })
-        }
+        })
     }
 
-
+    if(redirect){
+        return (<Redirect to="/"/>)
+    }
 
     return (
         <div className={styles.Login}>
@@ -55,7 +73,7 @@ const Login = () => {
                         <label htmlFor="">Password</label>
                         <input value={password} onChange={(e) => setPassword(e.target.value)} type="password"/>
                     </div>
-                    <Button type="submit" action={submitForm} text="Log in" style={{
+                    <Button type="submit" loading={actionBtnLoading} action={submitForm} text="Log in" style={{
                         backgroundColor: "#083a55",
                         color: "#fff",
                         padding: "12px 45px",

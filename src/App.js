@@ -7,6 +7,7 @@ import DatePicker from './Pages/DatePicker/DatePicker';
 import NewBookings from './Pages/newBookings/newBookings';
 import ViewBookings from './Pages/viewBookings/viewBookings';
 import ProtectedRoutes from './components/protectedRoutes/protectedRoutes';
+import Logout from './components/logout/logout';
 
 
 class App extends Component {
@@ -17,6 +18,7 @@ class App extends Component {
           <Route path="/login" component={Login} />
           <Route path="/venue/:id" component={ViewVenue} />
           <Route path="/date-picker" component={DatePicker} />
+          <Route path="/logout" component={Logout} />
           <ProtectedRoutes path="/new-bookings" component={NewBookings} />
           <ProtectedRoutes path="/bookings" component={ViewBookings} />
         </Switch>

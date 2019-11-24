@@ -3,7 +3,6 @@ import styles from './notification.module.css'
 import { NotificationContext } from '../../../contexts/notificationContext'
 
 const Notification = () => {
-    
     const [notification , setNotification] = useContext(NotificationContext)
     let notificationClasses = [styles.Notification]
 
@@ -16,7 +15,7 @@ const Notification = () => {
   
     useEffect(() => {
         const timey = setTimeout(() => {
-            
+            console.log("i ran")
             notificationClasses = [styles.Notification]
             setNotification({
                 open: false,
@@ -27,7 +26,7 @@ const Notification = () => {
         return () => {
             clearTimeout(timey)
         }
-    })
+    }, [(notification.open != true)])
 
     const style = {
         color: '',
@@ -39,7 +38,7 @@ const Notification = () => {
         style.color = '#5F8465'
         style.backgroundColor = '#B9FFC5'
         style.borderColor = '#5F8465' 
-    }else{
+    } else if(notification.success === false) {
         style.color = '#DF7676'
         style.backgroundColor = '#FFE2E2'
         style.borderColor = '#DF7676'

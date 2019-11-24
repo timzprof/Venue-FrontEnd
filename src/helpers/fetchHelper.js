@@ -1,7 +1,11 @@
 const BaseURL = 'https://venue-app.herokuapp.com'
-const Token = JSON.parse(localStorage.getItem("Token"))
 
 const FetchHelper = (route, method="GET", body, authRequired) => {
+    
+    let Token = ''
+    if (authRequired){
+        Token = JSON.parse(localStorage.getItem("Token"))
+    }
     if(method === "GET"){
         return fetch(`${BaseURL}${route}`, {
             headers: {

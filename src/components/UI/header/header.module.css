@@ -43,6 +43,15 @@
     right: 20px;
 }
 
+.flexLogout{
+    /* height: 100%; */
+    position: absolute;
+    display: flex;
+    align-items: center;
+    right: 20px;
+    top: 20px;
+}
+
 .menu{
     height: 50px;
     width: 50px;

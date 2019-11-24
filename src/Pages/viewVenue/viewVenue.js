@@ -82,7 +82,7 @@ const ViewVenue = ({history}) => {
                 image1: formDetails.images.value[1],
                 image2: formDetails.images.value[2]
             }
-            dispatch(venueActions.createVenue(formBody))
+            dispatch(actions.editVenue(targetVenue.id,formBody))
             reset()
         } 
     }

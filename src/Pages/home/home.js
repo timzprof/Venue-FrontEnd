@@ -14,6 +14,8 @@ import { NotificationContext } from '../../contexts/notificationContext'
 import Input from '../../components/input/input'
 import { formValidator } from '../../helpers/formValidationHelper'
 import { inputValidator } from '../../helpers/formValidationHelper'
+import EmptyList from '../../components/UI/emptyList/emptyList'
+
 
 
 
@@ -233,7 +235,7 @@ const Home = () => {
                     }} /> : null}
                 </div>
                 <div className={styles.cardList}>
-                    {venueState.loading ? <Loader color="#083A55"/>  : (cardList.length > 0) ? cardList : <h1>There are no venues avaliable</h1> }
+                    {venueState.loading ? <Loader color="#083A55"/>  : (cardList.length > 0) ? cardList : <EmptyList label="venues"/>  }
                 </div>
             </div>
         </PageLayout>

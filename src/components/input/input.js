@@ -2,7 +2,7 @@ import React, {useRef, useState}  from 'react'
 import styles from './input.module.css'
 import Button from '../UI/button/button'
 
-const Input = ({type, value,  inputObj, changeFunc, errorMessages}) => {
+const Input = ({type, value,  inputObj, changeFunc, errorMessages, checked}) => {
 
     const fileInputRef = useRef()
     const getFiles = (e) => {
@@ -54,7 +54,7 @@ const Input = ({type, value,  inputObj, changeFunc, errorMessages}) => {
         case("checkbox"):
             input = (
                 <div className={styles.formGroupCheck}>
-                        <input value={value} {...inputObj} onChange={(e) => parentFunc(e)}/>
+                        <input checked={checked} {...inputObj} onChange={(e) => parentFunc(e)}/>
                         <label htmlFor={inputObj.id}><div className={styles.fakeCheckBox}></div><span>{inputObj.label}</span></label>
                         { (errorMessages && errorMessages.length > 0) ? <p className={styles.error}> {errorMessages[0]} </p> : null}  
                 </div>

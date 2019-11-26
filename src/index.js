@@ -7,11 +7,15 @@ import { BrowserRouter } from 'react-router-dom';
 import NotificationContextProvider from './contexts/notificationContext';
 import AuthContextProvider from './contexts/AuthContext';
 import { Provider } from 'react-redux'
-import { createStore, applyMiddleware } from 'redux'
+import { createStore, applyMiddleware, compose } from 'redux'
 import  thunk from 'redux-thunk'
 import centralReducer from './reducers/index'
 
-const appStore = createStore(centralReducer, applyMiddleware(thunk))
+const composeEnhancers = 
+    process.env.NODE_ENV === 'development'
+    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__&& window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({ trace: true, traceLimit: 25 }) : null || compose
+
+const appStore = createStore(centralReducer, composeEnhancers(applyMiddleware(thunk)))
 
 const app = (
     <Provider store={appStore}>

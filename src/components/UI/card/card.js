@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux'
 import * as actions from '../../../actions/venueActions'
 
 const Card = ({venueObj, history}) => {
+    console.log(venueObj)
     const dispatch = useDispatch()
 
     const viewVenue = (id) => {
@@ -21,22 +22,22 @@ const Card = ({venueObj, history}) => {
     return (
         <div className={styles.Card}>
             <div className={styles.CardImage}>
-                <img src={venueObj.featurImage}/>
+                <img src={venueObj.featureImage}/>
             </div>
             <h2 className={styles.CardName}>{venueObj.title}</h2>
             <div className={styles.infoGroup}>
-                <span className={styles.detail}>{venueObj.address}</span>
-                <span className={styles.detail}>
+                <span className={styles.detailImp}>{venueObj.address}</span>
+                <span className={styles.detailImp}>
                     <span className={styles.dot}></span>
                     <span className={styles.detail}>{venueObj.capacity} seats</span>
                 </span>
             </div>
             <div className={styles.additionalInfo}>
                 <div className={styles.infoGroup}>
-                    <span className={styles.detail}>{venueObj.resources[0].value ? <AvailableImage/> : <UnavailableImage/>} Computers</span>
+                    {/* <span className={styles.detail}>{venueObj.resources[0].value ? <AvailableImage/> : <UnavailableImage/>} Computers</span> */}
                 </div>
                 <div className={styles.infoGroup}>
-                    <span className={styles.detail}>{venueObj.resources[1].value ? <AvailableImage/> : <UnavailableImage/>} Internet</span>
+                    {/* <span className={styles.detail}>{venueObj.resources[1].value ? <AvailableImage/> : <UnavailableImage/>} Internet</span> */}
                 </div>
             </div>
             <Button text="View" onClick={() => viewVenue(venueObj.id)} style={{

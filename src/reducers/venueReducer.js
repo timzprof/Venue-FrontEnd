@@ -62,6 +62,13 @@ const venueReducer = (state = initialStore, action) => {
                 venues: state.venues.filter(venue => venue.id != action.payload.id),
                 loading: false
             }
+        case(actions.createVenueSuccess):{
+            return {
+                ...state,
+                venues: state.venues.concat(action.payload),
+                loading: false
+            }
+        }    
         case(actions.editVenueSuccess):
             return{
                 ...state,

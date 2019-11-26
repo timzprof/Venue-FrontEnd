@@ -1,4 +1,10 @@
 import * as actions from '../actions/actionsIndex'
+const options = {
+    day: "numeric",
+    month: "long",
+    year: "numeric"
+
+}
 
 const initialStore = {
     loading: false,
@@ -7,6 +13,7 @@ const initialStore = {
         type: '',
         message: ''
     },
+    targetDate: new Date().toLocaleDateString("en", options),
     bookings: [
         // all bookings for all venues  they have a venue id, and a time array
     ]
@@ -41,6 +48,11 @@ const bookingReducer = (state = initialStore, action) => {
                 ...state,
                 bookings: action.payload
             }
+        case(actions.setTargetDate):
+            return {
+                ...state,
+                targetDate: new Date(action.payload).toLocaleDateString("en", options)
+            }    
         case(actions.approveBookingSuccess):
             return {
                 ...state,

@@ -47,12 +47,16 @@
 .MainContainer > div{
     opacity: 0;
     position: absolute;
-    top: 55%;
+    top: 53%;
     left: 50%;
     transform: translate(-50%, -50%);
     animation: MainContainerOpen 0.3s ease-out 0s 1 forwards;
     z-index: 1300;
+    max-height: 85%;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
+
 
 .MainContainerClose > div{
     animation: MainContainerClose 0.3s ease-out 0s 1 forwards;

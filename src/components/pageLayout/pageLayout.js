@@ -9,10 +9,10 @@ const PageLayout = ({children}) => {
 
     return (
         <div className={styles.PageLayout}>
-            <Notification/>
             <Header open={menuOpen} setOpen={setMenuOpen} />
             <Sidebar open={menuOpen} setOpen={setMenuOpen}/>
             <div className={styles.Main}>
+                <Notification/>
                 {children}
             </div>
         </div>

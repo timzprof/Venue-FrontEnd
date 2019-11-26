@@ -39,8 +39,9 @@ implement showing error message and disabling button on invalid form (done)
 import and implement all the venue actions (done),
 implement venue creating and editing and deleting (done)
 cause the notification element to show the error messages (done)
+add the no items component (done)
+create the action overlay Load Component
 add the loaders to the edit and delete buttons
-add the no items component
 implement the bookings action -
     - getting the bookings for a particular venue on a particular day.
     - i need to understand how the bookings are set - (or create a function to filter them myself)

@@ -31,6 +31,13 @@
     width: 70%;
     border-radius: 8px;
     background-color: #083a55;
+    overflow: hidden;
+}
+
+.mainImage > img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
 }
 
 .rightSection{
@@ -44,10 +51,20 @@
     background-color: #083a55;
     border-radius: 8px;
     margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.subImage img{
+    height: 100%;
+    width: 100%;
 }
 
 .btnHolder{
     width: 100%;
+}
+
+.smallScreenImages{
+    display: none;
 }
 
 .tag{

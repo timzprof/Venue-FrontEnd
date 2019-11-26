@@ -28,11 +28,12 @@ const ViewVenue = ({history}) => {
     const [modalMode, setModalMode] = useState(null)
     const [redirect , setRedirect] = useState(false)
     const [authState] = useContext(AuthContext)
-    const [notification, setNotification] = useContext()
+    const [notification, setNotification] = useContext(NotificationContext)
     let showLoader = false
 
 
     const targetVenue = venueState.targetVenue
+    console.log(targetVenue)
     
     const datePicker = () => {
         history.push("/date-picker")
@@ -40,7 +41,7 @@ const ViewVenue = ({history}) => {
 
 
 
-    const [formValid, setFormValid]  = useState(null)
+    const [formValid, setFormValid]  = useState(false)
 
     const [formDetails, setFormDetails] = useState({
         title: { 
@@ -62,30 +63,49 @@ const ViewVenue = ({history}) => {
         
         resources: [{name: "computers", value: targetVenue.resources[0].value}, {name: "internet", value: targetVenue.resources[1].value}],
         
-        images: {value: [targetVenue.featureImage, targetVenue.image1, targetVenue.image2], rules:{
-            max: 3, min: 1, allowedTypes:['image/jpeg', 'image/png', 'image/svg'], maxSize: 5    
+        images: {value: [targetVenue.featureImage, targetVenue.otherImages[0], targetVenue.otherImages[1]], rules:{
+            max: 3, allowedTypes:['image/jpeg', 'image/png', 'image/svg'], maxSize: 5    
         }, errorMessages: [], valid:true},
-        // featureImage: '',
-        // image1: '',
-        // image2: ''
     })    
     
     const submitFunc = (e) => {
         e.preventDefault();
-        setFormValid(formValidator(formDetails, setFormDetails, setFormValid))
-        if(formValid){
-            const formBody = {
-                title: formDetails.title.value,
-                address: formDetails.address.value,
-                capacity: formDetails.address.capacity,
-                featureImage: formDetails.images.value[0],
-                image1: formDetails.images.value[1],
-                image2: formDetails.images.value[2]
-            }
-            dispatch(actions.editVenue(targetVenue.id,formBody))
-            reset()
-        } 
+        setFormValid(formValidator(formDetails, setFormDetails))
     }
+
+    const finalSubmit = () => {
+            const copyObj = {...formDetails}
+            copyObj.resources = [...formDetails.resources]
+            const tempTimeAllowed = ["8am" - "8pm"]
+
+            const formBody = new FormData() 
+                formBody.append("title", copyObj.title.value)
+                formBody.append("address", copyObj.address.value)
+                formBody.append("capacity", parseInt(copyObj.capacity.value))
+                formBody.append("resources", copyObj.resources)
+                formBody.append("timeAllowed", tempTimeAllowed)
+                
+                // if only the images.length > 0
+                if (copyObj.featureImage.value.length > 0){
+                    formBody.append("featureImage", copyObj.images.value[0])
+                }
+
+            if (copyObj.images.value[1]){
+                formBody.append("image1", copyObj.images.value[1]) 
+            }
+            if (copyObj.images.value[2]){
+                formBody.append("image2", copyObj.images.value[2]) 
+            }
+
+
+            dispatch(actions.editVenue(formBody))
+            reset()
+    }
+
+    if (formValid){
+        finalSubmit()
+    }
+
 
     const formUpdater = (e) => {
         let inputObject = {}
@@ -162,9 +182,33 @@ const ViewVenue = ({history}) => {
         }        
     }
 
-    const reset = () => {
+    function reset(){
         setModal(false)
         setModalMode(null)
+        setFormDetails({
+            title: { 
+                value: targetVenue.title,
+                rules:{
+                    required: true
+                },
+                errorMessages: [],
+                valid:true
+            },
+            
+            address: {value: targetVenue.address, rules:{
+                required: true
+            }, errorMessages: [], valid:true},
+            
+            capacity: {value: targetVenue.capacity, rules:{
+                required: true
+            }, errorMessages: [], valid:true},
+            
+            resources: [{name: "computers", value: targetVenue.resources[0].value}, {name: "internet", value: targetVenue.resources[1].value}],
+            
+            images: {value: [targetVenue.featureImage, targetVenue.otherImages[0], targetVenue.otherImages[1]], rules:{
+                max: 3, allowedTypes:['image/jpeg', 'image/png', 'image/svg'], maxSize: 5    
+            }, errorMessages: [], valid:true}, 
+        })
     }
     if(modalMode == "delete"){
         modalItem = (
@@ -204,18 +248,18 @@ const ViewVenue = ({history}) => {
                         name: 'title',
                         type: 'text',
                         label: 'Name'
-                    }} />
+                    }} errorMessages={formDetails.title.errorMessages} />
 
                     <Input type="input"  changeFunc={formUpdater} value={formDetails.address.value} inputObj={{
                         name: 'address',
                         type: 'text',
                         label: 'Location'
-                    }} />
+                    }} errorMessages={formDetails.address.errorMessages} />
                     <Input type="input"  changeFunc={formUpdater} value={formDetails.capacity.value} inputObj={{
                         name: 'capacity',
                         type: 'number',
                         label: 'Capacity'
-                    }} />
+                    }} errorMessages={formDetails.capacity.errorMessages} />
 
                     <Input type="checkbox"  changeFunc={formUpdater}  checked={formDetails.resources[0].value} inputObj={{
                         type: 'checkbox',
@@ -236,7 +280,8 @@ const ViewVenue = ({history}) => {
                         label: 'Add Image',
                         multiple: true,
                         accept: 'image/*' 
-                    }} />    
+                    }} errorMessages={formDetails.images.errorMessages}  />    
+
 
                     <div className={styles.btnHolderModal}>
                         <Button onClick={submitFunc} type="submit" text="Done" style={{
@@ -290,23 +335,21 @@ const ViewVenue = ({history}) => {
                             </div> : null}
                     </div>    
                     <h2 className={styles.venueHeader}>
-                        {/* {targetVenue.name} */}
-                        Conference Hall
-
+                        {targetVenue.title}
                     </h2>
                     <div className={styles.mainContent}>
                         <div className={styles.mainImage}>
                             <img src={targetVenue.featureImage}/>
-                            <div className={styles.smallScreenImages}>
+                            <div className={styles.smallScreenImages }>
                                 <img src={targetVenue.featureImage} />
-                                {targetVenue.image1 ? <img src={targetVenue.image1} /> : null}
-                                {targetVenue.image2 ? <img src={targetVenue.image2} /> : null}
+                                {targetVenue.otherImages[0] ? <img src={targetVenue.otherImages[0]} /> : null}
+                                {targetVenue.otherImages[1] ? <img src={targetVenue.otherImages[1]} /> : null}
                             </div>
                         </div>
                         <div className={styles.rightSection}>
-                            <div className={styles.subImage}>
+                            {targetVenue.otherImages[0] ? <div className={styles.subImage}>
                                 <img src={targetVenue.image1}/>
-                            </div>
+                            </div> : null}
                             <div className={styles.tag}><span className={styles.bolden}> {targetVenue.address} </span></div>
                             <div className={styles.tag}><span className={styles.bolden}> {targetVenue.capacity} </span> seats </div>
                             <div className={styles.tag}> { targetVenue.resources[0].value ? <AvailableImage/> : <UnavailableImage/> } <span className={styles.bolden}>Computers</span></div>

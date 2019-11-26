@@ -42,6 +42,13 @@ const rejectBookingSuccess = (id) => {
     })
 }
 
+const setTargetDateSuccess = (date) => {
+    return ({
+        type: actions.setTargetDate,
+        payload: date
+    })
+}
+
 export const getBookings = () => (dispatch) => {
     dispatch(bookingActionStart)
     FetchHelper('/api/v1/booking', "GET", true)
@@ -83,4 +90,6 @@ export const rejectBooking = (id) => (dispatch) => {
     .catch(error => dispatch(bookingActionFail))
 }
 
- 
+ export const setTargetDate = (date) => (dispatch) => {
+     dispatch(setTargetDateSuccess(date))
+ }

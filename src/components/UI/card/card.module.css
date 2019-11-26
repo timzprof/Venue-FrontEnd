@@ -5,6 +5,7 @@
     border: 1px solid #083A5510;
     font-family: 'Nexa-light';
     background-color: #ffffff;
+    max-width: 500px;
 }
 
 .CardImage{
@@ -58,6 +59,17 @@
     justify-content: flex-start;
     align-items: center;
 }
+
+.detailImp{
+    color: #083A55;
+    font-size: 18px;
+    font-weight: 100;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+}
+
 
 .additionalInfo{
     margin-top: 25px;

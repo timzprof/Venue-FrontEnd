@@ -2,12 +2,12 @@ import React, {useState} from 'react'
 import styles from './dropDown.module.css'
 import { ReactComponent as DropImage } from '../../../assets/images/Polygon 10.svg'
 
-const DropDown = ({label, options, onChange}) => {
+const DropDown = ({label, options, onChange, name}) => {
 
     const [value, setValue] = useState('')
     const changeValue = (e) => {
         setValue(e.target.textContent)
-        // onChange(e.target.textContent)
+        onChange(name, value)
     }
 
     const MenuOptions = options.map(option => <div onClick={(e) => changeValue(e) } className={styles.option}>{option}</div>) 

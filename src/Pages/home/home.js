@@ -20,13 +20,15 @@ import EmptyList from '../../components/UI/emptyList/emptyList'
 
 
 const Home = () => {
+    const venueState = useSelector(state => state.venues)
+    const dispatch = useDispatch()
     const [notification, setNotification] = useContext(NotificationContext)
     const [modalOpen, setModalOpen] = useState()
     const [authState] = useContext(AuthContext)
     
    
-    const [formValid, setFormValid]  = useState(null)
-
+    const [formValid, setFormValid]  = useState(false)
+    
     const [formDetails, setFormDetails] = useState({
         title: { 
             value: '',
@@ -54,33 +56,48 @@ const Home = () => {
         // image1: '',
         // image2: ''
     })    
-    
+
+
     const submitFunc = (e) => {
         e.preventDefault();
-        setFormValid(formValidator(formDetails, setFormDetails, setFormValid))
-        if(formValid){
-            const formBody = {
-                title: formDetails.title.value,
-                address: formDetails.address.value,
-                capacity: formDetails.address.capacity,
-                featurImage: formDetails.images.value[0],
-                image1: formDetails.images.value[1],
-                image2: formDetails.images.value[2]
+        setFormValid(formValidator(formDetails, setFormDetails))
+    }
+
+    const finalSubmit = () => {
+            const copyObj = {...formDetails}
+            copyObj.resources = [...formDetails.resources]
+            const tempTimeAllowed = JSON.stringify(["8am", "8pm"])
+
+            const formBody = new FormData() 
+                formBody.append("title", copyObj.title.value)
+                formBody.append("address", copyObj.address.value)
+                formBody.append("capacity", parseInt(copyObj.capacity.value))
+                formBody.append("resources", JSON.stringify(copyObj.resources))
+                formBody.append("featureImage", copyObj.images.value[0])
+                formBody.append("timeAllowed", tempTimeAllowed)
+            
+            if (copyObj.images.value[1]){
+                formBody.append("image1", copyObj.images.value[1])   
             }
+            if (copyObj.images.value[2]){
+                formBody.append("image2", copyObj.images.value[2])   
+            }
+
             dispatch(venueActions.createVenue(formBody))
             reset()
-        } 
     }
+
+    if (formValid){
+        finalSubmit()
+    }
+
 
     const formUpdater = (e) => {
         let inputObject = {}
         if (e.target.type === "checkbox"){
-            console.log("Checkbox", formDetails)
             inputObject = {
                 ...formDetails,
                 resources: formDetails.resources.map(resource => {
-                    console.log(resource.name)
-                    console.log(e.target.name)
                     if(resource.name === e.target.name){
                         console.log({
                             ...resource,
@@ -123,9 +140,7 @@ const Home = () => {
     }
 
 
-    const venueState = useSelector(state => state.venues)
-    const dispatch = useDispatch()
-
+    
     useEffect(() => {
         dispatch(venueActions.getVenues())
     }, [])
@@ -139,8 +154,8 @@ const Home = () => {
     }, [venueState.error.status])
       
     const cardList = venueState.venues.map((venueObj) => <Card venueObj={venueObj}/>)
-    const reset = () => {
-        setModalOpen(false)
+    function reset (){
+        setModalOpen()
         setFormDetails({
             title: {value: '', rules:{
                 required: true
@@ -154,12 +169,13 @@ const Home = () => {
                 required: true
             }, errorMessages: [], valid:true},
             
-            resources: [{name: "Computers", value: false}, {name: "Internet", value: false}],
+            resources: [{name: "computers", value: false}, {name: "internet", value: false}],
             
             images: {value: [], rules:{
-                max: 3, min: 1, allowedTypes:['images/jpeg', 'images/png', 'images/svg'], maxSize: 5    
+                max: 3, min: 1, allowedTypes:['image/jpeg', 'image/png', 'image/svg'], maxSize: 5    
             }, errorMessages: [], valid:true}  
         })
+        setFormValid(false)
     }
 
     

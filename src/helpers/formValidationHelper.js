@@ -1,6 +1,6 @@
 export const formValidator = (recievedFromDetails, setFormDetails, setFormValid) => {
     let formValid = true
-    console.log(recievedFromDetails)
+    console.log("starter form valid is true")
     let formDetails = {...recievedFromDetails}
     Object.keys(formDetails).forEach(detail => {
         if (detail === 'resources'){
@@ -11,7 +11,6 @@ export const formValidator = (recievedFromDetails, setFormDetails, setFormValid)
         }        
     }) 
 
-    console.log("the function has started to run")
     Object.keys(formDetails).forEach(key => {
         if (formDetails[key].rules){
             console.log("The rules have been seen")
@@ -27,10 +26,12 @@ export const formValidator = (recievedFromDetails, setFormDetails, setFormValid)
                             }
                         }
                         formValid = false
+                        console.log("the form valid has been set to false")
                     }
                 }
                 else if (rule === "min"){
                     if (formDetails[key].value.length < formDetails[key].rules[rule]){
+                        console.log("A rule was broken")
                         formDetails = {
                             ...formDetails,
                             [key]: {
@@ -39,11 +40,13 @@ export const formValidator = (recievedFromDetails, setFormDetails, setFormValid)
                             }
                         }
                         formValid = false
+                        console.log("the form valid has been set to false")
+
                     }
                 }
                 else if (rule === "required"){
-                    console.log("The required rule has been seen")
                     if (formDetails[key].value.length <= 0 || formDetails[key].value <= 0 ){
+                        console.log("A rule was broken")
                         formDetails = {
                             ...formDetails,
                             [key]: {
@@ -53,6 +56,8 @@ export const formValidator = (recievedFromDetails, setFormDetails, setFormValid)
                             }
                         }
                         formValid = false
+                        console.log("the form valid has been set to false")
+
                     }
                 }else if (rule === "maxSize"){
                     let filesValid = true
@@ -63,6 +68,7 @@ export const formValidator = (recievedFromDetails, setFormDetails, setFormValid)
                             }
                         })
                         if(filesValid === false){
+                        console.log("A rule was broken")
                             formDetails = {
                                 ...formDetails,
                                 [key]: {
@@ -72,6 +78,8 @@ export const formValidator = (recievedFromDetails, setFormDetails, setFormValid)
                                 }
                             }
                             formValid = false
+                            console.log("the form valid has been set to false")
+
                         }
                     }
                 }else if (rule === "allowedTypes"){
@@ -85,6 +93,7 @@ export const formValidator = (recievedFromDetails, setFormDetails, setFormValid)
                                 }
                             })
                             if (seenFileType === false){
+                                console.log("A rule was broken")
                                 filesValid = false
                             }
                         })
@@ -98,6 +107,7 @@ export const formValidator = (recievedFromDetails, setFormDetails, setFormValid)
                                 }
                             }
                             formValid = false
+                            console.log("the form valid has been set to false")
                         }
                     }
                 }
@@ -105,7 +115,8 @@ export const formValidator = (recievedFromDetails, setFormDetails, setFormValid)
         }
     })
     setFormDetails(formDetails)
-    setFormValid(formValid)
+    console.log("The final form valid", formValid)
+    return formValid
 }
 
 
@@ -115,7 +126,7 @@ export const formValidator = (recievedFromDetails, setFormDetails, setFormValid)
 export const inputValidator = (e, rules, formDetails, setFormDetails,type) => {
     let finalObj = {...formDetails}
     finalObj[e.target.name].errorMessages = []
-    
+    console.log(finalObj)
     let valid = true
     const key = e.target.name
     Object.keys(rules).forEach(rule => {

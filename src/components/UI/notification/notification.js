@@ -15,7 +15,6 @@ const Notification = () => {
   
     useEffect(() => {
         const timey = setTimeout(() => {
-            console.log("i ran")
             notificationClasses = [styles.Notification]
             setNotification({
                 open: false,

@@ -7,16 +7,16 @@ const options = {
 }
 
 const initialStore = {
-    loading: false,
+    loading: true,
     error: {
         status: false,
         type: '',
         message: ''
     },
-    targetDate: new Date().toLocaleDateString("en", options),
     bookings: [
         // all bookings for all venues  they have a venue id, and a time array
-    ]
+    ],
+    selectedBookings: [],
 }
 
 
@@ -40,18 +40,22 @@ const bookingReducer = (state = initialStore, action) => {
         case(actions.createBookingSuccess):
             return {
                 ...state,
-                bookings: state.bookings.concat(action.payload)
+                bookings: state.bookings.concat(action.payload),
+                loading: false
 
             }
         case(actions.getBookingsSuccess):
             return {
                 ...state,
-                bookings: action.payload
+                bookings: action.payload,
+                loading: false
             }
-        case(actions.setTargetDate):
+        case(actions.getRequiredBookingsSuccess):
+            console.log("payload", action.payload)
             return {
                 ...state,
-                targetDate: new Date(action.payload).toLocaleDateString("en", options)
+                selectedBookings: state.bookings.filter(booking => booking.date === action.payload),
+                loading: false
             }    
         case(actions.approveBookingSuccess):
             return {
@@ -64,7 +68,8 @@ const bookingReducer = (state = initialStore, action) => {
                         }
                     }
                     return booking
-                })
+                }),
+                loading: false        
             }
         case(actions.rejectBookingSuccess):
             return {
@@ -77,7 +82,8 @@ const bookingReducer = (state = initialStore, action) => {
                         }
                     }
                     return booking
-                })
+                }),
+                loading: false
             }
         default:
             return state

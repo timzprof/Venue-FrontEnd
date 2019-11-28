@@ -2,10 +2,11 @@ import React, {useState} from 'react'
 import styles from './button.module.css'
 import Loader from '../loader/loader'
 
-const Button = ({action, loading, type, text, image:Image, ...rest}) => {
+const Button = ({action, loading, loaderColor, type, text, image:Image, ...rest}) => {
    
     // const [loading, setLoading] = useState()
     let btnDisabled = false
+    let color = loaderColor ? loaderColor : "#fff"
     let content = (<React.Fragment>
         {Image ? <Image/> : null}
         <span>{text}</span>
@@ -18,7 +19,7 @@ const Button = ({action, loading, type, text, image:Image, ...rest}) => {
 
     if(loading == true && type == "submit"){
         btnDisabled = true
-        content = <div className={styles.loaderContainer}> <Loader color="#fff"/> </div>
+        content = <div className={styles.loaderContainer}> <Loader color={color}/></div>
     }
 
 

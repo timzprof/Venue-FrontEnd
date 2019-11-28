@@ -292,6 +292,7 @@
         align-items: center;
         padding: 0 20px;
         padding-right: 0;
+        display: block;
     }
 
     .smallScreenImages::-webkit-scrollbar{
@@ -301,7 +302,7 @@
     .smallScreenImages img{
         /* display: inline-block; */
         height: 330px ;
-        width: 80%;
+        width: 85%;
         border-radius: 8px;
         background-color: #083A55;
         margin-right: 20px;

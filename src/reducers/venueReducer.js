@@ -5,12 +5,13 @@ import * as actions from '../actions/actionsIndex'
 const initialStore = {
     loading: true,
     venues: [],
-    targetVenue: {},
+    targetVenue: null,
     error: {
         status: false,
         errorType: '',
-        errorMessage: '',
-    }
+        errorMessage: '', 
+    },
+    message: ""
 }
 
 const venueReducer = (state = initialStore, action) => {
@@ -20,6 +21,7 @@ const venueReducer = (state = initialStore, action) => {
             return {
                 ...state,
                 loading: true,
+                message: '',
                 error: {
                     status: false,
                     errorType: '',
@@ -37,29 +39,47 @@ const venueReducer = (state = initialStore, action) => {
                 }
                 // consider setting error message in the store
             }
+        case(actions.venueActionSuccess):
+            console.log(action.payload)
+            console.log("action delete success", action.payload)
+            return {
+                ...state,
+                message: action.payload,
+                loading: false,
+            }    
         case(actions.getVenuesSuccess):
             console.log('action payload', action.payload)
             return {
                 ...state,
                 venues: action.payload,
                 loading: false
-            }
+            }    
         case(actions.setTargetVenueSuccess):
-            return {
-                ...state,
-                targetVenue: action.payload,
-                loading: false
+            if(action.payload.id){
+                let requiredVenue = state.venue.filter(venue => venue.id === action.payload.id )
+                return {
+                    ...state,
+                    targetVenue: requiredVenue[0],
+                    loading: false
+                }
+            }else{
+                return {
+                    ...state,
+                    targetVenue: action.payload.venue,
+                    loading: false
+                }
             }    
         case(actions.getVenueSuccess):
             return {
                 ...state,
                 venues: state.venues.concat(action.payload),
+                targetVenue: action.payload,
                 loading: false
             }
         case(actions.deleteVenueSuccess):
             return {
                 ...state,
-                venues: state.venues.filter(venue => venue.id != action.payload.id),
+                venues: state.venues.filter(venue => venue.id !== action.payload),
                 loading: false
             }
         case(actions.createVenueSuccess):{
@@ -79,7 +99,8 @@ const venueReducer = (state = initialStore, action) => {
                         return venue
                     }
                 }),
-                loading: false
+                loading: false,
+                targetVenue: action.payload
             }                
         default:
             return state

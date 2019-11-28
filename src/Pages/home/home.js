@@ -9,6 +9,7 @@ import { ReactComponent as Close } from '../../assets/images/close.svg'
 import { AuthContext } from '../../contexts/AuthContext'
 import { useSelector, useDispatch } from 'react-redux'
 import * as venueActions from '../../actions/venueActions'
+import * as bookingActions from '../../actions/bookingActions'
 import Loader from '../../components/UI/loader/loader'
 import { NotificationContext } from '../../contexts/notificationContext'
 import Input from '../../components/input/input'
@@ -21,12 +22,18 @@ import EmptyList from '../../components/UI/emptyList/emptyList'
 
 const Home = () => {
     const venueState = useSelector(state => state.venues)
+    const bookingState = useSelector(state => state.bookings)
     const dispatch = useDispatch()
     const [notification, setNotification] = useContext(NotificationContext)
     const [modalOpen, setModalOpen] = useState()
     const [authState] = useContext(AuthContext)
+    const message = venueState.message
     
    
+
+    
+
+
     const [formValid, setFormValid]  = useState(false)
     
     const [formDetails, setFormDetails] = useState({
@@ -101,11 +108,11 @@ const Home = () => {
                     if(resource.name === e.target.name){
                         console.log({
                             ...resource,
-                            value: e.target.checked
+                            value: e.target.checked === "false" ? false : true
                         })
                         return ({
                             ...resource,
-                            value: e.target.checked
+                            value: e.target.checked === "false" ? false : true
                         })
                     }
 
@@ -153,7 +160,6 @@ const Home = () => {
                 })
     }, [venueState.error.status])
       
-    const cardList = venueState.venues.map((venueObj) => <Card venueObj={venueObj}/>)
     function reset (){
         setModalOpen()
         setFormDetails({
@@ -178,6 +184,8 @@ const Home = () => {
         setFormValid(false)
     }
 
+    console.log(venueState.venues)
+    const cardList = venueState.venues.map((venueObj) => <Card venueObj={venueObj}/>)
     
 
     return (

@@ -56,19 +56,9 @@ The end
 
 
 
-<!-- create the function from nifemi to hold my posting and fetching of data -->
-
-
-
-
-<!-- will use the context api for ui state and authentication -->
-
-<!-- will use redux for every other state -->
-
-<!-- will build the loader i saw yesterday litle above quater circle spinning in a circular loci -->
-
-<!-- write tests for all the pages in the application -->
-
+<!-- bugs to fix after app has been completed--> solutions
+reduce scroll bar size drop downs and modals
+stopping people for booking on days and times that have already been booked - (send a list of disabled times for a date, drop down will contain array of objects with disabled properties)
 
 
 

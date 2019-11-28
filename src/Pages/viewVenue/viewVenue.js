@@ -1,4 +1,4 @@
-import React, {Fragment,useState, useRef, useContext} from 'react'
+import React, {Fragment,useState, useEffect, useContext} from 'react'
 import styles from './viewVenue.module.css'
 import PageLayout from '../../components/pageLayout/pageLayout'
 import { NavLink } from 'react-router-dom'
@@ -12,61 +12,91 @@ import { AuthContext } from '../../contexts/AuthContext'
 import { NotificationContext } from '../../contexts/notificationContext'
 import { useSelector, useDispatch } from 'react-redux'
 import * as actions from '../../actions/venueActions'
-import Loader from '../../components/UI/loader/loader'
+import * as bookingActions from '../../actions/bookingActions'
 import { Redirect } from 'react-router-dom'
 import Input from '../../components/input/input'
 import { formValidator } from '../../helpers/formValidationHelper'
 import { inputValidator } from '../../helpers/formValidationHelper'
+import WholeLoader from '../../components/UI/wholeLoader/wholeLoader'
 
-const ViewVenue = ({history}) => {
-    
+const ViewVenue = ({match ,history}) => {
     const venueState = useSelector(state => state.venues)
     const dispatch = useDispatch()
-
+    const {params: {id}} = match
 
     const [modal, setModal] = useState(null)
     const [modalMode, setModalMode] = useState(null)
     const [redirect , setRedirect] = useState(false)
     const [authState] = useContext(AuthContext)
     const [notification, setNotification] = useContext(NotificationContext)
-    let showLoader = false
 
-
-    const targetVenue = venueState.targetVenue
-    console.log(targetVenue)
+    const targetVenueState = venueState.targetVenue
+    useEffect(() => {
+        if (targetVenueState === null){
+            dispatch(actions.getVenue(id))
+        }
+    }, [])
+    const loading = venueState.loading
+    const message = venueState.message
     
     const datePicker = () => {
         history.push("/date-picker")
     }
 
 
+    useEffect(() => {
+        console.log("use effect one")
+        if(venueState.error.status === true){
+            console.log(venueState.error.errorMessage)
+            setNotification({
+                open: true,
+                success: false,
+                text: venueState.error.errorMessage
+            })
+        }
+    }, [venueState.error.status])
+
 
     const [formValid, setFormValid]  = useState(false)
 
-    const [formDetails, setFormDetails] = useState({
-        title: { 
-            value: targetVenue.title,
-            rules:{
-                required: true
-            },
-            errorMessages: [],
-            valid:true
-        },
-        
-        address: {value: targetVenue.address, rules:{
-            required: true
-        }, errorMessages: [], valid:true},
-        
-        capacity: {value: targetVenue.capacity, rules:{
-            required: true
-        }, errorMessages: [], valid:true},
-        
-        resources: [{name: "computers", value: targetVenue.resources[0].value}, {name: "internet", value: targetVenue.resources[1].value}],
-        
-        images: {value: [targetVenue.featureImage, targetVenue.otherImages[0], targetVenue.otherImages[1]], rules:{
-            max: 3, allowedTypes:['image/jpeg', 'image/png', 'image/svg'], maxSize: 5    
-        }, errorMessages: [], valid:true},
-    })    
+    let targetVenue = targetVenueState ? {...targetVenueState} : {
+        title: '',
+        address: '',
+        capacity: '',
+        resources: [{name: 'computer', value: false}, {name: 'internet', value: false}],
+    }
+ 
+    const [formDetails, setFormDetails] = useState()
+
+    useEffect(() => {
+        if (targetVenueState){
+            setFormDetails({
+                title: { 
+                    value: targetVenue.title,
+                    rules:{
+                        required: true
+                    },
+                    errorMessages: [],
+                    valid:true
+                },
+                
+                address: {value: targetVenue.address, rules:{
+                    required: true
+                }, errorMessages: [], valid:true},
+                
+                capacity: {value: targetVenue.capacity, rules:{
+                    required: true
+                }, errorMessages: [], valid:true},
+                
+                resources: [{name: "computers", value: targetVenue.resources[0].value === "true" ? true : false}, {name: "internet", value:  targetVenue.resources[1].value === "true" ? true : false}],
+                
+                images: {value: [], rules:{
+                    max: 3, allowedTypes:['image/jpeg', 'image/png', 'image/svg'], maxSize: 5    
+                }, errorMessages: [], valid:true},
+            })
+            dispatch(bookingActions.getBookings(targetVenueState.id))
+        }
+    }, [targetVenueState])
     
     const submitFunc = (e) => {
         e.preventDefault();
@@ -76,17 +106,17 @@ const ViewVenue = ({history}) => {
     const finalSubmit = () => {
             const copyObj = {...formDetails}
             copyObj.resources = [...formDetails.resources]
-            const tempTimeAllowed = ["8am" - "8pm"]
+            const tempTimeAllowed = ["8am", "8pm"]
 
             const formBody = new FormData() 
                 formBody.append("title", copyObj.title.value)
                 formBody.append("address", copyObj.address.value)
                 formBody.append("capacity", parseInt(copyObj.capacity.value))
-                formBody.append("resources", copyObj.resources)
-                formBody.append("timeAllowed", tempTimeAllowed)
+                formBody.append("resources", JSON.stringify(copyObj.resources))
+                formBody.append("timeAllowed", JSON.stringify(tempTimeAllowed))
                 
                 // if only the images.length > 0
-                if (copyObj.featureImage.value.length > 0){
+                if (copyObj.images.value.length > 0){
                     formBody.append("featureImage", copyObj.images.value[0])
                 }
 
@@ -97,8 +127,8 @@ const ViewVenue = ({history}) => {
                 formBody.append("image2", copyObj.images.value[2]) 
             }
 
-
-            dispatch(actions.editVenue(formBody))
+            console.log("I will now dispatch")
+            dispatch(actions.editVenue(targetVenue.id, formBody))
             reset()
     }
 
@@ -110,20 +140,14 @@ const ViewVenue = ({history}) => {
     const formUpdater = (e) => {
         let inputObject = {}
         if (e.target.type === "checkbox"){
-            console.log("Checkbox", formDetails)
+            console.log("Checkbox", e.target.checked)
             inputObject = {
                 ...formDetails,
                 resources: formDetails.resources.map(resource => {
-                    console.log(resource.name)
-                    console.log(e.target.name)
                     if(resource.name === e.target.name){
-                        console.log({
-                            ...resource,
-                            value: e.target.checked
-                        })
                         return ({
                             ...resource,
-                            value: e.target.checked
+                            value: (e.target.checked === "true" || e.target.checked === true)  ? true : false
                         })
                     }
 
@@ -161,26 +185,9 @@ const ViewVenue = ({history}) => {
     let modalItem = ""
 
     const venueDelete = () =>{
-        dispatch(actions.deleteVenue(targetVenue.id))
-        while (venueState.loading){
-            showLoader = true
-        }
-        showLoader = false
-        if(venueState.error.status == true && venueState.error.type == "deleteVenue"){
-            setNotification({
-                open: true,
-                success: false,
-                message: venueState.error.message
-            })
-        }else{
-            setNotification({
-                open: true,
-                success: true,
-                message: 'Venue was successfully deleted'
-            })
-            setRedirect(true)
-        }        
+        dispatch(actions.deleteVenue(targetVenue.id))        
     }
+
 
     function reset(){
         setModal(false)
@@ -203,16 +210,18 @@ const ViewVenue = ({history}) => {
                 required: true
             }, errorMessages: [], valid:true},
             
-            resources: [{name: "computers", value: targetVenue.resources[0].value}, {name: "internet", value: targetVenue.resources[1].value}],
+            resources: [{name: "computers", value: targetVenue.resources[0].value  === "true" ? true : false}, {name: "internet", value:  targetVenue.resources[1].value  === "true" ? true : false}],
             
-            images: {value: [targetVenue.featureImage, targetVenue.otherImages[0], targetVenue.otherImages[1]], rules:{
+            images: {value: [], rules:{
                 max: 3, allowedTypes:['image/jpeg', 'image/png', 'image/svg'], maxSize: 5    
             }, errorMessages: [], valid:true}, 
         })
+        setFormValid(false)
     }
+
     if(modalMode == "delete"){
         modalItem = (
-            <div className={styles.modalItemDelete}>{ showLoader ? <Loader color="#083a55" /> : (
+            <div className={styles.modalItemDelete}>{(
                 <React.Fragment>
                     <Close className="close" onClick={reset} />
                     <h2>Are you sure you want to delete this venue?</h2>
@@ -224,7 +233,7 @@ const ViewVenue = ({history}) => {
                                     marginRight: "20px",
                                     padding: "12px 30px"
                                 }}  />
-                                <Button onClick={venueDelete}
+                                <Button type="submit" loading={loading} loaderColor="#DF7676" action={venueDelete}
                                     text="Delete" style={{
                                     color: "#DF7676",
                                     backgroundColor: "transparent",
@@ -284,7 +293,7 @@ const ViewVenue = ({history}) => {
 
 
                     <div className={styles.btnHolderModal}>
-                        <Button onClick={submitFunc} type="submit" text="Done" style={{
+                        <Button type="submit" loading={loading} action={submitFunc} text="Done" style={{
                             backgroundColor: "#23B83C",
                             color: "#fff",
                             padding: "12px 45px",
@@ -302,13 +311,27 @@ const ViewVenue = ({history}) => {
     if (redirect){
         return <Redirect to="/"/>
     }
+
+    if (message){
+        if(message === "venue delete"){
+            dispatch(actions.venueActionSuccess("Venue successfully deleted"))
+            setRedirect(true)
+        }else{
+            dispatch(actions.venueActionSuccess("Venue successfully edited"))
+        }
+    }
+
+
     return (
         <Fragment>
             <Modal open={modal} setOpen={setModal}>
                 {modalItem}
             </Modal>
-            <PageLayout>
+            <PageLayout>{
+
+            loading && targetVenueState === null ? <WholeLoader/> :
             <div className={styles.ViewVenue}>
+            { loading ? <WholeLoader/> : null }
                     <div className={styles.subHeader}>
                         <NavLink to="/" className={styles.backLink}>Back</NavLink>
                             {authState ? <div className={styles.btnGroup}>
@@ -348,12 +371,12 @@ const ViewVenue = ({history}) => {
                         </div>
                         <div className={styles.rightSection}>
                             {targetVenue.otherImages[0] ? <div className={styles.subImage}>
-                                <img src={targetVenue.image1}/>
+                                <img src={targetVenue.otherImages[0]}/>
                             </div> : null}
                             <div className={styles.tag}><span className={styles.bolden}> {targetVenue.address} </span></div>
                             <div className={styles.tag}><span className={styles.bolden}> {targetVenue.capacity} </span> seats </div>
-                            <div className={styles.tag}> { targetVenue.resources[0].value ? <AvailableImage/> : <UnavailableImage/> } <span className={styles.bolden}>Computers</span></div>
-                            <div className={styles.tag}> { targetVenue.resources[1].value ? <AvailableImage/> : <UnavailableImage/> } <span className={styles.bolden}>Internet</span></div>
+                            <div className={styles.tag}> { targetVenue.resources[0].value === "true" ? <AvailableImage/> : <UnavailableImage/> } <span className={styles.bolden}>Computers</span></div>
+                            <div className={styles.tag}> { targetVenue.resources[1].value === "true" ? <AvailableImage/> : <UnavailableImage/> } <span className={styles.bolden}>Internet</span></div>
                         </div>
                     </div>
                     <div className={styles.btnHolder}>
@@ -365,6 +388,9 @@ const ViewVenue = ({history}) => {
                         }} onClick={datePicker}/>
                     </div>
                 </div>
+            }
+            
+            
         </PageLayout>
         </Fragment>
     )

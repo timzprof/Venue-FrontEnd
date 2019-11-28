@@ -5,7 +5,7 @@ import Loader from '../../UI/loader/loader'
 const WholeLoader = () => {
     return (
         <div className={styles.WholeLoader}>
-            <Loader color="#083a55"/>
+                <Loader color="#083a55"/>
         </div>
     )
 }

@@ -1,7 +1,8 @@
 import React from 'react'
 import styles from './eventItem.module.css'
+import {translate} from '../../../helpers/filterBookings'
 
-const EventItem = ({ timeBlock, blocked, eventName }) => {
+const EventItem = ({ timeBlock, blocked, name }) => {
 
     let start = timeBlock.start
     let end = timeBlock.end
@@ -42,16 +43,16 @@ const EventItem = ({ timeBlock, blocked, eventName }) => {
     return (
         <div className={styles.EventItem} style={style}>
             <div className={styles.bigScreenDetails}>
-                <span>{eventName}</span>
+                <span>{name}</span>
             </div>
              <div className={styles.smallScreenDetails}>
                  <div className={styles.detailGroup}>
                      <span className={styles.lead}>Time-Block : </span>
-                     <span className={styles.result}> 8:00 - 10:00 </span>
+                     <span className={styles.result}> {translate(timeBlock.start)} - {translate(timeBlock.end)} </span>
                  </div>
                  <div className={styles.detailGroup}>
                      <span className={styles.lead}>Event : </span>
-                     <span className={styles.result}> HUAWEI certification program </span>
+                     <span className={styles.result}> {name} </span>
                  </div>
              </div>
         </div>

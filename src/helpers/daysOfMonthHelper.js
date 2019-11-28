@@ -13,6 +13,12 @@ const helperObj = {
     12: 31
 }
 
+const months = ['Jan', 'Feb', 'March', 'April', 'May', 'July', 'August', 'Sept', 'Oct', 'Nov', 'Dec']
+
+export const monthHelper  = (number) => {
+    return months[number - 1]
+}
+
 export const daysOfMonthHelper = (date) => {
     
     const dateVar = new Date(date)
@@ -38,4 +44,7 @@ export const daysOfMonthHelper = (date) => {
 
     return arr
 }
+
+
+
 

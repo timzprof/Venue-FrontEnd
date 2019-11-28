@@ -10,7 +10,7 @@ const AuthContextProvider = ({children}) => {
         authIntial = true
     }
 
-    const [authState, setAuthState] = useState(true)
+    const [authState, setAuthState] = useState(authIntial)
     const setToken = (Token) => {
         localStorage.setItem("Token", JSON.stringify(Token))
         setAuthState(true)

@@ -1,13 +1,18 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import styles from './dropDown.module.css'
 import { ReactComponent as DropImage } from '../../../assets/images/Polygon 10.svg'
 
-const DropDown = ({label, options, onChange, name}) => {
-
-    const [value, setValue] = useState('')
+const DropDown = ({label, valueDate, options, onChange, name}) => {
+    console.log("from the dropdown", valueDate)
+    const [value, setValue] = useState(valueDate)
+    
+    useEffect(() => {
+        setValue(valueDate)
+    }, [valueDate])
+    
     const changeValue = (e) => {
         setValue(e.target.textContent)
-        onChange(name, value)
+        onChange(name, e.target.textContent)
     }
 
     const MenuOptions = options.map(option => <div onClick={(e) => changeValue(e) } className={styles.option}>{option}</div>) 

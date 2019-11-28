@@ -1,64 +1,47 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import styles from './DatePicker.module.css'
 import CalendarComponent from '../../components/calendar/calendar'
 import PageLayout from '../../components/pageLayout/pageLayout'
-import { NavLink } from 'react-router-dom'
+import { NavLink, withRouter } from 'react-router-dom'
 import Button from '../../components/UI/button/button'
 import EventShelf from '../../components/eventShelf/eventShelf'
-import { withRouter } from 'react-router-dom'
 import Modal from '../../components/UI/modal/modal'
 import DropDown from '../../components/UI/dropDown/dropDown'
 import { AuthContext } from '../../contexts/AuthContext'
-import {daysOfMonthHelper} from '../../helpers/daysOfMonthHelper'
+import {monthHelper, daysOfMonthHelper} from '../../helpers/daysOfMonthHelper'
 import {useSelector, useDispatch} from 'react-redux'
 import * as actions from '../../actions/bookingActions'
 import Input from '../../components/input/input'
 import { inputValidator, formValidator } from '../../helpers/formValidationHelper' 
-
-
-
-
-// for the datepicker in the drop down component (add a value and a onchange prop and then deal with those appropriately),
-    // make it such that once the dropdown is clicked then you close the drop down
-    // hide the scrollbar,
-    // give the range prop some real values that will be gotten from the month of the date string passed
-// there will be state for selected date
-// there will be a redux state for this also.
-// the selected date will determine the redux state
-// the event shelf will have a prop so we'll take care of the prop of active and unacctive times here
-// the callender will be given a prop(onchange) that will set the date
-
-
-
-
-// for booking 
-// will set the proper inputs and stuff
-// create an update function - borrow the other one and trim it
-// add an external validator function that will validate that a time is added , also a warning text will be put under it
-// there must be both start and end times
-// there will be a seperate state for the times and the date section of the booking
-// for the phone number i'll do the normal editing and send the edited stuff
-// an addtime function will be given to the add time button that will set the event time  and t
+import WholeLoader from '../../components/UI/wholeLoader/wholeLoader'
+import {timesArray, filterBooking} from '../../helpers/filterBookings'
 
 
 const DatePicker = ({ history }) => {
+    console.log(history)
     const [modalOpen, setModalOpen] = useState()
     const [authState] = useContext(AuthContext)
-    const venueState =  useSelector(state => state.venue)
-    const bookingState = useSelector(state => state.booking)
+    const venueState =  useSelector(state => state.venues)
+    const bookingState = useSelector(state => state.bookings)
     const dispatch = useDispatch()
-    const [targetDate, setTargetDate] = (bookingState)
+    const [targetDate, setTargetDate] = useState(new Date().toLocaleDateString("en", {
+        day: "numeric",
+        month: "long",
+        year: "numeric"
+    }))
 
+    console.log(bookingState.selectedBookings)    
     const targetVenue = venueState.targetVenue
 
+    
+    useEffect(() => {
+        console.log("initial useEffect ran")
+        dispatch(actions.getRequiredBookings(targetDate))
+    }, [targetDate])
+ 
 
-    const dateUpdater = (obj) => {
-        console.log(obj)
-        // set the reducers date
-        // set internal date state
-    }
-
-    const [formValid, setFormValid]  = useState(null)
+    console.log("The target date is ", targetDate)
+    const [formValid, setFormValid]  = useState(false)
 
     const [formDetails, setFormDetails] = useState({
         eventTitle: { 
@@ -93,11 +76,18 @@ const DatePicker = ({ history }) => {
                 required: true,
             }, errorMessages: [], valid:true
         },
-        timeframe: {
-            value: [],
+        start: {
+            value: 0,
             rules: {
                 required: true,
-                min: 2
+            }, 
+            errorMessages: [],
+            valid: true
+        },
+        end: {
+            value: 0,
+            rules: {
+                required: true,
             }, 
             errorMessages: [],
             valid: true
@@ -108,6 +98,27 @@ const DatePicker = ({ history }) => {
         }, errorMessages: [],  valid:true}
 
     })
+
+    const dateUpdater = (obj) => {
+        console.log("date changed", obj)
+        setTargetDate(new Date(obj).toLocaleDateString("en", {
+            day: "numeric",
+            month: "long",
+            year: "numeric"
+        }))
+        setBookingInfo({
+            ...bookingInfo,
+            ['date']: {
+                ...bookingInfo['date'],
+                value: new Date(obj).toLocaleDateString("en", {
+                    day: "numeric",
+                    month: "long",
+                    year: "numeric"
+                })
+            }
+        })
+    }
+
 
     const reset = () => {
         setModalOpen(null)
@@ -133,7 +144,6 @@ const DatePicker = ({ history }) => {
         }, errorMessages: [], valid:true}})
         setBookingInfo({
             date: {
-                // default value should be the date date state
                 value: targetDate,
                 rules: {
                     required: true,
@@ -166,10 +176,10 @@ const DatePicker = ({ history }) => {
     const bookingUpdater = (name, value, e) => {
         let finalObj = {...bookingInfo}
         if(e){
-            let tempVal = e.target.textContent.split('-').reduce((acc, current, i, array) => {
+            let tempVal = e.target.value.split('-').reduce((acc, current, i, array) => {
                 if(i === (array.length - 1) && current.length > 4){
-                    array.push(current[4])
                     acc.push(current.slice(0, 4))
+                    acc.push(current[4])
                     return acc
                 }
                 acc.push(current)
@@ -177,7 +187,7 @@ const DatePicker = ({ history }) => {
             }, [])
 
             finalObj.contactNumber.value = tempVal.join('')
-            e.target.textContent = tempVal.join('-')
+            e.target.value = tempVal.join('-')
         }else{
             if(name === "date"){
                 let dateVar = new Date(finalObj.date.value)
@@ -188,45 +198,56 @@ const DatePicker = ({ history }) => {
                     year: "numeric"
                 }) 
             }else{
-                finalObj.name = value
+                finalObj[name].value = value
             }
         }
         setBookingInfo(finalObj)
-        let rules = finalObj.name.rules
+        let rules = finalObj[name].rules
         let type = e ? e.target.type : 'input'
-        inputValidator(e, rules, finalObj, setBookingInfo, type)
+        const event = e ? e : {
+            target: {
+                value: value,
+                name: name
+            }
+        }
+        inputValidator(event, rules, finalObj, setBookingInfo, type)
     }
     
 
     
     const submitFunc = (e) => {
         e.preventDefault();
-        formValidator(formDetails, setFormDetails, setFormValid)
-        formValidator(bookingInfo, setBookingInfo, setFormValid)
-        if(formValid){
-            const formBody = {
-                eventTitle: formDetails.title.value,
-                eventDescription: formDetails.eventDescription.value,
-                contactEmail: formDetails.contactEmail.value,
-                contactName: formDetails.contactName.value,
-                contactNumber: bookingInfo.contactNumber.value,
-                date: bookingInfo.date.value,
-                timeframe: [bookingInfo.start.value, bookingInfo.end.value]
-            }
-            dispatch(actions.createBooking(formBody))
-            reset()
-        } 
+        setFormValid(formValidator(formDetails, setFormDetails))
+        setFormValid(formValidator(bookingInfo, setBookingInfo))
+    }
+
+    const finalSubmit = () => {
+        const formBody = {
+            eventTitle: formDetails.eventTitle.value,
+            eventDescription: formDetails.eventDescription.value,
+            contactName: formDetails.contactName.value,
+            contactEmail: formDetails.contactEmail.value,
+            contactPhone: parseInt(bookingInfo.contactNumber.value),
+            date: bookingInfo.date.value,
+            timeframe: [bookingInfo.start.value, bookingInfo.end.value],
+            venueId: targetVenue.id
+        }
+        console.log(formBody)
+        setFormValid(false)
+        dispatch(actions.createBooking(formBody))
+        reset()
+    }
+
+    if (formValid){
+        finalSubmit()
     }
 
     const formUpdater = (e) => {
         let inputObject = {}
         if (e.target.type === "checkbox"){
-            console.log("Checkbox", formDetails)
             inputObject = {
                 ...formDetails,
                 resources: formDetails.resources.map(resource => {
-                    console.log(resource.name)
-                    console.log(e.target.name)
                     if(resource.name === e.target.name){
                         console.log({
                             ...resource,
@@ -279,12 +300,12 @@ const DatePicker = ({ history }) => {
                             <h2 className={styles.formHeader}>
                                 Booking Details
                             </h2>
-                            <Input type="input" changeFunc={formUpdater} value={formDetails.title.value} inputObj={{
+                            <Input type="input" changeFunc={formUpdater} value={formDetails.eventTitle.value} inputObj={{
                                 name: 'eventTitle',
                                 type: 'text',
                                 label: 'Event title'
                             }} errorMessages={formDetails.eventTitle.errorMessages}/>
-                            <Input type="input"  changeFunc={formUpdater} value={formDetails.address.value} inputObj={{
+                            <Input type="input"  changeFunc={formUpdater} value={formDetails.eventDescription.value} inputObj={{
                                 name: 'eventDescription',
                                 type: 'text',
                                 label: 'Description'
@@ -293,17 +314,17 @@ const DatePicker = ({ history }) => {
                             <h2 className={styles.formHeader}>
                                 Contact Information
                             </h2>
-                            <Input type="input"  changeFunc={formUpdater} value={formDetails.capacity.value} inputObj={{
+                            <Input type="input"  changeFunc={formUpdater} value={formDetails.contactName.value} inputObj={{
                                 name: 'contactName',
                                 type: 'text',
                                 label: 'Name'
                             }} errorMessages={formDetails.contactName.errorMessages}/>
-                            <Input type="input"  changeFunc={formUpdater} value={formDetails.capacity.value} inputObj={{
+                            <Input type="input"  changeFunc={formUpdater} value={formDetails.contactEmail.value} inputObj={{
                                 name: 'contactEmail',
                                 type: 'text',
                                 label: 'Email'
                             }} errorMessages={formDetails.contactEmail.errorMessages}/>
-                            <Input type="input"  changeFunc={formUpdater} value={formDetails.capacity.value} inputObj={{
+                            <Input type="input"  changeFunc={(e) => bookingUpdater('contactNumber', bookingInfo.contactNumber.value, e)} inputObj={{
                                 name: 'contactNumber',
                                 type: 'text',
                                 label: 'Number'
@@ -315,59 +336,52 @@ const DatePicker = ({ history }) => {
                                 Booking Period
                             </h2>
                             {/* find a way to get value off drop downs andset them in  */}
-                            <DropDown name="date" onChange={bookingUpdater} label="July" options={daysOfMonthHelper(targetDate)} errorMessages={bookingInfo.date.errorMessages}/>
+                            <DropDown name="date" valueDate={new Date(bookingInfo.date.value).getDate()} onChange={bookingUpdater} label={monthHelper(new Date(targetDate).getMonth())} options={daysOfMonthHelper(targetDate)} errorMessages={bookingInfo.date.errorMessages}/>
                             <div className={styles.flexContainer}>
-                                <DropDown name="start" onChange={bookingUpdater} label="from" options={["8am", "9am", "10am", "11am", "12pm", "1pm", "2pm", "3pm"]} errorMessages={bookingInfo.start.errorMessages}/>
-                                <DropDown name="end" onChange={bookingUpdater} label="to" options={["8am", "9am", "10am", "11am", "12pm", "1pm", "2pm", "3pm"]} errorMessages={bookingInfo.end.errorMessages}/>
-                                {/* <Button 
-                                 text="Select Time" style={{
-                                    color: '#fff',
-                                    backgroundColor: '#23B83C',
-                                    marginTop: "20px"
-                                }} /> */}
-
+                                <DropDown name="start" onChange={bookingUpdater} label="from" options={["8am", "9am", "10am", "11am", "12pm", "1pm", "2pm", "3pm", "4pm", "5pm", "6pm", "7pm", "8pm"]} errorMessages={bookingInfo.start.errorMessages}/>
+                                <DropDown name="end" onChange={bookingUpdater} label="to" options={["8am", "9am", "10am", "11am", "12pm", "1pm", "2pm", "3pm", "4pm", "5pm", "6pm", "7pm", "8pm"]} errorMessages={bookingInfo.end.errorMessages}/>
                             </div>
                             <div className={styles.timeHolder}>
                                 {(bookingInfo.start.value && bookingInfo.end.value) ? <div className={styles.timeLabel}>
                             <span>{bookingInfo.date.value}, {bookingInfo.start.value} - {bookingInfo.end.value}</span>
                                 </div>: null}
-                                {/* <div className={styles.timeLabel}>
-                                    <span>July 10, 1pm - 3pm</span>
-                                </div><div className={styles.timeLabel}>
-                                    <span>July 10, 1pm - 3pm</span>
-                                </div> */}
                             </div>
-                        </div>
-                        </div>
-                        <div className={styles.btnHolder}>
-                            <Button 
+                            { bookingInfo.start.errorMessages.length > 0 || bookingInfo.end.errorMessages.length > 0 ? <p className={styles.warning}>you must insert both start and end times</p> : null}
+                            <div className={styles.btnHolder}>
+                            <Button onClick={submitFunc}
                                  text="Submit" style={{
                                     color: '#fff',
                                     backgroundColor: '#23B83C',
                                     marginTop: "20px"
                              }} />
                         </div>
+                        </div>
+                        </div>
                     </form>
                 </div>
             </Modal>
             <PageLayout>
+                {bookingState.loading ? <WholeLoader/> : null}
                     <div className={styles.subHeader}>
                         <NavLink to="back" className={styles.backLink}>Back</NavLink>
                     </div>    
                     <h2 className={styles.venueHeader}>
-                        {/* {targetVenue.name} */}
-                        Conference Hall
+                        {targetVenue.title}
                         <span className={styles.Date}>
-                            {new Date().toLocaleDateString()}
+                            {new Date(targetDate).toLocaleDateString("en", {
+                                day: "numeric",
+                                month: "long",
+                                year: "numeric"
+                            })}
                         </span>
                     </h2>
                     <div className={styles.mainContent}>
-                        <CalendarComponent/>
-                        <EventShelf/>
+                        <CalendarComponent value={targetDate} onChange={dateUpdater}/>
+                        <EventShelf filtered={filterBooking(bookingState.selectedBookings)}/>
                         {/* Bookings */}  
                     </div>
                     {authState ? <Button onClick={() => {
-                        history.push("/bookings")
+                        history.push(`/bookings/${targetVenue.id}/${targetDate}`)
                     }} text="Manage Bookings" style={{
                         color: '#fff',
                         backgroundColor: '#083a55',

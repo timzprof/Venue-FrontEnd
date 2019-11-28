@@ -1,16 +1,20 @@
 import React, {useState} from 'react'
 import styles from './viewBookings.module.css'
 import PageLayout from '../../components/pageLayout/pageLayout'
-import {NavLink} from 'react-router-dom'
+import {NavLink, withRouter} from 'react-router-dom'
 import Booking from '../../components/UI/booking/booking'
 import Modal from '../../components/UI/modal/modal'
 import DropDown from '../../components/UI/dropDown/dropDown'
 import Button from '../../components/UI/button/button'
 import { ReactComponent as Close } from '../../assets/images/close.svg'
+import { useSelector } from 'react-redux'
 
-
-const ViewBookings = () => {
+const ViewBookings = ({match}) => {
+    const { params: {venueid, date} } = match
     const [modalOpen, setModalOpen] = useState()
+    const venueState = useSelector(state => state.venues)
+    const bookingState = useSelector(state => state.bookings)
+    const bookingList = bookingState.selectedBookings.map(booking => <Booking bookingObj={booking} /> )
 
     return (
         <React.Fragment>
@@ -41,7 +45,7 @@ const ViewBookings = () => {
                                     padding: "12px 30px"
                                 }}  />
                                 <Button 
-                                    text="Delete" style={{
+                                    text="Deactivate" style={{
                                     color: "#DF7676",
                                     backgroundColor: "transparent",
                                     padding: "12px 30px"
@@ -61,20 +65,22 @@ const ViewBookings = () => {
                                 }} />
                     </div>
                     <h2 className={styles.venueHeader}>
-                        {/* {targetVenue.name} */}
-                        Conference Hall
+                        {venueState.targetVenue.title}
                         <span className={styles.Date}>
-                            {new Date().toLocaleDateString()}
+                        {new Date(date).toLocaleDateString("en", {
+                                day: "numeric",
+                                month: "long",
+                                year: "numeric"
+                            })}
                         </span>
                     </h2>
                     <div className={styles.BookingList}>
-                        <Booking approved/>
-                        <Booking approved/>
-                        <Booking approved/>
+                        
+                        {bookingList}
                     </div>
             </PageLayout>
         </React.Fragment>
     )
 }
 
-export default ViewBookings
+export default withRouter(ViewBookings)

@@ -17,6 +17,13 @@ const venueActionFail = (errorObj) => {
     })
 }
 
+export const venueActionSuccess = (message) => {
+    return ({
+        type: actions.venueActionSuccess,
+        payload: message
+    })
+}
+
 const getVenuesSuccess = (venues) => {
     return ({
         type: actions.getVenuesSuccess,
@@ -52,10 +59,13 @@ const editVenueSuccess = (newVenue) => {
     }
 }
 
-const setTargetVenueSuccess = (id) => {
+const setTargetVenueSuccess = (venue, id) => {
     return {
         type: actions.setTargetVenueSuccess,
-        payload: id
+        payload: {
+            venue: venue,
+            id: id
+        }
     }
 }
 
@@ -79,11 +89,13 @@ export const setTargetVenue = (venue) => (dispatch) => {
 }
 
 export const getVenue = (id) => (dispatch) => {
+    console.log("was called")
     dispatch(venueActionStart())
     FetchHelper(`/api/v1/venue/${id}`, "GET")
     .then((res) => res.json())
     .then((body) => {
-        dispatch(getVenueSuccess(body.venue))
+        console.log("got the body", body)
+        dispatch(getVenueSuccess(body.data))
     })
     .catch(error => dispatch(venueActionFail({
         type: 'getVenue',
@@ -97,7 +109,15 @@ export const deleteVenue = (id) => (dispatch) => {
     FetchHelper(`/api/v1/venue/${id}`, "DELETE",null, true)
     .then((res) => res.json())
     .then((body) => {
-            dispatch(deleteVenueSuccess(body.venue.id))
+            if (body.status === "success" ){
+                dispatch(deleteVenueSuccess(body.data))
+                dispatch(venueActionSuccess("venue delete"))
+            }else{
+                dispatch(venueActionFail({
+                    type: "deleteVenue",
+                    message: 'There was an error deleting the venue'
+                }))
+            }
     })
     .catch(error => dispatch(venueActionFail({
         type: "deleteVenue",
@@ -131,10 +151,10 @@ export const createVenue = (venueBody) => (dispatch) => {
 
 export const editVenue = (id, newVenueBody) => (dispatch) => {
     dispatch(venueActionStart())
-    FetchHelper(`/api/v1/venue/${id}`, "PATCH", newVenueBody, true, true)
+    FetchHelper(`/api/v1/venue/${id}`, "PUT", newVenueBody, true, true)
     .then((res) => res.json())
     .then((body) => {
-        dispatch(editVenueSuccess(body.venue))
+        dispatch(editVenueSuccess(body.data))
     })
     .catch((error) => dispatch(venueActionFail({
         type: "editVenue",
@@ -142,6 +162,8 @@ export const editVenue = (id, newVenueBody) => (dispatch) => {
     })))
 }
 
+
+// export 
 
 
 

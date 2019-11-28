@@ -34,10 +34,10 @@ const Card = ({venueObj, history}) => {
             </div>
             <div className={styles.additionalInfo}>
                 <div className={styles.infoGroup}>
-                    {/* <span className={styles.detail}>{venueObj.resources[0].value ? <AvailableImage/> : <UnavailableImage/>} Computers</span> */}
+                    <span className={styles.detail}>{(venueObj.resources[0].value === "true") ? <AvailableImage/> : <UnavailableImage/>} Computers</span>
                 </div>
                 <div className={styles.infoGroup}>
-                    {/* <span className={styles.detail}>{venueObj.resources[1].value ? <AvailableImage/> : <UnavailableImage/>} Internet</span> */}
+                    <span className={styles.detail}>{ (venueObj.resources[1].value === 'true') ? <AvailableImage/> : <UnavailableImage/>} Internet</span>
                 </div>
             </div>
             <Button text="View" onClick={() => viewVenue(venueObj.id)} style={{

@@ -1,6 +1,5 @@
 export const formValidator = (recievedFromDetails, setFormDetails, setFormValid) => {
     let formValid = true
-    console.log("starter form valid is true")
     let formDetails = {...recievedFromDetails}
     Object.keys(formDetails).forEach(detail => {
         if (detail === 'resources'){
@@ -13,7 +12,6 @@ export const formValidator = (recievedFromDetails, setFormDetails, setFormValid)
 
     Object.keys(formDetails).forEach(key => {
         if (formDetails[key].rules){
-            console.log("The rules have been seen")
             Object.keys(formDetails[key].rules).forEach(rule => {
                 if (rule === "max"){
                     if (formDetails[key].value.length > formDetails[key].rules[rule]){
@@ -26,12 +24,10 @@ export const formValidator = (recievedFromDetails, setFormDetails, setFormValid)
                             }
                         }
                         formValid = false
-                        console.log("the form valid has been set to false")
                     }
                 }
                 else if (rule === "min"){
                     if (formDetails[key].value.length < formDetails[key].rules[rule]){
-                        console.log("A rule was broken")
                         formDetails = {
                             ...formDetails,
                             [key]: {
@@ -40,13 +36,12 @@ export const formValidator = (recievedFromDetails, setFormDetails, setFormValid)
                             }
                         }
                         formValid = false
-                        console.log("the form valid has been set to false")
 
                     }
                 }
                 else if (rule === "required"){
+                    console.log(key )
                     if (formDetails[key].value.length <= 0 || formDetails[key].value <= 0 ){
-                        console.log("A rule was broken")
                         formDetails = {
                             ...formDetails,
                             [key]: {
@@ -56,8 +51,6 @@ export const formValidator = (recievedFromDetails, setFormDetails, setFormValid)
                             }
                         }
                         formValid = false
-                        console.log("the form valid has been set to false")
-
                     }
                 }else if (rule === "maxSize"){
                     let filesValid = true
@@ -68,7 +61,6 @@ export const formValidator = (recievedFromDetails, setFormDetails, setFormValid)
                             }
                         })
                         if(filesValid === false){
-                        console.log("A rule was broken")
                             formDetails = {
                                 ...formDetails,
                                 [key]: {
@@ -78,8 +70,6 @@ export const formValidator = (recievedFromDetails, setFormDetails, setFormValid)
                                 }
                             }
                             formValid = false
-                            console.log("the form valid has been set to false")
-
                         }
                     }
                 }else if (rule === "allowedTypes"){
@@ -93,7 +83,6 @@ export const formValidator = (recievedFromDetails, setFormDetails, setFormValid)
                                 }
                             })
                             if (seenFileType === false){
-                                console.log("A rule was broken")
                                 filesValid = false
                             }
                         })
@@ -107,7 +96,6 @@ export const formValidator = (recievedFromDetails, setFormDetails, setFormValid)
                                 }
                             }
                             formValid = false
-                            console.log("the form valid has been set to false")
                         }
                     }
                 }
@@ -115,7 +103,6 @@ export const formValidator = (recievedFromDetails, setFormDetails, setFormValid)
         }
     })
     setFormDetails(formDetails)
-    console.log("The final form valid", formValid)
     return formValid
 }
 
@@ -138,7 +125,7 @@ export const inputValidator = (e, rules, formDetails, setFormDetails,type) => {
                         ...finalObj,
                         [key]: {
                             ...finalObj[key],
-                            errorMessages:finalObj[key].errorMessages.concat(`Maximimum number of ${(key === "images") ? 'files' : 'characters'} allowed is ${key.rules[rule]}`)
+                            errorMessages:finalObj[key].errorMessages.concat(`Maximimum number of ${(key === "images") ? 'files' : 'characters'} allowed is ${finalObj[key].rules[rule]}`)
                         }
                     }
                 }
@@ -149,7 +136,7 @@ export const inputValidator = (e, rules, formDetails, setFormDetails,type) => {
                         ...finalObj,
                         [key]: {
                             ...finalObj[key],
-                            errorMessages:finalObj[key].errorMessages.concat(`Maximimum number of ${(key === "images") ? 'files' : 'characters'} allowed is ${key.rules[rule]}`)
+                            errorMessages:finalObj[key].errorMessages.concat(`Maximimum number of ${(key === "images") ? 'files' : 'characters'} allowed is ${finalObj[key].rules[rule]}`)
                         }
                     }
                 }
@@ -163,24 +150,25 @@ export const inputValidator = (e, rules, formDetails, setFormDetails,type) => {
                         [key]: {
                             ...finalObj[key],
                             errorMessages: 
-                            finalObj[key].errorMessages.concat(`Minimun number of ${(key === "images") ? 'files' : 'characters'} allowed is ${key.rules[rule]}`)
+                            finalObj[key].errorMessages.concat(`Minimum number of ${(key === "images") ? 'files' : 'characters'} allowed is ${finalObj[key].rules[rule]}`)
                         }
                     }
                 }
             }else{
-                if (e.target.value.length < rules['min']){
+                if (finalObj[key].value.length < rules['min']){
                     valid = false
                     finalObj = {
                         ...finalObj,
                         [key]: {
                             ...finalObj[key],
                             errorMessages: 
-                            finalObj[key].errorMessages.concat(`Minimun number of ${(key === "images") ? 'files' : 'characters'} allowed is ${key.rules[rule]}`)
+                            finalObj[key].errorMessages.concat(`Minimum number of ${(key === "images") ? 'files' : 'characters'} allowed is ${finalObj[key].rules[rule]}`)
                         }
                     }
                 }
             }
         }else if (rule == 'required'){
+            console.log("yes you were required")
             if (type == 'file'){
                 if (e.target.files.length <= 0){
                     valid = false
@@ -194,9 +182,10 @@ export const inputValidator = (e, rules, formDetails, setFormDetails,type) => {
                     }
                 }
             }else{
+                console.log("e", e)
                 if (e.target.value === '' || e.target.value <= 0){
+                    console.log(key)
                     valid = false
-                    console.log("error field is required")
                     finalObj = {
                         ...finalObj,
                         [key]: {

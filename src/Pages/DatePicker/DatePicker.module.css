@@ -33,6 +33,12 @@
     display: block;
 }
 
+.warning{
+    color: #df7676;
+    font-size: 12px;
+    margin-top: 10px;
+}
+
 
 
 @media (max-width: 1100px){
@@ -161,7 +167,7 @@
 .btnHolder{
     width: 100%;
     margin-top: 20px;
-    text-align: center;
+    text-align: start;
 }
 
 @media (max-width: 1024px){
@@ -172,6 +178,9 @@
 }
 
 @media (max-width: 768px){
+    .btnHolder{
+        text-align: center;
+    }
     .bookVenue{
         width: 80%;
         max-height: 80vh;

@@ -1,12 +1,12 @@
 import React from "react";
+import Login from "../containers/Login/Login";
 import {BrowserRouter as Router} from "react-router-dom";
-import Home from "../containers/Home/Home";
 import {create} from "react-test-renderer";
 
-test("Home Container renders", () => {
+test("Login Container renders", () => {
 	const component = create(
 		<Router>
-			<Home />
+			<Login />
 		</Router>
 	);
 	const tree = component.toJSON();

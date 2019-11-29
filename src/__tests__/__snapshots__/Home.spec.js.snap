@@ -12,7 +12,8 @@ Array [
     </div>
     <a
       className="Link"
-      href="/"
+      href="/login"
+      onClick={[Function]}
     >
       Log In
     </a>

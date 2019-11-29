@@ -1,0 +1,17 @@
+.Form_group {
+	width: 100%;
+}
+.Form_field {
+	width: 100%;
+	box-sizing: border-box;
+	padding: 15px;
+	margin: 5px;
+	outline: 0;
+	border: 1px solid var(--red);
+	border-radius: 4px;
+	font-family: inherit;
+}
+
+.Invalid {
+	background-color: #fda49a;
+}

@@ -70,7 +70,8 @@
 
 @media (max-width: 500px){
     .loginBox{
-        width: 90%;
-        padding: 40px;
+        width: 95%;
+        padding: 40px 20px;
+        height: 60%;
     }
 }

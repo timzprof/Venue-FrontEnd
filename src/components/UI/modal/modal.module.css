@@ -47,7 +47,7 @@
 .MainContainer > div{
     opacity: 0;
     position: absolute;
-    top: 52%;
+    top: 53%;
     left: 50%;
     transform: translate(-50%, -50%);
     animation: MainContainerOpen 0.3s ease-out 0s 1 forwards;

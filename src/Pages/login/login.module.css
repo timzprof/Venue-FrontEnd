@@ -75,3 +75,9 @@
         height: 60%;
     }
 }
+
+@media (max-height: 700px){
+    .loginBox{
+        height: 90%;
+    }
+}

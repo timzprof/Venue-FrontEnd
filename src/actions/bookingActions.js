@@ -50,6 +50,14 @@ const getRequiredBookingsSuccess = (date) => {
     })
 }
 
+const bookingsActionSuccess = (message) => {
+    return ({
+        type: actions.bookingsActionSuccess,
+        payload: message
+    })
+}
+
+
 export const getBookings = (id) => (dispatch) => {
     dispatch(bookingActionStart())
     FetchHelper(`/api/v1/booking?venueId=${id}`, "GET", true)
@@ -77,6 +85,7 @@ export const createBooking = (body) => (dispatch) => {
     .then((res) => res.json())
     .then((data) => {
         dispatch(createBookingSuccess(data.data))
+        dispatch(bookingsActionSuccess("Booking created successfully. Approval status details will be sent to you"))
     })
     .catch(err => dispatch(bookingActionFail({
         type: "createBookings",
@@ -84,12 +93,13 @@ export const createBooking = (body) => (dispatch) => {
     })))
 }
 
-export const approveBooking = (id) => (dispatch) => {
+export const approveBooking = (body) => (dispatch) => {
     dispatch(bookingActionStart())
-    FetchHelper(`/api/v1/booking/${id}/approve`)
+    FetchHelper(`/api/v1/booking/approve`, 'PATCH', body, true)
     .then((res) => res.json())
     .then((body) => {
-        dispatch(approveBookingSuccess(body.booking))
+        console.log("response body", body)
+        dispatch(approveBookingSuccess(body.data))
     })
     .catch(error => dispatch(bookingActionFail({
         type: "approveBookings",
@@ -98,12 +108,12 @@ export const approveBooking = (id) => (dispatch) => {
 }
 
 
-export const rejectBooking = (id) => (dispatch) => {
+export const rejectBooking = (body) => (dispatch) => {
     dispatch(bookingActionStart())
-    FetchHelper(`/api/v1/booking/${id}/reject`)
+    FetchHelper(`/api/v1/booking/reject`,'PATCH', body, true)
     .then((res) => res.json())
     .then((body) => {
-        dispatch(rejectBookingSuccess(body.booking))
+        dispatch(rejectBookingSuccess(body.data))
     })
     .catch(error => dispatch(bookingActionFail({
         type: "rejectBooking",
@@ -117,3 +127,10 @@ export const getRequiredBookings = (date) => (dispatch) => {
     dispatch(bookingActionStart())
     dispatch(getRequiredBookingsSuccess(date))
 }
+
+export const clearBookingNotification = () => {
+    return ({
+        type: actions.clearBookingNotification        
+    })
+}
+

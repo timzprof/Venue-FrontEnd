@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, Fragment} from 'react'
 import styles from './viewBookings.module.css'
 import PageLayout from '../../components/pageLayout/pageLayout'
 import {NavLink, withRouter} from 'react-router-dom'
@@ -8,6 +8,7 @@ import DropDown from '../../components/UI/dropDown/dropDown'
 import Button from '../../components/UI/button/button'
 import { ReactComponent as Close } from '../../assets/images/close.svg'
 import { useSelector } from 'react-redux'
+import  WholeLoader from '../../components/UI/wholeLoader/wholeLoader'
 
 const ViewBookings = ({match}) => {
     const { params: {venueid, date} } = match
@@ -54,30 +55,30 @@ const ViewBookings = ({match}) => {
                 </div>
             </Modal>
             <PageLayout>
-                    <div className={styles.subHeader}>
-                        <NavLink to="/" className={styles.backLink}>Back</NavLink>
-                        <Button onClick={() => setModalOpen(true)}
-                                    text="Disable bookings for this date" style={{
-                                    color: "#DF7676",
-                                    backgroundColor: "transparent",
-                                    border: "1px solid #DF7676",
-                                    padding: "12px 30px"
-                                }} />
-                    </div>
-                    <h2 className={styles.venueHeader}>
-                        {venueState.targetVenue.title}
-                        <span className={styles.Date}>
-                        {new Date(date).toLocaleDateString("en", {
-                                day: "numeric",
-                                month: "long",
-                                year: "numeric"
-                            })}
-                        </span>
-                    </h2>
-                    <div className={styles.BookingList}>
-                        
-                        {bookingList}
-                    </div>
+                { bookingState.loading ? <WholeLoader/> : null }
+                <div className={styles.subHeader}>
+                    <NavLink to="/" className={styles.backLink}>Back</NavLink>
+                    <Button onClick={() => setModalOpen(true)}
+                                text="Disable bookings for this date" style={{
+                                color: "#DF7676",
+                                backgroundColor: "transparent",
+                                border: "1px solid #DF7676",
+                                padding: "12px 30px"
+                            }} />
+                </div>
+                <h2 className={styles.venueHeader}>
+                    {venueState.targetVenue.title}
+                    <span className={styles.Date}>
+                    {new Date(date).toLocaleDateString("en", {
+                            day: "numeric",
+                            month: "long",
+                            year: "numeric"
+                        })}
+                    </span>
+                </h2>
+                <div className={styles.BookingList}>
+                    {bookingList}
+                </div>
             </PageLayout>
         </React.Fragment>
     )

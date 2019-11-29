@@ -12,7 +12,7 @@
 .timeBlock{
     background-color: #083a55;
     padding: 15px 10px;
-    flex-basis: 30%;
+    flex-basis: 15%;
     color: #fff;
     font-family: 'Nexa-bold';
     font-size: 13px;
@@ -33,6 +33,7 @@
     /* border-radius: 8px; */
     /* border-top-left-radius: none; */
     box-shadow: 0 3px 6px #00000016;
+    flex-basis: 85%;
 }
 
 .main{
@@ -121,7 +122,7 @@
         padding: 20px;
         flex-basis: 0;
         height: 20px;
-        width: 30%;
+        width: 45%;
     }
 
     .bookingInfo{

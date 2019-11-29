@@ -1,5 +1,5 @@
 .Notification{
-    position: absolute;
+    position: fixed;
     width: 80%;
     max-width: 700px;
     padding: 20px 50px;
@@ -13,6 +13,7 @@
     transition: all 0.3s ease-in;
     z-index: 1499;
     text-align: center;
+    box-shadow: 0 2px 3px #00000010;
 }
 
 .Notification span{

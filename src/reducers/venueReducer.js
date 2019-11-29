@@ -11,13 +11,15 @@ const initialStore = {
         errorType: '',
         errorMessage: '', 
     },
-    message: ""
+    success: {
+        status: false,
+        successMessage: ''
+    } 
 }
 
 const venueReducer = (state = initialStore, action) => {
     switch(action.type){
         case(actions.venueActionStart):
-            console.log("action has started")
             return {
                 ...state,
                 loading: true,
@@ -26,6 +28,10 @@ const venueReducer = (state = initialStore, action) => {
                     status: false,
                     errorType: '',
                     errorMessage: ''
+                },
+                success: {
+                    status: false,
+                    successMessage: ''
                 }
             }
         case(actions.venueActionFail):
@@ -36,19 +42,37 @@ const venueReducer = (state = initialStore, action) => {
                     status: true,
                     errorType: action.payload.type,
                     errorMessage: action.payload.message
+                },
+                success: {
+                    status: false,
+                    successMessage: ''
                 }
                 // consider setting error message in the store
             }
         case(actions.venueActionSuccess):
-            console.log(action.payload)
-            console.log("action delete success", action.payload)
             return {
                 ...state,
-                message: action.payload,
+                success: {
+                    status: true,
+                    successMessage: action.payload
+                },
                 loading: false,
+            }
+        case(actions.clearVenueNotification):
+            return {
+                ...state,
+                loading: false,
+                error: {
+                    status: false,
+                    type: '',
+                    message: '',
+                },
+                success: {
+                    status: false,
+                    successMessage: ''
+                }
             }    
         case(actions.getVenuesSuccess):
-            console.log('action payload', action.payload)
             return {
                 ...state,
                 venues: action.payload,

@@ -27,11 +27,33 @@ const Home = () => {
     const [notification, setNotification] = useContext(NotificationContext)
     const [modalOpen, setModalOpen] = useState()
     const [authState] = useContext(AuthContext)
-    const message = venueState.message
     
-   
 
-    
+    useEffect(() => {
+        dispatch(bookingActions.clearBookingNotification())
+        dispatch(venueActions.clearVenueNotification())
+    }, [])
+
+    useEffect(() => {
+        if(venueState.error.status === true){
+            setNotification({
+                open: true,
+                success: false,
+                text: venueState.error.errorMessage
+            })
+        }
+    }, [venueState.error.status])
+
+    useEffect(() => {
+        if(venueState.success.status === true){
+            setNotification({
+                open: true,
+                success: true,
+                text: venueState.success.successMessage
+            })
+        }
+        dispatch(venueActions.clearVenueNotification())
+    }, [venueState.success.status])
 
 
     const [formValid, setFormValid]  = useState(false)
@@ -152,13 +174,6 @@ const Home = () => {
         dispatch(venueActions.getVenues())
     }, [])
 
-    useEffect(() => {
-        setNotification({
-                    open: venueState.error.status,
-                    success: venueState.error.status ? false : null ,
-                    text: venueState.error.errorMessage
-                })
-    }, [venueState.error.status])
       
     function reset (){
         setModalOpen()
@@ -184,7 +199,6 @@ const Home = () => {
         setFormValid(false)
     }
 
-    console.log(venueState.venues)
     const cardList = venueState.venues.map((venueObj) => <Card venueObj={venueObj}/>)
     
 

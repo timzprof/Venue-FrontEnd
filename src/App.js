@@ -18,8 +18,8 @@ class App extends Component {
         <Switch>
           <Route exact path={["/", '/venue/']} component={Home} />
           <Route path="/login" component={Login} />
-          <Route path="/venue/:id" component={ViewVenue} />
-          <Route path="/date-picker" component={DatePicker} />
+          <Route path="/venue/:id" exact component={ViewVenue} />
+          <Route path="/venue/:id/date-picker" exact component={DatePicker} />
           <Route path="/logout" component={Logout} />
           <Route path="/page-not-found" component={NotFound} />
           <ProtectedRoutes path="/new-bookings" component={NewBookings} />

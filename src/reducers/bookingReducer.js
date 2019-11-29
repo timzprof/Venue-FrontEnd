@@ -17,6 +17,10 @@ const initialStore = {
         // all bookings for all venues  they have a venue id, and a time array
     ],
     selectedBookings: [],
+    success: {
+        status: false,
+        successMessage: ''
+    }
 }
 
 
@@ -25,7 +29,16 @@ const bookingReducer = (state = initialStore, action) => {
         case(actions.bookingActionStart):
             return {
                 ...state,
-                loading: true
+                loading: true,
+                error: {
+                    status: false,
+                    type: '',
+                    message: '',
+                },
+                // success: {
+                //     status: false,
+                //     successMessage: ''
+                // }
             }
         case(actions.bookingActionFail):
             return {
@@ -35,8 +48,40 @@ const bookingReducer = (state = initialStore, action) => {
                     status: true,
                     type: action.payload.type,
                     message: action.payload.message
+                },
+                success: {
+                    status: false,
+                    successMessage: ''
                 }
         }
+        case(actions.bookingsActionSuccess):
+            return {
+                ...state,
+                loading: false,
+                error: {
+                    status: false,
+                    type: '',
+                    message: '',
+                },
+                success: {
+                    status: true,
+                    successMessage: action.payload
+                }
+            }
+        case(actions.clearBookingNotification):
+            return {
+                ...state,
+                loading: false,
+                error: {
+                    status: false,
+                    type: '',
+                    message: '',
+                },
+                success: {
+                    status: false,
+                    successMessage: ''
+                }
+            }
         case(actions.createBookingSuccess):
             return {
                 ...state,
@@ -51,7 +96,6 @@ const bookingReducer = (state = initialStore, action) => {
                 loading: false
             }
         case(actions.getRequiredBookingsSuccess):
-            console.log("payload", action.payload)
             return {
                 ...state,
                 selectedBookings: state.bookings.filter(booking => booking.date === action.payload),
@@ -61,7 +105,7 @@ const bookingReducer = (state = initialStore, action) => {
             return {
                 ...state,
                 bookings: state.bookings.map(booking => {
-                    if (booking.id == action.payload){
+                    if (booking.id == action.payload.id){
                         return {
                             ...booking,
                             status: 'approved'
@@ -69,21 +113,39 @@ const bookingReducer = (state = initialStore, action) => {
                     }
                     return booking
                 }),
-                loading: false        
+                loading: false,
+                selectedBookings: state.selectedBookings.map(booking => {
+                    if (booking.id == action.payload.id){
+                        return {
+                            ...booking,
+                            status: 'approved'
+                        }
+                    }
+                    return booking
+                })        
             }
         case(actions.rejectBookingSuccess):
             return {
                 ...state,
                 bookings: state.bookings.map(booking => {
-                    if (booking.id == action.payload){
+                    if (booking.id == action.payload.id){
                         return {
                             ...booking,
-                            status: 'rejected'
+                            status: 'reject'
                         }
                     }
                     return booking
                 }),
-                loading: false
+                loading: false,
+                selectedBookings: state.selectedBookings.map(booking => {
+                    if (booking.id == action.payload.id){
+                        return {
+                            ...booking,
+                            status: 'reject'
+                        }
+                    }
+                    return booking
+                })
             }
         default:
             return state

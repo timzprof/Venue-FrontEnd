@@ -49,7 +49,8 @@
     margin-bottom: 20px;
     font-family: 'Nexa-bold';
     margin-top: 20px;
-    display: none;
+    margin-left: 100px;
+    /* display: none; */
 }
 
 .warning{
@@ -72,6 +73,10 @@
         margin: 0 0 50px;
         max-width: 100%;
         /* margin-left: -130px; */
+    }
+
+    .littleHeading{
+        margin-left: 0;
     }
 
     .littleHeading, .warning{

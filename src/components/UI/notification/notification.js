@@ -1,10 +1,14 @@
 import React, {useContext, useEffect} from 'react'
 import styles from './notification.module.css'
 import { NotificationContext } from '../../../contexts/notificationContext'
+import { useSelector, useDispatch } from 'react-redux'
+import * as venueActions from '../../../actions/venueActions'
+import * as bookingActions from '../../../actions/bookingActions'
 
 const Notification = () => {
     const [notification , setNotification] = useContext(NotificationContext)
     let notificationClasses = [styles.Notification]
+    let dispatch = useDispatch()
 
     if(notification.open){
         notificationClasses = [styles.Notification, styles.NotificationOpen]
@@ -20,7 +24,9 @@ const Notification = () => {
                 open: false,
                 success: false,
                 text: ''
-            })     
+            })
+            dispatch(venueActions.clearVenueNotification())
+            dispatch(bookingActions.clearBookingNotification())     
         }, 5000)
         return () => {
             clearTimeout(timey)

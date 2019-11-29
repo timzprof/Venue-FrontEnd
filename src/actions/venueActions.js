@@ -94,7 +94,6 @@ export const getVenue = (id) => (dispatch) => {
     FetchHelper(`/api/v1/venue/${id}`, "GET")
     .then((res) => res.json())
     .then((body) => {
-        console.log("got the body", body)
         dispatch(getVenueSuccess(body.data))
     })
     .catch(error => dispatch(venueActionFail({
@@ -111,7 +110,7 @@ export const deleteVenue = (id) => (dispatch) => {
     .then((body) => {
             if (body.status === "success" ){
                 dispatch(deleteVenueSuccess(body.data))
-                dispatch(venueActionSuccess("venue delete"))
+                dispatch(venueActionSuccess("venue was successfuly deleted"))
             }else{
                 dispatch(venueActionFail({
                     type: "deleteVenue",
@@ -130,7 +129,6 @@ export const createVenue = (venueBody) => (dispatch) => {
     FetchHelper('/api/v1/venue', "POST", venueBody, true, true)
     .then((res) => res.json())
     .then((body) => {
-        console.log("response", body)
         if(body.status === "error"){
             dispatch(venueActionFail({
                 type: "createVenue",
@@ -138,8 +136,8 @@ export const createVenue = (venueBody) => (dispatch) => {
             }))    
         }
         else{
-            console.log("The recieved body", body)
-            dispatch(createVenueSuccess(body.data))        
+            dispatch(createVenueSuccess(body.data))
+            dispatch(venueActionSuccess("Venue was successfully created"))
         }
     })
     .catch((error) =>{
@@ -155,6 +153,7 @@ export const editVenue = (id, newVenueBody) => (dispatch) => {
     .then((res) => res.json())
     .then((body) => {
         dispatch(editVenueSuccess(body.data))
+        dispatch(venueActionSuccess("Venue was successfully edited"))
     })
     .catch((error) => dispatch(venueActionFail({
         type: "editVenue",
@@ -162,8 +161,12 @@ export const editVenue = (id, newVenueBody) => (dispatch) => {
     })))
 }
 
-
-// export 
+export const clearVenueNotification = () => {
+    return ({
+        type: actions.clearVenueNotification        
+    })
+}
+ 
 
 
 

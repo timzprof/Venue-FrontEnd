@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useState, useContext, useEffect, Fragment } from 'react'
 import styles from './DatePicker.module.css'
 import CalendarComponent from '../../components/calendar/calendar'
 import PageLayout from '../../components/pageLayout/pageLayout'
@@ -11,16 +11,20 @@ import { AuthContext } from '../../contexts/AuthContext'
 import {monthHelper, daysOfMonthHelper} from '../../helpers/daysOfMonthHelper'
 import {useSelector, useDispatch} from 'react-redux'
 import * as actions from '../../actions/bookingActions'
+import * as venueActions from '../../actions/venueActions'
 import Input from '../../components/input/input'
 import { inputValidator, formValidator } from '../../helpers/formValidationHelper' 
 import WholeLoader from '../../components/UI/wholeLoader/wholeLoader'
 import {timesArray, filterBooking} from '../../helpers/filterBookings'
+import Loader from '../../components/UI/loader/loader'
+import { NotificationContext } from '../../contexts/notificationContext'
 
 
-const DatePicker = ({ history }) => {
-    console.log(history)
+const DatePicker = ({match, history }) => {
+    const {params: {id}} = match 
     const [modalOpen, setModalOpen] = useState()
     const [authState] = useContext(AuthContext)
+    const [notification, setNotification] = useContext(NotificationContext)
     const venueState =  useSelector(state => state.venues)
     const bookingState = useSelector(state => state.bookings)
     const dispatch = useDispatch()
@@ -30,17 +34,52 @@ const DatePicker = ({ history }) => {
         year: "numeric"
     }))
 
-    console.log(bookingState.selectedBookings)    
-    const targetVenue = venueState.targetVenue
 
+
+    useEffect(() => {
+        if(venueState.error.status === true){
+            setNotification({
+                open: true,
+                success: false,
+                text: venueState.error.errorMessage
+            })
+        }
+    }, [venueState.error.status])
     
     useEffect(() => {
-        console.log("initial useEffect ran")
+        if(bookingState.success.status === true){
+            setNotification({
+                open: true,
+                success: true,
+                text: bookingState.success.successMessage
+            })
+        }
+    }, [bookingState.success.status])
+
+
+    const targetVenue = venueState.targetVenue
+    const goBack = () => {
+        history.goBack()
+    }
+
+    useEffect(() => {
+        dispatch(actions.clearBookingNotification())
+        if (targetVenue === null){
+            dispatch(venueActions.getVenue(id))
+        }
+    }, [])
+    
+    useEffect(() => {
         dispatch(actions.getRequiredBookings(targetDate))
-    }, [targetDate])
+    }, [targetDate, bookingState.bookings])
+
+    useEffect(() => {
+        if(targetVenue){
+            dispatch(actions.getBookings(targetVenue.id))
+        }
+    }, [targetVenue])
  
 
-    console.log("The target date is ", targetDate)
     const [formValid, setFormValid]  = useState(false)
 
     const [formDetails, setFormDetails] = useState({
@@ -100,7 +139,6 @@ const DatePicker = ({ history }) => {
     })
 
     const dateUpdater = (obj) => {
-        console.log("date changed", obj)
         setTargetDate(new Date(obj).toLocaleDateString("en", {
             day: "numeric",
             month: "long",
@@ -232,7 +270,6 @@ const DatePicker = ({ history }) => {
             timeframe: [bookingInfo.start.value, bookingInfo.end.value],
             venueId: targetVenue.id
         }
-        console.log(formBody)
         setFormValid(false)
         dispatch(actions.createBooking(formBody))
         reset()
@@ -361,9 +398,10 @@ const DatePicker = ({ history }) => {
                 </div>
             </Modal>
             <PageLayout>
+                { venueState.loading === true && venueState.targetVenue === null ? <Loader color='#083a55'/> : <Fragment>
                 {bookingState.loading ? <WholeLoader/> : null}
                     <div className={styles.subHeader}>
-                        <NavLink to="back" className={styles.backLink}>Back</NavLink>
+                        <NavLink onClick={goBack} className={styles.backLink}>Back</NavLink>
                     </div>    
                     <h2 className={styles.venueHeader}>
                         {targetVenue.title}
@@ -393,6 +431,7 @@ const DatePicker = ({ history }) => {
                         backgroundColor: '#083a55',
                         marginTop: '20px'
                     }} />}
+                </Fragment> }
             </PageLayout>
         </React.Fragment>
     )

@@ -2,10 +2,25 @@ import React from 'react'
 import styles from './booking.module.css'
 import Button from '../button/button'
 import Label from '../label/label'
-
+import { useDispatch } from 'react-redux'
+import * as actions from '../../../actions/bookingActions'
 
 const Booking = ({ bookingObj }) => {
-    console.log(bookingObj)
+    const dispatch = useDispatch()
+    const approve = (id) => {
+        dispatch(actions.approveBooking({
+            bookingId: id
+        }))
+    }
+
+    const reject = (id) => {
+        dispatch(actions.rejectBooking({
+            bookingId: id
+        }))
+    }
+
+    const id = bookingObj.id
+
     return (
         <div className={styles.Booking}>
            <div className={styles.timeBlock}>
@@ -29,18 +44,20 @@ const Booking = ({ bookingObj }) => {
                                     padding: "12px 30px"
                                 }} />) :  
                                 [<Button 
-                                    text="Approve" style={{
+                                    text="Approve" action={() => approve(id)} style={{
                                     color: "#f5f5f5",
                                     backgroundColor: "#23B83C",
                                     marginRight: "20px",
-                                    padding: "12px 30px"
+                                    padding: "12px 30px",
+                                    marginBottom: "10px"
                                 }} />,
                                 <Button 
-                                    text="Reject" style={{
+                                    text="Reject" action={() => reject(id)} style={{
                                     color: "#DF7676",
                                     backgroundColor: "transparent",
                                     border: "1px solid #DF7676",
-                                    padding: "12px 30px"
+                                    padding: "12px 30px",
+                                    marginBottom: "10px"
                                 }} />]}
                     </div>
                 </div>

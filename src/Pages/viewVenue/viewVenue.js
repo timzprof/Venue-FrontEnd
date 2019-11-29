@@ -18,6 +18,7 @@ import Input from '../../components/input/input'
 import { formValidator } from '../../helpers/formValidationHelper'
 import { inputValidator } from '../../helpers/formValidationHelper'
 import WholeLoader from '../../components/UI/wholeLoader/wholeLoader'
+import Loader from '../../components/UI/loader/loader'
 
 const ViewVenue = ({match ,history}) => {
     const venueState = useSelector(state => state.venues)
@@ -32,6 +33,7 @@ const ViewVenue = ({match ,history}) => {
 
     const targetVenueState = venueState.targetVenue
     useEffect(() => {
+        dispatch(bookingActions.clearBookingNotification())
         if (targetVenueState === null){
             dispatch(actions.getVenue(id))
         }
@@ -40,12 +42,14 @@ const ViewVenue = ({match ,history}) => {
     const message = venueState.message
     
     const datePicker = () => {
-        history.push("/date-picker")
+        history.push(`/venue/${targetVenueState.id}/date-picker`)
     }
 
+    const goBack = () => {
+        history.goBack()
+    }
 
     useEffect(() => {
-        console.log("use effect one")
         if(venueState.error.status === true){
             console.log(venueState.error.errorMessage)
             setNotification({
@@ -55,6 +59,20 @@ const ViewVenue = ({match ,history}) => {
             })
         }
     }, [venueState.error.status])
+
+    useEffect(() => {
+        if (venueState.success.status === true && venueState.success.successMessage === "venue was successfuly deleted"){
+            console.log("I should redirect them")
+            setRedirect(true)
+        }else if(venueState.success.status === true){
+            setNotification({
+                open: true,
+                success: true,
+                text: venueState.success.successMessage
+            })
+        }
+    }, [venueState.success.status])
+
 
 
     const [formValid, setFormValid]  = useState(false)
@@ -185,7 +203,8 @@ const ViewVenue = ({match ,history}) => {
     let modalItem = ""
 
     const venueDelete = () =>{
-        dispatch(actions.deleteVenue(targetVenue.id))        
+        dispatch(actions.deleteVenue(targetVenue.id))
+        reset()        
     }
 
 
@@ -312,14 +331,14 @@ const ViewVenue = ({match ,history}) => {
         return <Redirect to="/"/>
     }
 
-    if (message){
-        if(message === "venue delete"){
-            dispatch(actions.venueActionSuccess("Venue successfully deleted"))
-            setRedirect(true)
-        }else{
-            dispatch(actions.venueActionSuccess("Venue successfully edited"))
-        }
-    }
+    // if (message){
+    //     if(message === "venue delete"){
+    //         dispatch(actions.venueActionSuccess("Venue successfully deleted"))
+    //         setRedirect(true)
+    //     }else{
+    //         dispatch(actions.venueActionSuccess("Venue successfully edited"))
+    //     }
+    // }
 
 
     return (
@@ -329,11 +348,11 @@ const ViewVenue = ({match ,history}) => {
             </Modal>
             <PageLayout>{
 
-            loading && targetVenueState === null ? <WholeLoader/> :
+            loading && targetVenueState === null ? <Loader/> :
             <div className={styles.ViewVenue}>
             { loading ? <WholeLoader/> : null }
                     <div className={styles.subHeader}>
-                        <NavLink to="/" className={styles.backLink}>Back</NavLink>
+                        <NavLink onClick={goBack} className={styles.backLink}>Back</NavLink>
                             {authState ? <div className={styles.btnGroup}>
                                 <Button 
                                     onClick={() => {

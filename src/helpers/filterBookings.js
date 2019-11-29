@@ -68,15 +68,21 @@ const timesArr = [
 ]
 
 export const filterBooking = (bookingArray) => {
+    
     timesArr.forEach((time) => {
         time.occupied = false
     })
-    const eventItems = bookingArray.map(booking => {
+
+    const eventItems = bookingArray.filter(booking => {
+        if (booking.status === "approved" || booking.eventTitle === "Blocked"){
+          return booking
+        }      
+    }).map(booking => {
         const time = [ booking.eventTitle, {start: times.indexOf(booking.timeframe[0]) + 8, end: times.indexOf(booking.timeframe[1]) + 8}]
-        for (let i = times.indexOf(booking.timeframe[0]); i < times.indexOf(booking.timeframe[1]); i++){
+        for (let i = times.indexOf(booking.timeframe[0]); i <= times.indexOf(booking.timeframe[1]); i++){
             timesArr[i].occupied = true
         }
-        return time      
+        return time
     })
     return [eventItems, timesArr]
 }

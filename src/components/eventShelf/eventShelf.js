@@ -27,11 +27,13 @@ const EventShelf = ({filtered}) => {
 
     })
 
+    console.log("array", arr)
+
     const events = arr.map(event => <EventItem timeBlock={{start: event[1].start, end: event[1].end}} blocked={event[0] === "blocked" ? true : false} name={event[0]}/>)
 
     return (
         <div className={styles.EventShelf}>
-            <p className={styles.littleHeading}>Events</p>
+            <p className={styles.littleHeading}>Approved Events</p>
             <div className={styles.innerDiv}> 
                 <div className={styles.timeGroup}>
                     {times}

@@ -1,0 +1,76 @@
+.Card{
+    box-shadow: 0 3px 6px #00000010;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #083A5510;
+    font-family: 'Nexa-light';
+    background-color: #ffffff;
+    max-width: 400px;
+}
+
+.CardImage{
+    height: 250px;
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.CardImage img{
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+}
+
+.CardName{
+    font-size: 20px;
+    color: #083A55;
+    margin-bottom: 10px;
+    font-family: 'Nexa-bold';
+}
+
+.infoGroup{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 10px;
+}
+
+.infoGroup svg{
+    margin-right: 15px;
+    width: 30px;
+    height: 30px;
+}
+
+.dot{
+    height: 8px;
+    width: 8px;
+    background-color: #083A55;
+    border-radius: 50%;
+    margin: 0 5px;
+    margin-left: 15px;
+}
+
+.detail{
+    color: #083A55;
+    font-size: 18px;
+    font-weight: 100;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.detailImp{
+    color: #083A55;
+    font-size: 18px;
+    font-weight: 100;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+}
+
+
+.additionalInfo{
+    margin-top: 25px;
+}

@@ -1,58 +1,41 @@
-@import url('https://fonts.googleapis.com/css?family=Livvic&display=swap');
+/* @import url('https://fonts.googleapis.com/css?family=Livvic&display=swap'); */
 
-:root {
-  --font: 'Livvic', sans-serif;
-  --teal: #083A55;
+
+@font-face{
+  font-family: "Nexa-bold";
+  src: url('./assets/fonts/Nexa Bold.otf');
 }
 
-html,body {
+@font-face{
+  font-family: "Nexa-light";
+  src: url('./assets/fonts/Nexa Light.otf');
+}
+
+
+*, 
+*::after,
+*::before{
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
-body {
-  font-family: var(--font);
-  background-color: #F5F5F5;
+body{
+  height: 100%;
+  width: 100%;
+  font-family: "Nexa-light";
+  background-color: #f5f5f5;
 }
 
-.main {
-  padding: 3rem;
-  min-height: 100vh;
+a{
+  text-decoration: none;
 }
 
-.btn {
-  padding: .8rem;
-  font: inherit;
-  outline: none;
-  cursor: pointer;
-  text-align: center;
-  font-size: .8rem;
-  background-color: var(--teal);
-  color: white;
-  border: none;
-  border-radius: 4px;
+svg.close{
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  height: 25px;
+  width: 25px;
+  font-family: "Nexa-light";
 }
-
-.card_container {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-around;
-}
-
-footer {
-  padding: .7rem;
-  background-color: var(--teal);
-  text-align: center;
-  color: white;
-}
-
-/* Tablet */
-@media only screen and (max-width: 768px) {
-	.main {
-    padding: 2rem;
-  }
-}
-
-/* Phone */
-@media only screen and (max-width: 500px) {}

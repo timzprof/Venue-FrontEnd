@@ -1,0 +1,138 @@
+.Booking{
+    display: flex;
+    width: 100%;
+    margin-bottom: 20px;
+    height: auto;
+    justify-content: flex-start;
+    align-items: flex-start;
+    transition: all 0.3s ease-out;
+}
+
+
+.timeBlock{
+    background-color: #083a55;
+    padding: 15px 10px;
+    flex-basis: 15%;
+    color: #fff;
+    font-family: 'Nexa-bold';
+    font-size: 13px;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    box-shadow: 0 3px 6px #00000016;
+    height: 79px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.bookingInfo{
+    padding: 20px;
+    background-color: #fff;
+    border-bottom-right-radius: 8px;
+    border-top-right-radius: 8px;
+    /* border-radius: 8px; */
+    /* border-top-left-radius: none; */
+    box-shadow: 0 3px 6px #00000016;
+    flex-basis: 85%;
+}
+
+.main{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.main h2{
+    color: #083a55;
+    font-size: 18px;
+    font-family: 'Nexa-bold';
+}
+
+.Booking .subInfo{
+    width: 70%;
+    max-height: 0;
+    overflow: hidden;
+    transform-origin: top;
+    transition: all 1s ease-out;
+    transition-delay: 0.2s;
+}
+
+.Booking:hover .subInfo{
+    max-height: 500px;
+}
+
+.Booking:hover .bookingInfo{
+    border-bottom-left-radius: 8px;
+}
+
+.subInfo p{
+    color: #083a55;
+    font-size: 15px;
+    font-family: 'Nexa-light';
+    padding-top: 20px;
+}
+
+.detail{
+    display: inline-block;
+    margin-right: 20px;
+    font-family: 'Nexa-light';
+    margin-top: 10px;
+    color: #083a55;
+    font-size: 13px;
+}
+
+
+.bold{
+    font-family: 'Nexa-bold';
+}
+
+.btnGroup{
+    margin-top: 15px;
+}
+
+
+@media (max-width: 1200px){
+    .timeBlock{
+        flex-basis: 18%;
+    }
+
+    .bookingInfo{
+        flex-basis: 82%;
+    }
+
+    .Booking .subInfo{
+        width: 95%;
+    }
+}
+
+
+@media (max-width: 600px){
+    .Booking{
+        /* display: flex; */
+        flex-direction: column;
+        width: 100%;
+        align-items: flex-start;
+        height: auto;
+    }
+
+    .timeBlock{
+        border-radius: 8px;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        padding: 20px;
+        flex-basis: 0;
+        height: 20px;
+        width: 45%;
+    }
+
+    .bookingInfo{
+        border-radius: 8px;
+        border-top-left-radius: 0;
+        border-top-right-radius: none;  
+        
+    }
+    
+    .subInfo{
+        width: 100%;
+    }
+}

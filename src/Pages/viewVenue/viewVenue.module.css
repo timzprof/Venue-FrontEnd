@@ -1,0 +1,330 @@
+.subHeader{
+    /* width: 100%; */
+    margin: 20px 0 30px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.mainContent{
+    height: 56.3vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.backLink{
+    color: #083a55;
+    font-family: 'Nexa-bold';
+}
+
+.venueHeader{
+    font-family: 'Nexa-bold';
+    font-size: 22px;
+    color: #083a55;
+    margin-bottom: 20px;
+}
+
+.mainImage{
+    height: 100%;
+    width: 70%;
+    border-radius: 8px;
+    background-color: #083a55;
+    overflow: hidden;
+}
+
+.mainImage > img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.rightSection{
+    width: 28%;
+    height: 100%;
+}
+
+.subImage{
+    width: 100%;
+    height: 45%;
+    background-color: #083a55;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.subImage img{
+    height: 100%;
+    width: 100%;
+}
+
+.btnHolder{
+    width: 100%;
+}
+
+.smallScreenImages{
+    display: none;
+}
+
+.tag{
+    padding: 12px 30px;
+    width: 100%;
+    background-color: #fff;
+    box-shadow: 0 2px 4px #00000010;
+    border-radius: 8px;
+    text-align: center;
+    margin-bottom: 7px;
+    color: #083a55;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tag svg{
+    margin-right: 10px;
+    height: 25px;
+    width: 25px;
+}
+
+.bolden{
+    font-family: "Nexa-bold";
+    margin-right: 10px;
+}
+
+
+.modalItemDelete{
+    height: 50%;
+    width: 40%;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    box-shadow: 0 3px 6px #00000016;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.modalItemDelete h2{
+    font-family: "Nexa-bold";
+    font-size: 22px;
+    color: #083a55;
+}
+
+.warning{
+    color: #df7676;
+    font-size: 15px;
+    margin: 10px 0 50px;
+}
+
+
+.modalItemEdit{
+    width: 45%;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    box-shadow: 0 3px 6px #00000016;
+    padding: 30px;
+}
+
+.formHeader{
+    font-family: "Nexa-bold";
+    font-size: 25px;
+    margin-bottom: 30px;
+    color: #083A55;
+}
+
+
+.formGroup{
+    width: 60%;
+    padding: 10px 0;
+}
+
+.formGroup input{
+    border: 2px solid #083A5510;
+    width: 100%;
+    padding: 15px;
+    color: #083A55;
+    outline: none;
+    margin: 5px 0;
+    font-size: 17px;
+    border-radius: 5px;
+    /* transition: all 0.3s ease-out; */
+}
+.formGroup input:focus{
+    border: 2px solid #083A55;
+}
+
+.formGroup label{
+    font-family: "Nexa-light";
+    font-size: 14px;
+    color: #083A55;
+    display: block;
+}
+
+.fileInput{
+   visibility: hidden; 
+}
+
+.formGroupCheck{
+    width: 100%;
+    margin: 5px 0;
+}
+.formGroupCheck span{
+    color: #083A55;
+}
+
+.formGroupCheck label{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 150px;
+}
+.formGroupCheck input{
+    visibility: hidden;
+}
+
+.formGroupCheck > input:checked + label > .fakeCheckBox::after{
+    opacity: 1;
+    max-width: 20px;
+    max-height: 20px;
+}
+
+.fakeCheckBox{
+    display: inline-block;
+    height: 25px;
+    width: 25px;
+    background-color: #fff;
+    box-shadow: 0 3px 6px #00000010;
+    margin-right: 10px;
+    position: relative;
+}
+
+.fakeCheckBox::after{
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+    height: 20px;
+    width: 10px;
+    border: 2px solid #083A55;
+    border-top: none;
+    border-left: none;
+    opacity: 0;
+    transition: all 0.5s ease;
+    max-width: 0;
+    max-height: 0;
+}
+
+.btnHolderModal{
+    text-align: center;
+}
+
+
+@media (max-width: 1024px){
+    .mainImage{
+        width: 58%;
+    }
+
+    .rightSection{
+        width: 40%;
+    }
+    .modalItemEdit, .modalItemDelete{
+        width: 55%;
+    }
+
+}
+
+@media (max-width: 768px){
+    .modalItemEdit, .modalItemDelete{
+        width: 80%;
+    }
+}
+
+
+@media (max-width: 628px){
+    .mainContent{
+        flex-direction: column;
+        height: 100%;
+    }
+
+    .subImage{
+        display: none;
+    }
+
+    .mainImage{
+        width: 100%;
+        margin-bottom: 30px;
+        height: 350px;
+        /* flex-basis: 70%; */
+        overflow-x: auto;
+        background-color: transparent;
+    }
+
+    .rightSection{
+        width: 90%;
+        margin-bottom: 20px;
+    }
+
+
+    .btnHolder{
+        text-align: center;
+    }
+
+    .btnHolder button{
+        width: 90%;
+    }
+
+    .mainImage > img{
+        display: none;
+    }
+
+    .smallScreenImages{
+        width: 100%;
+        position: absolute;
+        width: 100%;
+        left: 0;
+        height: 350px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        white-space: nowrap;
+        align-items: center;
+        padding: 0 20px;
+        padding-right: 0;
+        display: block;
+    }
+
+    .smallScreenImages::-webkit-scrollbar{
+        display: none;
+    }
+
+    .smallScreenImages img{
+        /* display: inline-block; */
+        height: 330px ;
+        width: 85%;
+        border-radius: 8px;
+        background-color: #083A55;
+        margin-right: 20px;
+        flex: 0 0 auto;
+    }
+
+
+}
+
+
+@media (max-width: 450px){
+    .backLink{
+        display: none;
+    }
+
+    .subHeader > div{
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .modalItemEdit, .modalItemDelete{
+        width: 95%;
+    }
+}

@@ -65,6 +65,14 @@
 }
 
 
+.barNull{
+    width: 21px;
+    background-color: #fff;
+    height: 4px;
+    position: relative;
+}
+
+
 .bar{
     width: 21px;
     max-width: 0;
@@ -84,7 +92,7 @@
 }
 
 
-.bar::after, .bar::before{
+.bar::after, .bar::before, .barNull::after, .barNull::before{
     position: absolute;
     /* position: relative; */
     content: '';
@@ -96,11 +104,11 @@
 }
 
 
-.bar::after{
+.barNull::after, .bar::after{
     top: 10px;
 }
 
-.bar::before{
+.barNull::before, .bar::before{
     top: -10px;
 }
 

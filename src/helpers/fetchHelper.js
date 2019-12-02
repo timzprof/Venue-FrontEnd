@@ -26,8 +26,6 @@ const FetchHelper = (route, method="GET", body, authRequired, filesIncluded) => 
                    'Authorization': `Bearer ${Token}`
         }
         const bodyObj = JSON.stringify(body)
-        console.log("body 1", body)
-        console.log(bodyObj)
 
         if (filesIncluded){
             delete headersObj['Content-type']
@@ -41,7 +39,6 @@ const FetchHelper = (route, method="GET", body, authRequired, filesIncluded) => 
                 headers: headersObj
             })
         }else{
-            console.log("I shouldnt reach here")
             return fetch(`${BaseURL}${route}`, {
                 method,
                 body: JSON.stringify(body),

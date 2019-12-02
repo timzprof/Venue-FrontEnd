@@ -3,14 +3,13 @@ import React, {createContext, useState} from 'react'
 export const AuthContext = createContext()
 
 const AuthContextProvider = ({children}) => {
-    let authIntial = false
+    let authInitial = false
     
     if (localStorage.getItem("Token")){
-        console.log(localStorage.getItem("Token"))
-        authIntial = true
+        authInitial = true
     }
 
-    const [authState, setAuthState] = useState(authIntial)
+    const [authState, setAuthState] = useState(authInitial)
     const setToken = (Token) => {
         localStorage.setItem("Token", JSON.stringify(Token))
         setAuthState(true)

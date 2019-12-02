@@ -5,7 +5,7 @@ import Sidebar from '../navigation/sideBar/sideBar'
 import Notification from '../UI/notification/notification'
 
 const PageLayout = ({children}) => {
-    const [menuOpen, setMenuOpen] = useState(false)
+    const [menuOpen, setMenuOpen] = useState(null)
 
     return (
         <div className={styles.PageLayout}>

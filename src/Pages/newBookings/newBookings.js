@@ -1,26 +1,39 @@
-import React, {useState, Fragment} from 'react'
+import React, {useState, Fragment, useEffect} from 'react'
 import styles from './newBookings.module.css'
 import PageLayout from '../../components/pageLayout/pageLayout'
-import { NavLink } from 'react-router-dom'
+import { NavLink, withRouter } from 'react-router-dom'
 import Button from '../../components/UI/button/button'
 import Booking from '../../components/UI/booking/booking'
 import Loader from '../../components/UI/loader/loader'
 import Modal from '../../components/UI/modal/modal'
 import DropDown from '../../components/UI/dropDown/dropDown'
 import { ReactComponent as Close } from '../../assets/images/close.svg'
-import { useSelector } from 'react-redux'
+import { useSelector, dispatch} from 'react-redux'
+import * as venueActions from '../../actions/venueActions'
+import * as bookingActions from '../../actions/bookingActions'
+const NewBookings = ({ history }) => {
 
-const NewBookings = () => {
+    useEffect(() => {
+        dispatch(venueActions.getVenues())
+        dispatch(venueActions.ge)
+    }, [])
+
+
     const [modalOpen, setModalOpen] = useState()
     const bookingState = useSelector(state => state.bookings)
     const venueState = useSelector(state => state.venues)
+
+
+
+    console.log(bookingState.bookings)
+    console.log(venueState.venues)
 
     const bookingsPendingObj = bookingState.bookings.reduce((acc, current, index, array) => {
         if (current.venueId in acc){
             if (current.status === "pending"){
                 acc[current.venueId] = {
                     ...acc[current.venueId],
-                    list: arr[current.venueId].list.concat(current)
+                    list: acc[current.venueId].list.concat(current)
                 }
             }
         }else{
@@ -46,7 +59,7 @@ const NewBookings = () => {
 
     const pendingList = Object.keys(bookingsPendingObj).map(id => {
         if (bookingsPendingObj[id].venueDetails !== null){
-            const bookingArr = booking.bookingsPendingObj[id].list.map(booking => (<Booking bookingObj={booking}/>))
+            const bookingArr = bookingsPendingObj[id].list.map(booking => (<Booking bookingObj={booking}/>))
             return (
                 <Fragment>
                 <h2 className={styles.venueHeader}>
@@ -104,7 +117,7 @@ const NewBookings = () => {
             </Modal>
             <PageLayout>
             <div className={styles.subHeader}>
-                        <NavLink to="/" className={styles.backLink}>Back</NavLink>
+                        <NavLink onClick={history.goBack} className={styles.backLink}>Back</NavLink>
                             <div className={styles.btnGroup}>
                                 <Button onClick={() => setModalOpen(true)} text="Disable Booking For This Date" style={{
                                     color: "#DF7676",
@@ -114,10 +127,10 @@ const NewBookings = () => {
                                 }} />
                             </div>
                     </div>
-                     {pendingList}
+                    { bookingState.loading === true || venueState.loading === true ? <Loader color="#083a55"/> : pendingList }
             </PageLayout>
         </React.Fragment>
     )
 }
 
-export default NewBookings
+export default  withRouter(NewBookings)

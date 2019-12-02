@@ -34,7 +34,7 @@ const ViewBookings = ({match}) => {
                             <span>OR</span>
                         </div>
                         <div className={styles.formGroupCheck}>
-                        <input checked={} type="checkbox" id="checky1"/>
+                        <input type="checkbox" id="checky1"/>
                         <label htmlFor="checky1"><div className={styles.fakeCheckBox}></div><span>All day</span></label>
                     </div>
                     </div>

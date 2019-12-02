@@ -26,8 +26,8 @@ const ViewBookings = ({match}) => {
                     <span className={styles.warning}>This action cannot be reversed</span>
                     <div className={styles.options}>
                         <div className={styles.flexContainer}>
-                                <DropDown label="from" options={["8am", "9am", "10am", "11am", "12pm", "1pm", "2pm", "3pm"]}/>
-                                <DropDown label="to" options={["8am", "9am", "10am", "11am", "12pm", "1pm", "2pm", "3pm"]}/>
+                                <DropDown label="from" options={["8am", "9am", "10am", "11am", "12pm", "1pm", "2pm", "3pm", "4pm", "5pm", "6pm", "7pm", "8pm"]}/>
+                                <DropDown label="to" options={["8am", "9am", "10am", "11am", "12pm", "1pm", "2pm", "3pm", "4pm", "5pm", "6pm", "7pm", "8pm"]}/>
                         </div>
                         <div className={styles.specialLine}>
                             <hr/>

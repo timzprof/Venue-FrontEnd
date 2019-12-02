@@ -74,7 +74,7 @@ export const filterBooking = (bookingArray) => {
     })
 
     const eventItems = bookingArray.filter(booking => {
-        if (booking.status === "approved" || booking.eventTitle === "Blocked"){
+        if (booking.status === "approved" || (booking.eventTitle === "Blocked" &&  booking.contactName === "Admin")){
           return booking
         }      
     }).map(booking => {
@@ -88,6 +88,7 @@ export const filterBooking = (bookingArray) => {
 }
 
 export const translate = (time) => timesArr[time-8].timeText
+export const translate2 = (time) => times.indexOf(time)
 
 
 export default timesArr

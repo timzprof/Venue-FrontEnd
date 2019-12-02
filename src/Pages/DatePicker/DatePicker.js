@@ -36,6 +36,20 @@ const DatePicker = ({match, history }) => {
 
 
 
+    const disableDate = []
+
+    useEffect(() => {
+        if(bookingState.bookings.length > 0){
+            bookingState.bookings.forEach(book => {
+                if (book.status === "disabled"){
+                    disableDate.push(book.date)   
+                }
+            })
+        }
+    }, [bookingState.bookings])
+
+
+
     useEffect(() => {
         if(venueState.error.status === true){
             setNotification({
@@ -63,21 +77,24 @@ const DatePicker = ({match, history }) => {
     }
 
     useEffect(() => {
+        dispatch(actions.getBookings(id))
+        dispatch(actions.getAllBookings())
         dispatch(actions.clearBookingNotification())
         if (targetVenue === null){
             dispatch(venueActions.getVenue(id))
         }
     }, [])
+
     
     useEffect(() => {
         dispatch(actions.getRequiredBookings(targetDate))
     }, [targetDate, bookingState.bookings])
 
-    useEffect(() => {
-        if(targetVenue){
-            dispatch(actions.getBookings(targetVenue.id))
-        }
-    }, [targetVenue])
+    // useEffect(() => {
+    //     if(targetVenue){
+    //         dispatch(actions.getBookings(targetVenue.id))
+    //     }
+    // }, [targetVenue])
  
 
     const [formValid, setFormValid]  = useState(false)
@@ -414,7 +431,7 @@ const DatePicker = ({match, history }) => {
                         </span>
                     </h2>
                     <div className={styles.mainContent}>
-                        <CalendarComponent value={targetDate} onChange={dateUpdater}/>
+                        <CalendarComponent disabledDates ={disableDate} value={targetDate} onChange={dateUpdater}/>
                         <EventShelf filtered={filterBooking(bookingState.selectedBookings)}/>
                         {/* Bookings */}  
                     </div>

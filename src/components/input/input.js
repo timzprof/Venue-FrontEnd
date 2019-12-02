@@ -52,6 +52,7 @@ const Input = ({type, value,  inputObj, changeFunc, errorMessages, checked}) => 
             )
             return input
         case("checkbox"):
+                    
             input = (
                 <div className={styles.formGroupCheck}>
                         <input checked={checked} {...inputObj} onChange={(e) => parentFunc(e)}/>

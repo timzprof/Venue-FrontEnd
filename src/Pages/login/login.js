@@ -64,7 +64,7 @@ const Login = () => {
                 <h2 className={styles.formHeader}>
                     Log In
                 </h2>
-                <form action="">
+                <form action=""> 
                     <div className={styles.formGroup}>
                         <label htmlFor="">Email</label>
                         <input value={email} onChange={(e) => setEmail(e.target.value)} type="text"/>
@@ -73,7 +73,7 @@ const Login = () => {
                         <label htmlFor="">Password</label>
                         <input value={password} onChange={(e) => setPassword(e.target.value)} type="password"/>
                     </div>
-                    <Button type="submit" loading={actionBtnLoading} action={submitForm} text="Log in" style={{
+                    <Button type="submit" loading={actionBtnLoading} className={styles.btn} action={submitForm} text="Log in" style={{
                         backgroundColor: "#083a55",
                         color: "#fff",
                         padding: "12px 45px",

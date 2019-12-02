@@ -101,5 +101,9 @@ svg.close{
 }
 
 
-
+@media (max-width: 600px){
+    .MainContainer > div{
+        width: 90%;
+    }
+}
 

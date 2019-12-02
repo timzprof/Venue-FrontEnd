@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, Fragment} from 'react'
 import styles from './newBookings.module.css'
 import PageLayout from '../../components/pageLayout/pageLayout'
 import { NavLink } from 'react-router-dom'
@@ -8,10 +8,61 @@ import Loader from '../../components/UI/loader/loader'
 import Modal from '../../components/UI/modal/modal'
 import DropDown from '../../components/UI/dropDown/dropDown'
 import { ReactComponent as Close } from '../../assets/images/close.svg'
-
+import { useSelector } from 'react-redux'
 
 const NewBookings = () => {
     const [modalOpen, setModalOpen] = useState()
+    const bookingState = useSelector(state => state.bookings)
+    const venueState = useSelector(state => state.venues)
+
+    const bookingsPendingObj = bookingState.bookings.reduce((acc, current, index, array) => {
+        if (current.venueId in acc){
+            if (current.status === "pending"){
+                acc[current.venueId] = {
+                    ...acc[current.venueId],
+                    list: arr[current.venueId].list.concat(current)
+                }
+            }
+        }else{
+            if (current.status === "pending"){
+                let venueDetails = null
+                venueState.venues.forEach(venue => {
+                    if (venue.id === current.venueId){
+                        venueDetails = {
+                            name: venue.title,
+                            address: venue.address
+                        }
+                    }
+                })
+                acc[current.venueId] = {
+                    list: [current],
+                    venueDetails: venueDetails 
+                }
+            }
+            
+        }
+        return acc
+    }, {})
+
+    const pendingList = Object.keys(bookingsPendingObj).map(id => {
+        if (bookingsPendingObj[id].venueDetails !== null){
+            const bookingArr = booking.bookingsPendingObj[id].list.map(booking => (<Booking bookingObj={booking}/>))
+            return (
+                <Fragment>
+                <h2 className={styles.venueHeader}>
+                    { bookingsPendingObj[id].venueDetails.name}
+                <span className={styles.Date}>
+                    { bookingsPendingObj[id].venueDetails.address}
+                </span>
+                </h2>
+                <div className={styles.BookingList}>
+                    { bookingArr }
+                </div>
+        </Fragment>
+            )
+        }
+    }
+    )
 
     return (
         <React.Fragment>
@@ -63,19 +114,7 @@ const NewBookings = () => {
                                 }} />
                             </div>
                     </div>
-                    <h2 className={styles.venueHeader}>
-                        {/* {targetVenue.name} */}
-                        Conference Hall
-                        <span className={styles.Date}>
-                            {new Date().toLocaleDateString()}
-                        </span>
-                    </h2>
-                    <Loader color='#083a55'/>
-                    {/* <div className={styles.BookingList}>
-                        <Booking/>
-                        <Booking/>
-                        <Booking approved/>
-                    </div> */}
+                     {pendingList}
             </PageLayout>
         </React.Fragment>
     )

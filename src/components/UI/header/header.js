@@ -10,12 +10,15 @@ const Header = ({open, setOpen, plain}) => {
     const [authState] = useContext(AuthContext)
     let barClasses = [styles.bar]
     let LogoClasses = [styles.Logo]
-
+  
     if(open){
         barClasses = [styles.bar, styles.open]
         LogoClasses = [styles.Logo, styles.logoOpen]
     }else if (open === false){
         barClasses = [styles.bar]
+        LogoClasses = [styles.Logo]
+    }else{
+        barClasses = [styles.barNull]
         LogoClasses = [styles.Logo]
     }
 

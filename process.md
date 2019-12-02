@@ -63,4 +63,14 @@ stopping people for booking on days and times that have already been booked - (s
 
 
 
+page transitions with the line increased width thingy - (i have a repo saved)
+blocking periods for days
+making the application look finer on smaller screens
+stopping people from booking dates and times that have already been approved
+making additions to the calender to block blur out dates that have been blocked.
+Adding react spring transitions to the application (the cards will be loaded that way. the side bar will move with react spring).
+reduce fonts sizes  throughout the apps on smaller screens.
+makes the modals wider on small screens.
+catch internet errors, design a page for 404 screen.
+
 

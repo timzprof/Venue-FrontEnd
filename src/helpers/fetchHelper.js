@@ -7,11 +7,21 @@ const FetchHelper = (route, method="GET", body, authRequired, filesIncluded) => 
         Token = JSON.parse(localStorage.getItem("Token"))
     }
     if(method === "GET"){
-        return fetch(`${BaseURL}${route}`, {
-            headers: {
-                'Content-type': 'application/json'
-            }
-        })
+        if (authRequired){
+            return fetch(`${BaseURL}${route}`, {
+                headers: {
+                    'Content-type': 'application/json',
+                    'Authorization': `Bearer ${Token}`
+                }
+            })
+        }else{
+            return fetch(`${BaseURL}${route}`, {
+                headers: {
+                    'Content-type': 'application/json'
+                }
+            })
+        }
+        
     }else if (method === "DELETE"){
         return fetch(`${BaseURL}${route}`, {
             method,

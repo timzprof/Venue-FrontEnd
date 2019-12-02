@@ -3,6 +3,7 @@ import styles from './dropDown.module.css'
 import { ReactComponent as DropImage } from '../../../assets/images/Polygon 10.svg'
 
 const DropDown = ({label, valueDate, options, onChange, name}) => {
+    console.log("value", valueDate)
     const [value, setValue] = useState(valueDate)
     const [show, setShow] = useState(true)
 

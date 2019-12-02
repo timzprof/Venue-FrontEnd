@@ -15,7 +15,7 @@ const EventShelf = ({filtered}) => {
 
         if (timeBlock.occupied){
             color = "#d4d4d4"
-        }else{
+        }else{ 
             color = '#083a55'
         }
 
@@ -29,7 +29,7 @@ const EventShelf = ({filtered}) => {
 
     console.log("array", arr)
 
-    const events = arr.map(event => <EventItem timeBlock={{start: event[1].start, end: event[1].end}} blocked={event[0] === "blocked" ? true : false} name={event[0]}/>)
+    const events = arr.map(event => <EventItem timeBlock={{start: event[1].start, end: event[1].end}} blocked={event[0] === "Blocked" ? true : false} name={event[0]}/>)
 
     return (
         <div className={styles.EventShelf}>

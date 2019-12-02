@@ -66,6 +66,7 @@
 .warning{
     color: #DF7676;
     margin: 17px 0;
+    font-size: 14px;
 }
 
 .specialLine{
@@ -144,6 +145,12 @@
     max-height: 0;
 }
 
+.checkContainer{
+    display: flex;
+    justify-content: center;
+    margin-top: -30px;
+    width: 100%;
+}
 
 @media (max-width: 1024px){
     .modalItemDelete{

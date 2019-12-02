@@ -26,6 +26,11 @@ const NewBookings = ({ history }) => {
     const bookingState = useSelector(state => state.bookings)
     const venueState = useSelector(state => state.venues)
 
+
+    console.log("all bookings", bookingState.allBookings)
+
+    
+
     useEffect(() => {
         if(venueState.error.status === true){
             setNotification({

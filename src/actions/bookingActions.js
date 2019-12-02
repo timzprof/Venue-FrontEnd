@@ -21,7 +21,7 @@ const getBookingsSuccess = (bookings) => {
     })
 }
 
-const createBookingSuccess = (booking) => {
+export const createBookingSuccess = (booking) => {
     return ({
         type: actions.createBookingSuccess,
         payload: booking
@@ -142,8 +142,9 @@ export const clearBookingNotification = () => {
 
 
 export const  getAllBookings = () => (dispatch) => {
+    console.log("I tried to get all bookings")
     dispatch(bookingActionStart())
-    FetchHelper(`/api/v1/booking`, "GET")
+    FetchHelper(`/api/v1/booking/all`, "GET", null, true)
     .then((res) => res.json())
     .then((data) => {
         dispatch(getRequiredBookingsSuccess(data))

@@ -75,7 +75,6 @@ export const getVenues = () => (dispatch) => {
     FetchHelper('/api/v1/venue', "GET")
     .then((res) => res.json())
     .then((body) => {
-        console.log(body)
         dispatch(getVenuesSuccess(body.data))
     })
     .catch(error => dispatch(venueActionFail({

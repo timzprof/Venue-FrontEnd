@@ -1,4 +1,4 @@
-import React, {useState, Fragment, useEffect} from 'react'
+import React, {useState, Fragment, useEffect, useContext} from 'react'
 import styles from './newBookings.module.css'
 import PageLayout from '../../components/pageLayout/pageLayout'
 import { NavLink, withRouter } from 'react-router-dom'
@@ -8,25 +8,41 @@ import Loader from '../../components/UI/loader/loader'
 import Modal from '../../components/UI/modal/modal'
 import DropDown from '../../components/UI/dropDown/dropDown'
 import { ReactComponent as Close } from '../../assets/images/close.svg'
-import { useSelector, dispatch} from 'react-redux'
+import { useSelector, useDispatch} from 'react-redux'
 import * as venueActions from '../../actions/venueActions'
 import * as bookingActions from '../../actions/bookingActions'
+import WholeLoader from '../../components/UI/wholeLoader/wholeLoader'
+import { NotificationContext } from '../../contexts/notificationContext'
+import EmptyList from '../../components/UI/emptyList/emptyList'
 const NewBookings = ({ history }) => {
 
+    const dispatch = useDispatch()
+    const [ notification, setNotification ] = useContext(NotificationContext)
     useEffect(() => {
         dispatch(venueActions.getVenues())
-        dispatch(venueActions.ge)
+        dispatch(bookingActions.getAllBookings())
     }, [])
 
-
-    const [modalOpen, setModalOpen] = useState()
     const bookingState = useSelector(state => state.bookings)
     const venueState = useSelector(state => state.venues)
 
+    useEffect(() => {
+        if(venueState.error.status === true){
+            setNotification({
+                open: true,
+                success: false,
+                text: venueState.error.errorMessage
+            })
+        }else if (bookingState.error.status === true){
+            setNotification({
+                open: true,
+                success: false,
+                text: bookingState.error.errorMessage
+            })
+        }
+    }, [venueState.error.status, bookingState.error.status])
 
 
-    console.log(bookingState.bookings)
-    console.log(venueState.venues)
 
     const bookingsPendingObj = bookingState.bookings.reduce((acc, current, index, array) => {
         if (current.venueId in acc){
@@ -79,55 +95,12 @@ const NewBookings = ({ history }) => {
 
     return (
         <React.Fragment>
-            <Modal open={modalOpen} setOpen={setModalOpen}>
-                <div className={styles.modalItemDelete}>
-                    <Close className="close" onClick={() => setModalOpen(false)} />
-                    <h2>Are you sure you want to deactivate bookings for this date ?</h2>
-                    <span className={styles.warning}>This action cannot be reversed</span>
-                    <div className={styles.options}>
-                        <div className={styles.flexContainer}>
-                                <DropDown label="from" options={["8am", "9am", "10am", "11am", "12pm", "1pm", "2pm", "3pm"]}/>
-                                <DropDown label="to" options={["8am", "9am", "10am", "11am", "12pm", "1pm", "2pm", "3pm"]}/>
-                        </div>
-                        <div className={styles.specialLine}>
-                            <hr/>
-                            <span>OR</span>
-                        </div>
-                        <div className={styles.formGroupCheck}>
-                        <input type="checkbox" id="checky1"/>
-                        <label htmlFor="checky1"><div className={styles.fakeCheckBox}></div><span>All day</span></label>
-                    </div>
-                    </div>
-                    <div className={styles.btnGroup}>
-                                <Button onClick={() => setModalOpen(false)} text="Cancel" style={{
-                                    color: "#f5f5f5",
-                                    backgroundColor: "#083a55",
-                                    marginRight: "20px",
-                                    padding: "12px 30px"
-                                }}  />
-                                <Button 
-                                    text="Delete" style={{
-                                    color: "#DF7676",
-                                    backgroundColor: "transparent",
-                                    // border: "1px solid #DF7676",
-                                    padding: "12px 30px"
-                                }} />
-                    </div>
-                </div>
-            </Modal>
             <PageLayout>
+            { bookingState.loading === true && venueState.loading !== true ? <WholeLoader/> : null }    
             <div className={styles.subHeader}>
                         <NavLink onClick={history.goBack} className={styles.backLink}>Back</NavLink>
-                            <div className={styles.btnGroup}>
-                                <Button onClick={() => setModalOpen(true)} text="Disable Booking For This Date" style={{
-                                    color: "#DF7676",
-                                    backgroundColor: "transparent",
-                                    border: "1px solid #DF7676",
-                                    padding: "12px 30px"
-                                }} />
-                            </div>
                     </div>
-                    { bookingState.loading === true || venueState.loading === true ? <Loader color="#083a55"/> : pendingList }
+                    {venueState.loading === true ? <Loader color="#083a55"/> : bookingState.allBookings.length > 0 ? pendingList : <EmptyList label="bookings"/> }
             </PageLayout>
         </React.Fragment>
     )

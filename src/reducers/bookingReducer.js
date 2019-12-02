@@ -13,6 +13,7 @@ const initialStore = {
         type: '',
         message: ''
     },
+    allBookings: [],
     bookings: [
         // all bookings for all venues  they have a venue id, and a time array
     ],
@@ -89,6 +90,12 @@ const bookingReducer = (state = initialStore, action) => {
                 loading: false
 
             }
+        case(action.getAllBookingsSuccess):
+            return {
+                ...this.state,
+                allBookings: action.payload,
+                loading: false
+            }    
         case(actions.getBookingsSuccess):
             return {
                 ...state,

@@ -57,6 +57,13 @@ const bookingsActionSuccess = (message) => {
     })
 }
 
+const getAllBookingsSuccess = (data) => {
+    return ({
+        type: actions.getAllBookingsSuccess,
+        payload: data
+    })
+}
+
 
 export const getBookings = (id) => (dispatch) => {
     dispatch(bookingActionStart())
@@ -123,7 +130,6 @@ export const rejectBooking = (body) => (dispatch) => {
 
 
 export const getRequiredBookings = (date) => (dispatch) => {
-    console.log("getting required bookings")
     dispatch(bookingActionStart())
     dispatch(getRequiredBookingsSuccess(date))
 }
@@ -134,3 +140,18 @@ export const clearBookingNotification = () => {
     })
 }
 
+
+export const  getAllBookings = () => (dispatch) => {
+    dispatch(bookingActionStart())
+    FetchHelper(`/api/v1/booking`, "GET")
+    .then((res) => res.json())
+    .then((data) => {
+        dispatch(getRequiredBookingsSuccess(data))
+    })
+    .catch((error) => {
+        dispatch(bookingActionFail({
+            type: "get all bookings",
+            message: "There was an error getting bookings"
+        }))
+    })
+}

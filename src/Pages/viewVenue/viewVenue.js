@@ -145,7 +145,6 @@ const ViewVenue = ({match ,history}) => {
                 formBody.append("image2", copyObj.images.value[2]) 
             }
 
-            console.log("I will now dispatch")
             dispatch(actions.editVenue(targetVenue.id, formBody))
             reset()
     }
@@ -158,7 +157,6 @@ const ViewVenue = ({match ,history}) => {
     const formUpdater = (e) => {
         let inputObject = {}
         if (e.target.type === "checkbox"){
-            console.log("Checkbox", e.target.checked)
             inputObject = {
                 ...formDetails,
                 resources: formDetails.resources.map(resource => {

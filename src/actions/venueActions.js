@@ -70,7 +70,6 @@ const setTargetVenueSuccess = (venue, id) => {
 }
 
 export const getVenues = () => (dispatch) => {
-    console.log("Fetched venues")
     dispatch(venueActionStart())
     FetchHelper('/api/v1/venue', "GET")
     .then((res) => res.json())
@@ -88,7 +87,6 @@ export const setTargetVenue = (venue) => (dispatch) => {
 }
 
 export const getVenue = (id) => (dispatch) => {
-    console.log("was called")
     dispatch(venueActionStart())
     FetchHelper(`/api/v1/venue/${id}`, "GET")
     .then((res) => res.json())

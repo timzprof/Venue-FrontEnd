@@ -15,7 +15,7 @@ const Booking = ({ bookingObj }) => {
 
     const reject = (id) => {
         dispatch(actions.rejectBooking({
-            bookingId: id
+            bookingId: id 
         }))
     }
 

@@ -51,7 +51,6 @@ const ViewVenue = ({match ,history}) => {
 
     useEffect(() => {
         if(venueState.error.status === true){
-            console.log(venueState.error.errorMessage)
             setNotification({
                 open: true,
                 success: false,
@@ -62,7 +61,6 @@ const ViewVenue = ({match ,history}) => {
 
     useEffect(() => {
         if (venueState.success.status === true && venueState.success.successMessage === "venue was successfuly deleted"){
-            console.log("I should redirect them")
             setRedirect(true)
         }else if(venueState.success.status === true){
             setNotification({

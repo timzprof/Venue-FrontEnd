@@ -6,7 +6,6 @@ import {useSelector} from 'react-redux'
 import EmptyList from '../UI/emptyList/emptyList'
 
 const EventShelf = ({filtered}) => {
-    console.log(filtered)
     const bookingState = useSelector( state => state.bookings )
     const [arr, timesArray] = filtered
 
@@ -27,7 +26,6 @@ const EventShelf = ({filtered}) => {
 
     })
 
-    console.log("array", arr)
 
     const events = arr.map(event => <EventItem timeBlock={{start: event[1].start, end: event[1].end}} blocked={event[0] === "Blocked" ? true : false} name={event[0]}/>)
 

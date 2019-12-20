@@ -8,7 +8,6 @@ import { useDispatch } from 'react-redux'
 import * as actions from '../../../actions/venueActions'
 
 const Card = ({venueObj, history}) => {
-    console.log(venueObj)
     const dispatch = useDispatch()
 
     const viewVenue = (id) => {

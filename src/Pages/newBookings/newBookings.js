@@ -27,7 +27,6 @@ const NewBookings = ({ history }) => {
     const venueState = useSelector(state => state.venues)
 
 
-    console.log("all bookings", bookingState.allBookings)
 
     
 

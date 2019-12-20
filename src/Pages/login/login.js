@@ -28,7 +28,6 @@ const Login = () => {
         FetchHelper('/api/v1/auth/login', 'POST', formBody)
         .then((res) => res.json())
         .then((data) => {
-            console.log("returning login body", data)
             if (data.status === "success"){
                 setToken(data.token)
                 setActionBtnLoading(false)

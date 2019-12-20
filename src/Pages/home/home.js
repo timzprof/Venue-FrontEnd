@@ -128,10 +128,6 @@ const Home = () => {
                 ...formDetails,
                 resources: formDetails.resources.map(resource => {
                     if(resource.name === e.target.name){
-                        console.log({
-                            ...resource,
-                            value: e.target.checked === "false" ? false : true
-                        })
                         return ({
                             ...resource,
                             value: e.target.checked === "false" ? false : true

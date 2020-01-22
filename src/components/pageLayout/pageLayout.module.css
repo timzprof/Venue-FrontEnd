@@ -8,7 +8,7 @@
     position: relative;
     margin-top: 70px;
     margin-left: 20%;
-    padding: 25px;
+    padding: 50px;
     min-height: calc(100vh - 70px);
 }
 
@@ -25,5 +25,13 @@
     .Main{
         margin-left: 0;
         width: 100%;
+        padding: 30px;
+    }
+}
+
+
+@media (max-width: 500px){
+    .Main{
+        padding: 20px;
     }
 }

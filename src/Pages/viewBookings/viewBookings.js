@@ -29,11 +29,18 @@ const ViewBookings = ({match}) => {
     const bookingState = useSelector(state => state.bookings)
     const bookingList = bookingState.selectedBookings.map(booking => <Booking bookingObj={booking} /> )
     const [loading, setLoading] = useState(false)
-    let errorMessage = ""
+    let errorMessage = ""  
 
     useEffect(() => {
         dispatch(venueActions.getVenue(venueid))
+        dispatch(bookingActions.getBookings(venueid))
     }, [])
+
+    useEffect(() => {
+        if(bookingState.bookings.length > 0){
+            dispatch(bookingActions.getRequiredBookings(date))
+        }
+    }, [bookingState.bookings])
 
     const [times, setTimes] = useState({
         start: '',
@@ -66,8 +73,6 @@ const ViewBookings = ({match}) => {
         }else{
             const endValue = translate2(textValue)
             const startValue = translate2(times.start)
-            console.log("end value", endValue)
-            console.log("start value", startValue)
             if (endValue < startValue){
                 setTimes({
                     end: times.start,
@@ -95,6 +100,7 @@ const ViewBookings = ({match}) => {
             .then(data => {
                 setLoading(false)
                 dispatch(bookingActions.createBookingSuccess(data.data))
+                dispatch(bookingActions.getBookings())
                 setNotification({
                     open: true,
                     success: true,
@@ -102,7 +108,6 @@ const ViewBookings = ({match}) => {
                 })
             })
             .catch((error) => {
-                console.log(error)
             })
         }else { 
             if (times.start && times.end){

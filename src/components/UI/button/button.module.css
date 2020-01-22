@@ -1,9 +1,9 @@
 .Button{
     display: inline-block;
-    padding: 12px 20px;
+    padding: 15px 35px;
     border-radius: 5px;
-    min-height: 50px;
-    min-width: 150px;
+    min-height: 40px;
+    /* min-width: 150px; */
     cursor: pointer;
     font-family: "Nexa-bold";
     border: none;
@@ -11,10 +11,15 @@
     outline: none !important;
 }
 
-.Button .loaderContainer{
-    height: 35px;
-    width: 35px;
+.loaderContainer{
+    height: 25px;
+    width: 25px;
     position: relative;
+}
+
+.loaderContainer > div{
+    height: 100%;
+    width: 100%;
 }
 
 .inner{

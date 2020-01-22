@@ -24,7 +24,7 @@ export const daysOfMonthHelper = (date) => {
     const dateVar = new Date(date)
     const month =  dateVar.getMonth() + 1
     const year = dateVar.getFullYear()
-    const leap = false
+    let leap = false
     if ((year % 4 === 0)){
         leap = true
         if(year % 100 === 0){

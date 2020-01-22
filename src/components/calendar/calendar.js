@@ -4,12 +4,10 @@ import Calendar from 'react-calendar/dist/entry.nostyle'
 
 const CalendarComponent = ({onChange, value, disabledDates}) => {
 
-    console.log("disabled dates", disabledDates)
    const disabled = (date) => {
        let shouldDisable = false
        disabledDates.forEach(day => {
         if (date.date === new Date(day)){
-            console.log("found a disabled date")
             shouldDisable = true
         }
        })

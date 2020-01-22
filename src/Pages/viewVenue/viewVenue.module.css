@@ -221,6 +221,21 @@
     text-align: center;
 }
 
+.tagsGroupHeader{
+    text-transform: capitalize;
+    font-size: 15px;
+    color: #083a55;
+    margin: 1rem 0 0.5rem;
+    font-family: "Nexa-bold";
+    display: block;
+}
+
+.tagsGroup{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
 
 @media (max-width: 1024px){
     .mainImage{
@@ -263,7 +278,7 @@
     }
 
     .rightSection{
-        width: 90%;
+        width: 100%;
         margin-bottom: 20px;
     }
 
@@ -302,11 +317,12 @@
     .smallScreenImages img{
         /* display: inline-block; */
         height: 330px ;
-        width: 92%;
+        width: 90%;
         border-radius: 8px;
         background-color: #083A55;
         margin-right: 20px;
         flex: 0 0 auto;
+        object-fit: cover;
     }
 
 

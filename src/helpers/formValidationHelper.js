@@ -40,7 +40,6 @@ export const formValidator = (recievedFromDetails, setFormDetails, setFormValid)
                     }
                 }
                 else if (rule === "required"){
-                    console.log(key )
                     if (formDetails[key].value.length <= 0 || formDetails[key].value <= 0 ){
                         formDetails = {
                             ...formDetails,
@@ -113,7 +112,6 @@ export const formValidator = (recievedFromDetails, setFormDetails, setFormValid)
 export const inputValidator = (e, rules, formDetails, setFormDetails,type) => {
     let finalObj = {...formDetails}
     finalObj[e.target.name].errorMessages = []
-    console.log(finalObj)
     let valid = true
     const key = e.target.name
     Object.keys(rules).forEach(rule => {
@@ -168,7 +166,6 @@ export const inputValidator = (e, rules, formDetails, setFormDetails,type) => {
                 }
             }
         }else if (rule == 'required'){
-            console.log("yes you were required")
             if (type == 'file'){
                 if (e.target.files.length <= 0){
                     valid = false
@@ -182,9 +179,7 @@ export const inputValidator = (e, rules, formDetails, setFormDetails,type) => {
                     }
                 }
             }else{
-                console.log("e", e)
                 if (e.target.value === '' || e.target.value <= 0){
-                    console.log(key)
                     valid = false
                     finalObj = {
                         ...finalObj,

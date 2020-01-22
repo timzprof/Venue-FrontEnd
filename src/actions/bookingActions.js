@@ -62,6 +62,24 @@ const getAllBookingsSuccess = (data) => {
         type: actions.getAllBookingsSuccess,
         payload: data
     })
+} 
+
+export const  getAllBookings = () => (dispatch) => {
+    dispatch(bookingActionStart())
+    FetchHelper(`/api/v1/booking/all`, "GET", null, true)
+    .then((res) => res.json())
+    .then((data) => {
+        console.log("result", data)
+        dispatch(getAllBookingsSuccess(data.data))
+    })
+    .catch((error) => {
+        console.log(error)
+        console.log("I seeing the catch block")
+        dispatch(bookingActionFail({
+            type: "get all bookings",
+            message: "There was an error getting bookings"
+        }))
+    })
 }
 
 
@@ -70,7 +88,6 @@ export const getBookings = (id) => (dispatch) => {
     FetchHelper(`/api/v1/booking?venueId=${id}`, "GET", true)
     .then((res) => res.json())
     .then((data) => {
-        console.log("data gotten back from asking for bookings", data)
         if(data.status === "success"){
             dispatch(getBookingsSuccess(data.data))
             dispatch(getRequiredBookingsSuccess(new Date().toLocaleDateString("en", {
@@ -105,7 +122,6 @@ export const approveBooking = (body) => (dispatch) => {
     FetchHelper(`/api/v1/booking/approve`, 'PATCH', body, true)
     .then((res) => res.json())
     .then((body) => {
-        console.log("response body", body)
         dispatch(approveBookingSuccess(body.data))
     })
     .catch(error => dispatch(bookingActionFail({
@@ -141,18 +157,3 @@ export const clearBookingNotification = () => {
 }
 
 
-export const  getAllBookings = () => (dispatch) => {
-    console.log("I tried to get all bookings")
-    dispatch(bookingActionStart())
-    FetchHelper(`/api/v1/booking/all`, "GET", null, true)
-    .then((res) => res.json())
-    .then((data) => {
-        dispatch(getRequiredBookingsSuccess(data))
-    })
-    .catch((error) => {
-        dispatch(bookingActionFail({
-            type: "get all bookings",
-            message: "There was an error getting bookings"
-        }))
-    })
-}

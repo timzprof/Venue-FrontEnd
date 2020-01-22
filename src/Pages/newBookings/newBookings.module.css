@@ -14,9 +14,11 @@
 
 .venueHeader{
     font-family: 'Nexa-bold';
-    font-size: 22px;
+    font-size: 25px;
     color: #083a55;
     margin-bottom: 10px;
+    margin-top: 80px;
+    text-transform: capitalize;
 }
 
 .Date{
@@ -26,10 +28,18 @@
     display: block;
 }
 
+.dateLead{
+    font-family: "Nexa-light";
+    font-size: 13px;
+    display: block;
+    color: #083A55;
+    margin: 40px 0 10px;
+    display: block;
+}
+
 .BookingList{
     width: 100%;
     margin-top: 20px;
-    min-height: 70vh;
 }
 
 .modalItemDelete{

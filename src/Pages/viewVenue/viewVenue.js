@@ -19,6 +19,7 @@ import { formValidator } from '../../helpers/formValidationHelper'
 import { inputValidator } from '../../helpers/formValidationHelper'
 import WholeLoader from '../../components/UI/wholeLoader/wholeLoader'
 import Loader from '../../components/UI/loader/loader'
+import Tag from '../../components/UI/tag/tag'
 
 const ViewVenue = ({match ,history}) => {
     const venueState = useSelector(state => state.venues)
@@ -51,7 +52,6 @@ const ViewVenue = ({match ,history}) => {
 
     useEffect(() => {
         if(venueState.error.status === true){
-            console.log(venueState.error.errorMessage)
             setNotification({
                 open: true,
                 success: false,
@@ -62,7 +62,6 @@ const ViewVenue = ({match ,history}) => {
 
     useEffect(() => {
         if (venueState.success.status === true && venueState.success.successMessage === "venue was successfuly deleted"){
-            console.log("I should redirect them")
             setRedirect(true)
         }else if(venueState.success.status === true){
             setNotification({
@@ -106,7 +105,7 @@ const ViewVenue = ({match ,history}) => {
                     required: true
                 }, errorMessages: [], valid:true},
                 
-                resources: [{name: "computers", value: targetVenue.resources[0].value === "true" ? true : false}, {name: "internet", value:  targetVenue.resources[1].value === "true" ? true : false}],
+                resources: [{name: "computers", value: targetVenue.resources[0].value === "true" ? true : false}], //{name: "internet", value:  targetVenue.resources[1].value === "true" ? true : false}],
                 
                 images: {value: [], rules:{
                     max: 3, allowedTypes:['image/jpeg', 'image/png', 'image/svg'], maxSize: 5    
@@ -383,7 +382,7 @@ const ViewVenue = ({match ,history}) => {
                             <div className={styles.smallScreenImages }>
                                 <img src={targetVenue.featureImage} />
                                 {targetVenue.otherImages[0] ? <img src={targetVenue.otherImages[0]} /> : null}
-                                {targetVenue.otherImages[1] ? <img src={targetVenue.otherImages[1]} /> : null}
+                                {/* {targetVenue.otherImages[1] ? <img src={targetVenue.otherImages[1]} /> : null} */}
                             </div>
                         </div>
                         <div className={styles.rightSection}>
@@ -392,8 +391,21 @@ const ViewVenue = ({match ,history}) => {
                             </div> : null}
                             <div className={styles.tag}><span className={styles.bolden}> {targetVenue.address} </span></div>
                             <div className={styles.tag}><span className={styles.bolden}> {targetVenue.capacity} </span> seats </div>
-                            <div className={styles.tag}> { targetVenue.resources[0].value === "true" ? <AvailableImage/> : <UnavailableImage/> } <span className={styles.bolden}>Computers</span></div>
-                            <div className={styles.tag}> { targetVenue.resources[1].value === "true" ? <AvailableImage/> : <UnavailableImage/> } <span className={styles.bolden}>Internet</span></div>
+                            <span className={styles.tagsGroupHeader}>
+                                Tags
+                            </span>
+                            <div className={styles.tagsGroup}>
+                                {
+                                    targetVenue.resources.map(resource => {
+                                        if(resource.value === "true"){
+                                            return (<Tag message={resource.name}></Tag>)
+                                        }
+                                        return null
+                                    })
+                                }
+                            </div>
+                            {/* <div className={styles.tag}> { targetVenue.resources[0].value === "true" ? <AvailableImage/> : <UnavailableImage/> } <span className={styles.bolden}>Computers</span></div> */}
+                            {/* <div className={styles.tag}> { targetVenue.resources[1].value === "true" ? <AvailableImage/> : <UnavailableImage/> } <span className={styles.bolden}>Internet</span></div> */}
                         </div>
                     </div>
                     <div className={styles.btnHolder}>

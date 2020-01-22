@@ -20,8 +20,8 @@ const SideBar = ({ open, setOpen }) => {
         <div className={sideBarClasses.join(' ')}>
             <h2 className={styles.SideBarHeader}>Menu</h2>
             <div className={styles.LinkGroup}>
-                <NavItem path="/" exact text="Venues"/>
-                {authState ? <NavItem path="/new-bookings"  exact text="New Bookings"/> : null}
+                <NavItem exact path="/"  text="Venues"/>
+                {authState ? <NavItem path="/new-bookings/"  exact text="New Bookings"/> : null}
             </div>
         </div>
         </React.Fragment>

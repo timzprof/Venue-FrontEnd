@@ -73,6 +73,7 @@ const venueReducer = (state = initialStore, action) => {
                 }
             }    
         case(actions.getVenuesSuccess):
+            console.log("recieved the venues")
             return {
                 ...state,
                 venues: action.payload,

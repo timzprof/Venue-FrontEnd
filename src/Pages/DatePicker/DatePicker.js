@@ -39,6 +39,14 @@ const DatePicker = ({match, history }) => {
     const disableDate = []
 
     useEffect(() => {
+        dispatch(actions.getBookings(id))
+        dispatch(actions.getAllBookings())
+        dispatch(actions.clearBookingNotification())
+        if (targetVenue === null){
+            dispatch(venueActions.getVenue(id))
+        }
+    }, [])
+    useEffect(() => {
         if(bookingState.bookings.length > 0){
             bookingState.bookings.forEach(book => {
                 if (book.status === "disabled"){
@@ -76,14 +84,7 @@ const DatePicker = ({match, history }) => {
         history.goBack()
     }
 
-    useEffect(() => {
-        dispatch(actions.getBookings(id))
-        dispatch(actions.getAllBookings())
-        dispatch(actions.clearBookingNotification())
-        if (targetVenue === null){
-            dispatch(venueActions.getVenue(id))
-        }
-    }, [])
+   
 
     
     useEffect(() => {
@@ -303,10 +304,6 @@ const DatePicker = ({match, history }) => {
                 ...formDetails,
                 resources: formDetails.resources.map(resource => {
                     if(resource.name === e.target.name){
-                        console.log({
-                            ...resource,
-                            value: e.target.checked
-                        })
                         return ({
                             ...resource,
                             value: e.target.checked

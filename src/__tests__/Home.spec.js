@@ -1,6 +1,6 @@
 import React from "react";
 import {BrowserRouter as Router} from "react-router-dom";
-import Home from "../containers/Home/Home";
+import Home from "../Pages/home/home";
 import {create} from "react-test-renderer";
 
 test("Home Container renders", () => {

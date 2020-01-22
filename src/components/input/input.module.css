@@ -1,10 +1,10 @@
 .formGroup{
-    width: 90%;
+    width: 100%;
     padding: 10px 0;
 }
 
 .formGroup input{
-    border: 2px solid #083A5510;
+    border: 1px solid #cccccc50;
     width: 100%;
     padding: 15px;
     color: #083A55;
@@ -28,11 +28,11 @@
 }
 
 .formGroup textarea:focus{
-    border: 2px solid #083A55;
+    border: 1px solid #083A55;
 }
 
 .formGroup input:focus{
-    border: 2px solid #083A55;
+    border: 1px solid #083A55;
 }
 
 .formGroup label{
@@ -67,7 +67,8 @@
      display: flex;
      align-items: center;
      justify-content: flex-start;
-     width: 150px;
+     width: auto;
+     text-transform: capitalize;  
  }
  .formGroupCheck input{
      visibility: hidden;

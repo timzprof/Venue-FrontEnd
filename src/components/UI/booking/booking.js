@@ -15,7 +15,7 @@ const Booking = ({ bookingObj }) => {
 
     const reject = (id) => {
         dispatch(actions.rejectBooking({
-            bookingId: id
+            bookingId: id 
         }))
     }
 
@@ -33,8 +33,8 @@ const Booking = ({ bookingObj }) => {
                 </div>
                 <div className={styles.subInfo}>
                     <p> {bookingObj.eventDescription} </p>
-                    <span className={styles.detail}> <span className={styles.bold}>Email</span> {bookingObj.contactEmail} </span>
-                    <span className={styles.detail}> <span className={styles.bold}>Phone</span> {bookingObj.contactPhone}</span>
+                    <span className={styles.detail}> <span className={styles.bold}>Email</span> { bookingObj. user ? bookingObj.user.email : bookingObj.email} </span>
+                    <span className={styles.detail}> <span className={styles.bold}>Phone</span> 0{bookingObj.user ? bookingObj.user.phone : bookingObj.phone} </span>
                     <div className={styles.btnGroup}>
                         { (bookingObj.status === "approved ") ? (<Button 
                                     text="Reject" style={{

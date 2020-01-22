@@ -1,11 +1,11 @@
 .Card{
-    box-shadow: 0 3px 6px #00000010;
-    padding: 10px;
+    box-shadow: 0 3px 5px #00000010;
+    padding: 14px;
     border-radius: 8px;
     border: 1px solid #083A5510;
     font-family: 'Nexa-light';
     background-color: #ffffff;
-    max-width: 400px;
+    /* max-width: 400px; */
 }
 
 .CardImage{
@@ -22,10 +22,12 @@
 }
 
 .CardName{
-    font-size: 20px;
+    font-size: 18px;
     color: #083A55;
     margin-bottom: 10px;
     font-family: 'Nexa-bold';
+    margin: 15px 0;
+    text-transform: capitalize;
 }
 
 .infoGroup{
@@ -53,7 +55,7 @@
 
 .detail{
     color: #083A55;
-    font-size: 18px;
+    font-size: 15px;
     font-weight: 100;
     display: flex;
     justify-content: flex-start;
@@ -62,7 +64,7 @@
 
 .detailImp{
     color: #083A55;
-    font-size: 18px;
+    font-size: 15px;
     font-weight: 100;
     display: flex;
     justify-content: flex-start;

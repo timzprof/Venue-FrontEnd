@@ -263,7 +263,7 @@
     }
 
     .rightSection{
-        width: 90%;
+        width: 100%;
         margin-bottom: 20px;
     }
 
@@ -302,11 +302,12 @@
     .smallScreenImages img{
         /* display: inline-block; */
         height: 330px ;
-        width: 92%;
+        width: 90%;
         border-radius: 8px;
         background-color: #083A55;
         margin-right: 20px;
         flex: 0 0 auto;
+        object-fit: cover;
     }
 
 

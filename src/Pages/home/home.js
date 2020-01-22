@@ -34,6 +34,11 @@ const Home = () => {
         dispatch(venueActions.clearVenueNotification())
     }, [])
 
+    // useEffect(() => {
+    //     dispatch(venueActions.getVenues())
+    // }, [])
+
+
     useEffect(() => {
         if(venueState.error.status === true){
             setNotification({
@@ -164,11 +169,6 @@ const Home = () => {
         }
     }
 
-
-    
-    useEffect(() => {
-        dispatch(venueActions.getVenues())
-    }, [])
 
       
     function reset (){

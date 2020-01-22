@@ -19,6 +19,7 @@ import { formValidator } from '../../helpers/formValidationHelper'
 import { inputValidator } from '../../helpers/formValidationHelper'
 import WholeLoader from '../../components/UI/wholeLoader/wholeLoader'
 import Loader from '../../components/UI/loader/loader'
+import Tag from '../../components/UI/tag/tag'
 
 const ViewVenue = ({match ,history}) => {
     const venueState = useSelector(state => state.venues)
@@ -390,7 +391,20 @@ const ViewVenue = ({match ,history}) => {
                             </div> : null}
                             <div className={styles.tag}><span className={styles.bolden}> {targetVenue.address} </span></div>
                             <div className={styles.tag}><span className={styles.bolden}> {targetVenue.capacity} </span> seats </div>
-                            <div className={styles.tag}> { targetVenue.resources[0].value === "true" ? <AvailableImage/> : <UnavailableImage/> } <span className={styles.bolden}>Computers</span></div>
+                            <span className={styles.tagsGroupHeader}>
+                                Tags
+                            </span>
+                            <div className={styles.tagsGroup}>
+                                {
+                                    targetVenue.resources.map(resource => {
+                                        if(resource.value === "true"){
+                                            return (<Tag message={resource.name}></Tag>)
+                                        }
+                                        return null
+                                    })
+                                }
+                            </div>
+                            {/* <div className={styles.tag}> { targetVenue.resources[0].value === "true" ? <AvailableImage/> : <UnavailableImage/> } <span className={styles.bolden}>Computers</span></div> */}
                             {/* <div className={styles.tag}> { targetVenue.resources[1].value === "true" ? <AvailableImage/> : <UnavailableImage/> } <span className={styles.bolden}>Internet</span></div> */}
                         </div>
                     </div>

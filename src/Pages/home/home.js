@@ -16,6 +16,7 @@ import Input from '../../components/input/input'
 import { formValidator } from '../../helpers/formValidationHelper'
 import { inputValidator } from '../../helpers/formValidationHelper'
 import EmptyList from '../../components/UI/emptyList/emptyList'
+import { ReactComponent as Plus } from '../../assets/images/plus.svg'
 
 
 
@@ -27,18 +28,20 @@ const Home = () => {
     const [notification, setNotification] = useContext(NotificationContext)
     const [modalOpen, setModalOpen] = useState()
     const [authState] = useContext(AuthContext)
+    const [showTagForm, setShowForm] = useState(false)
+    const tagsFormClasses = showTagForm ? [styles.specialInput, styles.showForm] : [styles.specialInput]
+    const [additionalTags, setAdditionalTags] = useState([])
+    const [currentTag, setCurrentTag] = useState('')
+  
     
 
     useEffect(() => {
         dispatch(bookingActions.clearBookingNotification())
         dispatch(venueActions.clearVenueNotification())
+        dispatch(venueActions.getVenues())
     }, [])
 
-    // useEffect(() => {
-    //     dispatch(venueActions.getVenues())
-    // }, [])
-
-
+    
     useEffect(() => {
         if(venueState.error.status === true){
             setNotification({
@@ -57,7 +60,6 @@ const Home = () => {
                 text: venueState.success.successMessage
             })
         }
-        dispatch(venueActions.clearVenueNotification())
     }, [venueState.success.status])
 
 
@@ -86,9 +88,6 @@ const Home = () => {
         images: {value: [], rules:{
             max: 3, min: 1, allowedTypes:['image/jpeg', 'image/png', 'image/svg'], maxSize: 5    
         }, errorMessages: [], valid:true},
-        // featureImage: '',
-        // image1: '',
-        // image2: ''
     })    
 
 
@@ -99,7 +98,7 @@ const Home = () => {
 
     const finalSubmit = () => {
             const copyObj = {...formDetails}
-            copyObj.resources = [...formDetails.resources]
+            copyObj.resources = [...formDetails.resources, ...additionalTags]
             const tempTimeAllowed = JSON.stringify(["8am", "8pm"])
 
             const formBody = new FormData() 
@@ -135,7 +134,7 @@ const Home = () => {
                     if(resource.name === e.target.name){
                         return ({
                             ...resource,
-                            value: e.target.checked === "false" ? false : true
+                            value: e.target.checked
                         })
                     }
 
@@ -194,10 +193,30 @@ const Home = () => {
         })
         setFormValid(false)
     }
-
     const cardList = venueState.venues.map((venueObj) => <Card venueObj={venueObj}/>)
-    
 
+
+    const addTag = () => {
+        const availableTags = []
+        additionalTags.forEach(tag => {
+            availableTags.push(tag.name.toLowerCase())
+        })
+        if(availableTags.includes(currentTag.toLowerCase())){
+            return 
+        }else{
+            if(currentTag){
+                setAdditionalTags([...additionalTags, { name: currentTag, value: true }])
+                setCurrentTag(' ')
+            }
+        }
+
+    }
+
+    const deleteTag = (e) => {
+        if(!e.target.checked){
+            setAdditionalTags([...additionalTags].filter(tag => tag.name.toLowerCase() !== e.target.name.toLowerCase()))
+        }
+    }
     return (
         <React.Fragment>
             <Modal open={modalOpen} setOpen={setModalOpen}>
@@ -224,20 +243,36 @@ const Home = () => {
                         type: 'number',
                         label: 'Capacity'
                     }} errorMessages={formDetails.capacity.errorMessages} />
-
-                    <Input type="checkbox"  changeFunc={formUpdater}  checked={formDetails.resources[0].value} inputObj={{
-                        type: 'checkbox',
-                        id: 'checky1',
-                        name: 'computers',
-                        label: 'Computers'
-                    }} />
-                    <Input type="checkbox"  changeFunc={formUpdater}  checked={formDetails.resources[1].value} inputObj={{
-                        type: 'checkbox',
-                        id: 'checky2',
-                        name: 'internet',
-                        label: 'Internet'
-                    }} />
-
+                    
+                    <div className={styles.checkGroup}>
+                        <Input type="checkbox"  changeFunc={formUpdater}  checked={formDetails.resources[0].value} inputObj={{
+                            type: 'checkbox',
+                            id: 'checky1',
+                            name: 'computers',
+                            label: 'Computers'
+                        }} />
+                        <Input type="checkbox"  changeFunc={formUpdater}  checked={formDetails.resources[1].value} inputObj={{
+                            type: 'checkbox',
+                            id: 'checky2',
+                            name: 'internet',
+                            label: 'Internet'
+                        }} />
+                        {
+                            additionalTags.map(({name, value}) => (<Input type="checkbox" changeFunc={deleteTag} checked={value} inputObj={{
+                                type: 'checkbox',
+                                id: name,
+                                name: name,
+                                label: name
+                            }} />))
+                        }
+                    </div>
+                    <div className={styles.additionalTags}>
+                        <span className={styles.openAdditionalTag} onClick={() => setShowForm(!showTagForm)}> Add feature tags </span>
+                        <div className={tagsFormClasses.join(' ')}>
+                            <input type="text" value={currentTag} onChange={(e) => setCurrentTag(e.target.value)}/>
+                            <div className={styles.addButton} onClick={addTag}> <Plus/> </div>
+                        </div>  
+                    </div>
                     <Input type="file" changeFunc={formUpdater} inputObj={{
                         type: 'file',
                         name: 'images',
@@ -269,7 +304,7 @@ const Home = () => {
                     }} /> : null}
                 </div>
                 <div className={styles.cardList}>
-                    {venueState.loading ? <Loader color="#083A55"/>  : (cardList.length > 0) ? cardList : <EmptyList label="venues"/>  }
+                    {venueState.loading ? <Loader color="#083A55"/>  : (venueState.venues.length !== 0) ? cardList : <EmptyList label="venues"/>  }
                 </div>
             </div>
         </PageLayout>

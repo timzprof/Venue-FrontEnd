@@ -221,6 +221,21 @@
     text-align: center;
 }
 
+.tagsGroupHeader{
+    text-transform: capitalize;
+    font-size: 15px;
+    color: #083a55;
+    margin: 1rem 0 0.5rem;
+    font-family: "Nexa-bold";
+    display: block;
+}
+
+.tagsGroup{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
 
 @media (max-width: 1024px){
     .mainImage{

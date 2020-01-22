@@ -64,6 +64,24 @@ const getAllBookingsSuccess = (data) => {
     })
 } 
 
+export const  getAllBookings = () => (dispatch) => {
+    dispatch(bookingActionStart())
+    FetchHelper(`/api/v1/booking/all`, "GET", null, true)
+    .then((res) => res.json())
+    .then((data) => {
+        console.log("result", data)
+        dispatch(getAllBookingsSuccess(data.data))
+    })
+    .catch((error) => {
+        console.log(error)
+        console.log("I seeing the catch block")
+        dispatch(bookingActionFail({
+            type: "get all bookings",
+            message: "There was an error getting bookings"
+        }))
+    })
+}
+
 
 export const getBookings = (id) => (dispatch) => {
     dispatch(bookingActionStart())
@@ -139,17 +157,3 @@ export const clearBookingNotification = () => {
 }
 
 
-export const  getAllBookings = () => (dispatch) => {
-    dispatch(bookingActionStart())
-    FetchHelper(`/api/v1/booking/all`, "GET", null, true)
-    .then((res) => res.json())
-    .then((data) => {
-        dispatch(getRequiredBookingsSuccess(data))
-    })
-    .catch((error) => {
-        dispatch(bookingActionFail({
-            type: "get all bookings",
-            message: "There was an error getting bookings"
-        }))
-    })
-}

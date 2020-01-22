@@ -6,6 +6,7 @@ import Button from '../button/button'
 import  { withRouter } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import * as actions from '../../../actions/venueActions'
+import Tag from '../tag/tag'
 
 const Card = ({venueObj, history}) => {
     const dispatch = useDispatch()
@@ -32,12 +33,14 @@ const Card = ({venueObj, history}) => {
                 </span>
             </div>
             <div className={styles.additionalInfo}>
-                <div className={styles.infoGroup}>
-                    <span className={styles.detail}>{(venueObj.resources[0].value === "true") ? <AvailableImage/> : <UnavailableImage/>} Computers</span>
+                <div className={[styles.infoGroup, styles.flexGroupTags].join(' ')}>
+                    { venueObj.resources.slice(0, 4).map(resource => {
+                        if(resource.value === "true"){
+                            return (<Tag message={resource.name}/>)
+                        }
+                        return null
+                    }) }
                 </div>
-                {/* <div className={styles.infoGroup}>
-                    <span className={styles.detail}>{ (venueObj.resources[1].value === 'true') ? <AvailableImage/> : <UnavailableImage/>} Internet</span>
-                </div> */}
             </div>
             <Button text="View" onClick={() => viewVenue(venueObj.id)} style={{
                 width: "100%",

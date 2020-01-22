@@ -5,10 +5,10 @@ const options = {
     year: "numeric"
 
 }
-
+  
 const initialStore = {
     loading: true,
-    error: {
+    error: {  
         status: false,
         type: '',
         message: ''
@@ -90,11 +90,20 @@ const bookingReducer = (state = initialStore, action) => {
                 loading: false
 
             }
-        case(action.getAllBookingsSuccess):
+        case(actions.getAllBookingsSuccess):
             return {
-                ...this.state,
-                allBookings: action.payload,
-                loading: false
+                ...state,
+                allBookings: [...action.payload],
+                loading: false,
+                error: {
+                    status: false,
+                    type: '',
+                    message: '',
+                },
+                success: {
+                    status: false,
+                    successMessage: ''
+                }
             }    
         case(actions.getBookingsSuccess):
             return {
@@ -106,7 +115,16 @@ const bookingReducer = (state = initialStore, action) => {
             return {
                 ...state,
                 selectedBookings: state.bookings.filter(booking => booking.date === action.payload),
-                loading: false
+                loading: false,
+                error: {
+                    status: false,
+                    type: '',
+                    message: '',
+                },
+                success: {
+                    status: false,
+                    successMessage: ''
+                }
             }    
         case(actions.approveBookingSuccess):
             return {

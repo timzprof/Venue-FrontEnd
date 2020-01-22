@@ -6,7 +6,6 @@ import { AuthContext } from '../../contexts/AuthContext'
 const ProtectedRoutes = ({ path, component:Component, ...rest }) => {
     
     const [authState] = useContext(AuthContext)
-    console.log(authState)
 
     return (
         <Route path={path} component={() =>  authState ? <Component/> : <Redirect to="/login"/>} {...rest}/>

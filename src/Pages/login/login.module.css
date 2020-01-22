@@ -33,7 +33,7 @@
 }
 
 .formGroup input{
-    border: 2px solid #083A5510;
+    border: 1px solid #cccccc;
     width: 100%;
     padding: 15px;
     color: #083A55;
@@ -45,7 +45,7 @@
 }
 
 .formGroup input:focus{
-    border: 2px solid #083A55;
+    border: 1px solid #083A55;
 }
 
 .formGroup label{

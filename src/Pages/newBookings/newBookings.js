@@ -14,6 +14,7 @@ import * as bookingActions from '../../actions/bookingActions'
 import WholeLoader from '../../components/UI/wholeLoader/wholeLoader'
 import { NotificationContext } from '../../contexts/notificationContext'
 import EmptyList from '../../components/UI/emptyList/emptyList'
+import { sortByDate } from '../../helpers/sortByDate'
 const NewBookings = ({ history }) => {
 
     const dispatch = useDispatch()
@@ -47,8 +48,7 @@ const NewBookings = ({ history }) => {
     }, [venueState.error.status, bookingState.error.status])
 
 
-
-    const bookingsPendingObj = bookingState.bookings.reduce((acc, current, index, array) => {
+    const bookingsPendingObj = bookingState.allBookings.reduce((acc, current, index, array) => {
         if (current.venueId in acc){
             if (current.status === "pending"){
                 acc[current.venueId] = {
@@ -76,10 +76,38 @@ const NewBookings = ({ history }) => {
         }
         return acc
     }, {})
-
-    const pendingList = Object.keys(bookingsPendingObj).map(id => {
-        if (bookingsPendingObj[id].venueDetails !== null){
-            const bookingArr = bookingsPendingObj[id].list.map(booking => (<Booking bookingObj={booking}/>))
+    let bookingsPendingObjClone = {}
+    Object.keys(bookingsPendingObj).forEach(id => {
+        bookingsPendingObjClone[id] = {
+            list: [...bookingsPendingObj[id].list].reduce((acc, current) => {
+                if(current.date in acc){
+                    acc[current.date] = [
+                        ...acc[current.date],
+                        current
+                    ]
+                    return acc
+                }else{
+                    acc[current.date] = [current]
+                    return acc
+                }
+             }, {}),
+            venueDetails: {...bookingsPendingObj[id].venueDetails}
+        }
+    })
+    const pendingList = Object.keys(bookingsPendingObjClone).map(id => {        
+        if (bookingsPendingObj[id].venueDetails !== null){  
+            const bookingArr =  sortByDate(Object.keys(bookingsPendingObjClone[id].list)).map(date => {
+                return(
+                    <Fragment>
+                        <span className={styles.dateLead}>
+                            {date}
+                        </span>
+                        {
+                            bookingsPendingObjClone[id].list[date].map(booking => (<Booking bookingObj={booking}/>))
+                        }
+                    </Fragment>
+                )
+            })
             return (
                 <Fragment>
                 <h2 className={styles.venueHeader}>

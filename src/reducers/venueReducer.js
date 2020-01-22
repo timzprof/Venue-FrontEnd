@@ -4,122 +4,8 @@ import * as actions from '../actions/actionsIndex'
 
 const initialStore = {
     loading: true,
-    venues: [{
-        id: 6,
-        title: "Location 5",
-        address: "Location 5",
-        capacity: 1300,
-        featureImage: "https://res.cloudinary.com/alphex-code-ltd/image/upload/v1574977438/sirfcob6sb6arozn5vyc.jpg",
-        otherImages: [],
-        timeAllowed:  ["8am", "8pm"],
-        createdAt: "2019-11-28T21:43:59.252Z",
-        updatedAt: "2019-11-28T21:43:59.252Z",
-        adminId: 1,
-        resources:  [{
-            id: 34,
-            name: "internet",
-            value: "true",
-            venueId: 6,
-            createdAt: "2019-11-28T21:43:59.270Z",
-            updatedAt: "2019-11-28T21:43:59.270Z"
-        }]
-    }, {
-        id: 6,
-        title: "Location 5",
-        address: "Location 5",
-        capacity: 1300,
-        featureImage: "https://res.cloudinary.com/alphex-code-ltd/image/upload/v1574977438/sirfcob6sb6arozn5vyc.jpg",
-        otherImages: [],
-        timeAllowed:  ["8am", "8pm"],
-        createdAt: "2019-11-28T21:43:59.252Z",
-        updatedAt: "2019-11-28T21:43:59.252Z",
-        adminId: 1,
-        resources:  [{
-            id: 34,
-            name: "internet",
-            value: "true",
-            venueId: 6,
-            createdAt: "2019-11-28T21:43:59.270Z",
-            updatedAt: "2019-11-28T21:43:59.270Z"
-        }]
-    }, {
-        id: 6,
-        title: "Location 5",
-        address: "Location 5",
-        capacity: 1300,
-        featureImage: "https://res.cloudinary.com/alphex-code-ltd/image/upload/v1574977438/sirfcob6sb6arozn5vyc.jpg",
-        otherImages: [],
-        timeAllowed:  ["8am", "8pm"],
-        createdAt: "2019-11-28T21:43:59.252Z",
-        updatedAt: "2019-11-28T21:43:59.252Z",
-        adminId: 1,
-        resources:  [{
-            id: 34,
-            name: "internet",
-            value: "true",
-            venueId: 6,
-            createdAt: "2019-11-28T21:43:59.270Z",
-            updatedAt: "2019-11-28T21:43:59.270Z"
-        }]
-    }, {
-        id: 6,
-        title: "Location 5",
-        address: "Location 5",
-        capacity: 1300,
-        featureImage: "https://res.cloudinary.com/alphex-code-ltd/image/upload/v1574977438/sirfcob6sb6arozn5vyc.jpg",
-        otherImages: [],
-        timeAllowed:  ["8am", "8pm"],
-        createdAt: "2019-11-28T21:43:59.252Z",
-        updatedAt: "2019-11-28T21:43:59.252Z",
-        adminId: 1,
-        resources:  [{
-            id: 34,
-            name: "internet",
-            value: "true",
-            venueId: 6,
-            createdAt: "2019-11-28T21:43:59.270Z",
-            updatedAt: "2019-11-28T21:43:59.270Z"
-        }]
-    }, {
-        id: 6,
-        title: "Location 5",
-        address: "Location 5",
-        capacity: 1300,
-        featureImage: "https://res.cloudinary.com/alphex-code-ltd/image/upload/v1574977438/sirfcob6sb6arozn5vyc.jpg",
-        otherImages: [],
-        timeAllowed:  ["8am", "8pm"],
-        createdAt: "2019-11-28T21:43:59.252Z",
-        updatedAt: "2019-11-28T21:43:59.252Z",
-        adminId: 1,
-        resources:  [{
-            id: 34,
-            name: "internet",
-            value: "true",
-            venueId: 6,
-            createdAt: "2019-11-28T21:43:59.270Z",
-            updatedAt: "2019-11-28T21:43:59.270Z"
-        }]
-    }],
-    targetVenue: {
-        id: 6,
-        title: "Location 5",
-        address: "Location 5",
-        capacity: 1300,
-        featureImage: "https://res.cloudinary.com/alphex-code-ltd/image/upload/v1574977438/sirfcob6sb6arozn5vyc.jpg",
-        otherImages: [],
-        timeAllowed:  ["8am", "8pm"],
-        createdAt: "2019-11-28T21:43:59.252Z",
-        updatedAt: "2019-11-28T21:43:59.252Z",
-        adminId: 1,
-        resources:  [{
-            id: 34,
-            name: "internet",
-            value: "true",
-            venueId: 6,
-            createdAt: "2019-11-28T21:43:59.270Z",
-            updatedAt: "2019-11-28T21:43:59.270Z"
-        }]
-    },
+    venues: [],
+    targetVenue: null,
     error: {
         status: false,
         errorType: '',
@@ -187,6 +73,7 @@ const venueReducer = (state = initialStore, action) => {
                 }
             }    
         case(actions.getVenuesSuccess):
+            console.log("recieved the venues")
             return {
                 ...state,
                 venues: action.payload,

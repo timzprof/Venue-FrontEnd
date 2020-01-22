@@ -86,19 +86,25 @@
 
 .react-calendar__month-view__days button:hover abbr{
     /* background-color: #083a55; */
-    color: #083a55;
+    color: #DF7676;
     outline: none;
-    transform: translate(-50%, -50%) scale(1.1);
+    transform: translate(-50%, -50%) scale(1.02);
 }
 
 .react-calendar__month-view__days__day--neighboringMonth{
-    color: transparent;
+    color: transparent !important;
+    background-color: transparent !important;
     /* display: none; */
 }
 .react-calendar__month-view__days__day--neighboringMonth:hover{
     background-color: transparent !important;
     color: transparent !important;
 }
+
+.react-calendar__month-view__days__day--neighboringMonth:hover abbr{
+    color: transparent !important;
+}
+
 
 .react-calendar__month-view__weekdays__weekday{
     border: none;

@@ -1,0 +1,9 @@
+.Tag{
+    font-size: 13px;
+    background-color: #083a5520;
+    color: #083a55;
+    padding: 8px 15px;
+    text-transform: capitalize;
+    border-radius: 4px;  
+    margin: 4px;
+}
